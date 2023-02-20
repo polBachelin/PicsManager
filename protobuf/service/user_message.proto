@@ -1,0 +1,6 @@
+message UserMessage {
+  required int32 user_id = 1;
+  required string email = 2;
+  optional string password = 3;
+  required string name = 4;
+}
