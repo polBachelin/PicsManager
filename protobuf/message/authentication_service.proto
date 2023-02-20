@@ -1,1 +1,12 @@
-service AuthenticationService {}
+service AuthenticationService {
+  rpc Authentication(AuthenticationRequest) returns (AuthenticationResponse);
+}
+
+message AuthenticationRequest {
+  required string email = 1;
+  required string password = 2;
+}
+
+message AuthenticationResponse {
+  required string token = 1;
+}
