@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-import "message/album_message.proto";
+option go_package = "picsManager/backend";
 
 service AlbumService {
   rpc CreateAlbum(CreateAlbumRequest) returns (CreateAlbumResponse);
@@ -12,6 +12,13 @@ service AlbumService {
   rpc ListSharedAlbums(ListSharedAlbumsRequest) returns (stream ListSharedAlbumsResponse);
 
   rpc SearchAlbumsByName(SearchAlbumsByNameRequest) returns (SearchAlbumsByNameResponse);
+}
+
+message AlbumMessage {
+  int32 album_id = 1;
+  string name = 2;
+  bytes thumbnail_data = 3;
+  string owner_name = 4;
 }
 
 message CreateAlbumRequest {

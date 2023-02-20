@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-import "message/user_message.proto";
+option go_package = "picsManager/backend";
 
 service UserService {
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
@@ -8,6 +8,13 @@ service UserService {
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
 
   rpc SearchUsersByName(SearchUsersByNameRequest) returns (SearchUsersByNameResponse);
+}
+
+message UserMessage {
+  int32 user_id = 1;
+  string email = 2;
+  optional string password = 3;
+  string name = 4;
 }
 
 message CreateUserRequest {

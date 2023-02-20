@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+option go_package = "picsManager/backend";
+
 service AuthenticationService {
   rpc Authentication(AuthenticationRequest) returns (AuthenticationResponse);
 }
