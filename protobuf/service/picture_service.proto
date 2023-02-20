@@ -7,8 +7,8 @@ service PictureService {
   rpc UpdatePicture(UpdatePictureRequest) returns (UpdatePictureResponse);
   rpc DeletePicture(DeletePictureRequest) returns (DeletePictureResponse);
 
-  rpc ListPictures(ListPicturesRequest) returns (ListPicturesResponse);
-  rpc ListAlbumPictures(ListAlbumPicturesRequest) returns (ListAlbumPicturesResponse);
+  rpc ListPictures(ListPicturesRequest) returns (stream ListPicturesResponse);
+  rpc ListAlbumPictures(ListAlbumPicturesRequest) returns (stream ListAlbumPicturesResponse);
 }
 
 message CreatePictureRequest {
@@ -35,17 +35,20 @@ message DeletePictureRequest {
 }
 
 message DeletePictureResponse {
-  repeated PictureMessage pictures = 1;
+  int32 index = 1;
+  PictureMessage pictures = 2;
 }
 
 message ListPicturesRequest {}
 
 message ListPicturesResponse {
-  repeated PictureMessage pictures = 1;
+  int32 index = 1;
+  PictureMessage pictures = 2;
 }
 
 message ListAlbumPicturesRequest {}
 
 message ListAlbumPicturesResponse {
-  repeated PictureMessage pictures = 1;
+  int32 index = 1;
+  PictureMessage pictures = 2;
 }

@@ -7,9 +7,9 @@ service AlbumService {
   rpc UpdateAlbum(UpdateAlbumRequest) returns (UpdateAlbumResponse);
   rpc DeleteAlbum(DeleteAlbumRequest) returns (DeleteAlbumResponse);
 
-  rpc ListAlbums(ListAlbumsRequest) returns (ListAlbumsResponse);
-  rpc ListOwnedAlbums(ListOwnedAlbumsRequest) returns (ListOwnedAlbumsResponse);
-  rpc ListSharedAlbums(ListSharedAlbumsRequest) returns (ListSharedAlbumsResponse);
+  rpc ListAlbums(ListAlbumsRequest) returns (stream ListAlbumsResponse);
+  rpc ListOwnedAlbums(ListOwnedAlbumsRequest) returns (stream ListOwnedAlbumsResponse);
+  rpc ListSharedAlbums(ListSharedAlbumsRequest) returns (stream ListSharedAlbumsResponse);
 }
 
 message CreateAlbumRequest {
@@ -38,17 +38,20 @@ message DeleteAlbumResponse {}
 message ListAlbumsRequest {}
 
 message ListAlbumsResponse {
-  repeated AlbumMessage albums = 1;
+  int32 index = 1;
+  AlbumMessage albums = 2;
 }
 
 message ListOwnedAlbumsRequest {}
 
 message ListOwnedAlbumsResponse {
-  repeated AlbumMessage albums = 1;
+  int32 index = 1;
+  AlbumMessage albums = 2;
 }
 
 message ListSharedAlbumsRequest {}
 
 message ListSharedAlbumsResponse {
-  repeated AlbumMessage albums = 1;
+  int32 index = 1;
+  AlbumMessage albums = 2;
 }
