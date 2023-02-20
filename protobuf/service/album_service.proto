@@ -1,3 +1,54 @@
 syntax = "proto3";
 
-service AlbumService {}
+import "message/album_message.proto";
+
+service AlbumService {
+  rpc CreateAlbum(CreateAlbumRequest) returns (CreateAlbumResponse);
+  rpc UpdateAlbum(UpdateAlbumRequest) returns (UpdateAlbumResponse);
+  rpc DeleteAlbum(DeleteAlbumRequest) returns (DeleteAlbumResponse);
+
+  rpc ListAlbum(ListAlbumRequest) returns (ListAlbumResponse);
+  rpc ListOwnedAlbum(ListOwnedAlbumRequest) returns (ListOwnedAlbumResponse);
+  rpc ListSharedAlbum(ListSharedAlbumRequest) returns (ListSharedAlbumResponse);
+}
+
+message CreateAlbumRequest {
+  string name = 1;
+}
+
+message CreateAlbumResponse {
+  AlbumMessage album = 1;
+}
+
+message UpdateAlbumRequest {
+  AlbumMessage source = 1;
+}
+
+message UpdateAlbumResponse {
+  AlbumMessage album = 1;
+}
+
+message DeleteAlbumRequest {
+  int32 album_id = 1;
+  optional bool propagate_deletion = 2;
+}
+
+message DeleteAlbumResponse {}
+
+message ListAlbumRequest {}
+
+message ListAlbumResponse {
+  repeated AlbumMessage albums = 1;
+}
+
+message ListOwnedAlbumRequest {}
+
+message ListOwnedAlbumResponse {
+  repeated AlbumMessage albums = 1;
+}
+
+message ListSharedAlbumRequest {}
+
+message ListSharedAlbumResponse {
+  repeated AlbumMessage albums = 1;
+}
