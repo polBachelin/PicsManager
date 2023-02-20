@@ -6,6 +6,8 @@ service UserService {
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
   rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+
+  rpc SearchUsersByName(SearchUsersByNameRequest) returns (SearchUsersByNameResponse);
 }
 
 message CreateUserRequest {
@@ -32,3 +34,11 @@ message DeleteUserRequest {
 }
 
 message DeleteUserResponse {}
+
+message SearchUsersByNameRequest {
+  string query = 1;
+}
+
+message SearchUsersByNameResponse {
+  repeated UserMessage users = 1;
+}

@@ -10,6 +10,8 @@ service AlbumService {
   rpc ListAlbums(ListAlbumsRequest) returns (stream ListAlbumsResponse);
   rpc ListOwnedAlbums(ListOwnedAlbumsRequest) returns (stream ListOwnedAlbumsResponse);
   rpc ListSharedAlbums(ListSharedAlbumsRequest) returns (stream ListSharedAlbumsResponse);
+
+  rpc SearchAlbumsByName(SearchAlbumsByNameRequest) returns (SearchAlbumsByNameResponse);
 }
 
 message CreateAlbumRequest {
@@ -54,4 +56,12 @@ message ListSharedAlbumsRequest {}
 message ListSharedAlbumsResponse {
   int32 index = 1;
   AlbumMessage albums = 2;
+}
+
+message SearchAlbumsByNameRequest {
+  string query = 1;
+}
+
+message SearchAlbumsByNameResponse {
+  repeated AlbumMessage albums = 1;
 }
