@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
+import 'package:picsmanager_application/views/homePages/AlbumPage.dart';
 import 'package:picsmanager_application/views/homePages/PicturesPage.dart';
 import 'package:provider/provider.dart';
 
@@ -92,7 +93,7 @@ Widget test({required BuildContext context}) {
     child: Container(
       width: double.infinity,
       height: double.infinity,
-      child: PicturesPage(context: context),
+      child: picturesPage(context: context),
     ),
   );
 }
@@ -112,16 +113,24 @@ Widget test1({required BuildContext context}) {
 }
 
 Widget test2({required BuildContext context}) {
-  return Column(
-    mainAxisSize: MainAxisSize.max,
-    children: [
-      Row(
-        mainAxisSize: MainAxisSize.max,
-      ),
-      Container(
-        color: Colors.red,
-      )
-    ],
+  return Container(
+    alignment: Alignment.centerRight,
+    width: MediaQuery.of(context).size.width >= 1080
+        ? MediaQuery.of(context).size.width - 72
+        : MediaQuery.of(context).size.width,
+    height: MediaQuery.of(context).size.height,
+    color: Colors.white,
+    padding: EdgeInsets.fromLTRB(
+      MediaQuery.of(context).size.width * 0.02,
+      MediaQuery.of(context).size.height * 0.02,
+      MediaQuery.of(context).size.width * 0.02,
+      0,
+    ),
+    child: Container(
+      width: double.infinity,
+      height: double.infinity,
+      child: albumPage(context: context),
+    ),
   );
 }
 

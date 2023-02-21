@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget picturesPage({required BuildContext context}) {
+Widget albumPage({required BuildContext context}) {
   return SingleChildScrollView(
     child: Column(
       children: <Widget>[
@@ -35,11 +35,20 @@ Widget picturesPage({required BuildContext context}) {
 Widget rowPictures() {
   return Row(
     children: <Widget>[
-      Expanded(child: Image.asset('images/paysage1.jpeg'),),
+      Expanded(child: albumCards(text: 'images/paysage1.jpeg')),
       SizedBox(width: 10,),
-      Expanded(child: Image.asset('images/paysage2.jpeg'),),
-      SizedBox(width: 10,),
-      Expanded(child: Image.asset('images/paysage3.jpeg'),),
+      Expanded(child: albumCards(text: 'images/paysage2.jpeg'),),
     ],
+  );
+}
+
+Widget albumCards({required String text}) {
+  return Card(
+    child: Column(
+      children: <Widget>[
+        Image.asset(text),
+        Text("Nom de l'album"),
+      ],
+    ),
   );
 }
