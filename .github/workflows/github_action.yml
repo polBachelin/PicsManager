@@ -1,0 +1,26 @@
+name: Github Action T-DEV-800
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build_protobuf_dart:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sdk: [ dev, 2.17.0 ]
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+      - uses: dart-lang/setup-dart@6a218f2413a3e78e9087f638a238f6b40893203d
+        with:
+          sdk: ${{ matrix.sdk }}
+      - name: Report version
+        run: dart --version
+      - name: Install dependencies
+        run: dart pub get
+      - name: Check formatting (using dev dartfmt release)
+        if: ${{ matrix.sdk == 'dev' }}
+        run: dart format --output=none --set-exit-if-changed .
+      - name: Build Dart gRPC
+        run: find protobuf/ -name '*.proto' | xargs -L1 protoc --proto_path=protobuf/ --dart_out=grpc:./source --plugin=protoc-gen-dart=$HOME/.pub-cache/bin/protoc-gen-dart -Iprotobuf/
+        shell: bash
