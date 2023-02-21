@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/views/homePages/HomePage.dart';
-import 'package:picsmanager_application/views/loginPages/SignInPage.dart';
 import 'package:provider/provider.dart';
 
 class Splashscreen extends StatefulWidget {

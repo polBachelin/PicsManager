@@ -5,7 +5,7 @@ import '../models/core/User.dart';
 class AuthenticationProvider extends ChangeNotifier {
   User _user = User(
     id: 0,
-    token: "fhaljhf;akhflka",
+    token: "",
     firstname: "",
     lastName: "",
     email: "",

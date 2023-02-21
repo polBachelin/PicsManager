@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:picsmanager_application/models/helpers/SignInHelper.dart';
 import 'package:picsmanager_application/providers/SignInProvider.dart';
 import 'package:picsmanager_application/views/loginPages/SignInForm.dart';
 import 'package:provider/provider.dart';
+
+import 'SignInButtons.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -12,14 +15,14 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPage extends State<SignInPage> {
   late SignInProvider signInProvider;
-  //late SignInHelper signInHelper;
+  late SignInHelper signInHelper;
   GlobalKey<FormState> signInKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     signInProvider = Provider.of<SignInProvider>(context, listen: false);
-    //signInHelper = SignInHelper(context: context);
+    signInHelper = SignInHelper(context: context);
   }
 
   @override
@@ -40,7 +43,7 @@ class _SignInPage extends State<SignInPage> {
                 const SizedBox(height: 40),
                 signInForm(signInProvider, signInKey),
                 const SizedBox(height: 40),
-                //signInButtons(context, signInKey, signInProvider, signInHelper)
+                signInButtons(context, signInKey, signInProvider, signInHelper)
               ],
             ),
           ),

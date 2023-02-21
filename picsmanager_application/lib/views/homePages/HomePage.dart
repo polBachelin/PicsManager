@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
-import 'package:picsmanager_application/views/homePages/TaskPage.dart';
+import 'package:picsmanager_application/views/homePages/PicturesPage.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,6 +17,7 @@ class _HomePage extends State<HomePage> {
     Provider.of<ViewProvider>(context, listen: false);
 
     return Scaffold(
+      appBar: AppBar(),
         bottomNavigationBar: MediaQuery.of(context).size.width < 1080
             ? Selector<ViewProvider, int>(
           selector: (context, provider) => provider.page,
@@ -26,17 +27,15 @@ class _HomePage extends State<HomePage> {
               onTap: (int page) {
                 viewProvider.page = page;
               },
-              selectedItemColor: Colors.white,
+              selectedItemColor: Colors.grey[900],
               unselectedItemColor: Colors.grey[700],
               items: const [
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.task), label: 'Tasks'),
+                    icon: Icon(Icons.folder), label: ''),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.calendar_month), label: 'Calendar'),
+                    icon: Icon(Icons.add_a_photo_outlined), label: ''),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.event), label: 'Events'),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.settings), label: 'Settings')
+                    icon: Icon(Icons.panorama), label: '')
               ],
             );
           },
@@ -55,12 +54,6 @@ class _HomePage extends State<HomePage> {
                         ? MediaQuery.of(context).size.width - 72
                         : MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
-                    padding: EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width * 0.02,
-                      MediaQuery.of(context).size.height * 0.02,
-                      MediaQuery.of(context).size.width * 0.02,
-                      0,
-                    ),
                     child: Container(
                       width: double.infinity,
                       height: double.infinity,
@@ -99,7 +92,7 @@ Widget test({required BuildContext context}) {
     child: Container(
       width: double.infinity,
       height: double.infinity,
-      child: TaskPage(context: context),
+      child: PicturesPage(context: context),
     ),
   );
 }
