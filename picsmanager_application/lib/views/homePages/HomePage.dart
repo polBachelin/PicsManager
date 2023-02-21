@@ -19,8 +19,7 @@ class _HomePage extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(),
-        bottomNavigationBar: MediaQuery.of(context).size.width < 1080
-            ? Selector<ViewProvider, int>(
+        bottomNavigationBar: Selector<ViewProvider, int>(
           selector: (context, provider) => provider.page,
           builder: (context, data, child) {
             return BottomNavigationBar(
@@ -40,8 +39,7 @@ class _HomePage extends State<HomePage> {
               ],
             );
           },
-        )
-            : null,
+        ),
         body: Selector<ViewProvider, int>(
             selector: (context, provider) => provider.page,
             builder: (context, data, child) {
