@@ -1,11 +1,46 @@
 package services
 
-import "log"
+import (
+	"fmt"
+	"picsManager/backend/pkg/utils"
+	"time"
 
-func NewAuthService() *Service {
-	return NewService("user_data")
+	"github.com/golang-jwt/jwt/v4"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
+
+type JWTService interface {
+	GenerateToken(email string, isUser bool) string
+	ValidateToken(token string) (*jwt.Token, error)
+}
+type Claims struct {
+	ID primitive.ObjectID `json:"id"`
+	jwt.RegisteredClaims
 }
 
-func CreateToken() {
-	log.Printf("TOKEN WILL BE CREATED")
+var jwtKey = []byte(utils.GetEnvVar("SECRET_KEY", "my_secret_key"))
+
+func GenerateToken(id primitive.ObjectID) string {
+	expirationTime := time.Now().Add(24 * time.Hour)
+	claims := &Claims{
+		ID: id,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expirationTime),
+		},
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString(jwtKey)
+	if err != nil {
+		return ""
+	}
+	return tokenString
+}
+
+func ValidateToken(encodedToken string) (*jwt.Token, error) {
+	return jwt.Parse(encodedToken, func(token *jwt.Token) (interface{}, error) {
+		if _, isvalid := token.Method.(*jwt.SigningMethodHMAC); !isvalid {
+			return nil, fmt.Errorf("Invalid token: %v", token.Header["alg"])
+		}
+		return jwtKey, nil
+	})
 }
