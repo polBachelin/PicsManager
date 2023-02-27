@@ -20,27 +20,49 @@ Widget scrollAlbum() {
     child: Column(
       children: <Widget>[
         rowPictures(),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         rowPictures(),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         rowPictures(),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         rowPictures(),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         rowPictures(),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         rowPictures(),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         rowPictures(),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         rowPictures(),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         rowPictures(),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         rowPictures(),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         rowPictures(),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         rowPictures(),
       ],
     ),
@@ -50,9 +72,13 @@ Widget scrollAlbum() {
 Widget rowPictures() {
   return Row(
     children: <Widget>[
-      Expanded(child: albumCards(text: 'images/paysage1.jpeg')),
-      SizedBox(width: 10,),
-      Expanded(child: albumCards(text: 'images/paysage1.jpeg'),),
+      Expanded(child: albumCards(text: 'assets/images/paysage1.jpeg')),
+      SizedBox(
+        width: 10,
+      ),
+      Expanded(
+        child: albumCards(text: 'assets/images/paysage1.jpeg'),
+      ),
     ],
   );
 }
