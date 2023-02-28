@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:picsmanager_application/providers/CameraProvider.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
 import 'package:picsmanager_application/views/homePages/AlbumPage.dart';
 import 'package:picsmanager_application/views/homePages/PicturesPage.dart';
@@ -68,15 +69,20 @@ class HomePage extends StatelessWidget {
 }
 
 Widget test1({required BuildContext context}) {
+  CameraProvider camera = Provider.of<CameraProvider>(context, listen: true);
+
   return Column(
     mainAxisSize: MainAxisSize.max,
     children: [
-      Row(
-        mainAxisSize: MainAxisSize.max,
+      Selector<CameraProvider, Widget>(
+        selector: (context, provider) => provider.show,
+        builder: (context, data, child) {
+          return data;
+        },
       ),
-      Container(
-        color: Colors.blue,
-      )
+      OutlinedButton(onPressed: () {
+        camera.picture;
+      }, child: const Text("Take Picture"))
     ],
   );
 }
