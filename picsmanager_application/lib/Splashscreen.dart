@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
+import 'package:picsmanager_application/providers/CameraProvider.dart';
 import 'package:picsmanager_application/views/homePages/HomePage.dart';
 import 'package:picsmanager_application/views/loginPages/SignInPage.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,8 @@ class Splashscreen extends StatefulWidget {
 class _SplashscreenState extends State<Splashscreen> {
   @override
   Widget build(BuildContext context) {
+    // TODO MAKE REAL SPLASH SCREEN
+    Provider.of<CameraProvider>(context, listen: false).init();
     return Selector<AuthenticationProvider, String>(
         selector: (_, provider) => provider.getToken,
         shouldRebuild: (previous, next) => true,
