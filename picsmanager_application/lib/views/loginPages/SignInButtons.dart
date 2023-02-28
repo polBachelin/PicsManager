@@ -12,7 +12,7 @@ Widget signInButtons(BuildContext context, GlobalKey<FormState> signInKey,
       ElevatedButton(
         onPressed: () {
           if (signInKey.currentState!.validate()) {
-            //signInHelper.login();
+            signInHelper.login();
           }
         },
         child: Container(

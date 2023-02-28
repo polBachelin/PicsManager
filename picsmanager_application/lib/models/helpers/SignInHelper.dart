@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:provider/provider.dart';
 
-class SignInHelper {
-  late BuildContext context;
+import '../../providers/SignInProvider.dart';
+import '../../repositories/LoginRepositoryGrpc.dart';
+import '../core/User.dart';
 
-  // SignInApi signInApi = SignInApi();
-  //
-  // late SignInProvider signInProvider;
-  // late AuthenticationProvider authentication;
-  // late DrawerProvider drawerProvider;
-  //
+class SignInHelper {
+
+  late BuildContext context;
+  late SignInProvider signInProvider;
+  late AuthenticationProvider authenticationProvider;
+
   SignInHelper({required this.context}) {
   //   signInProvider = Provider.of<SignInProvider>(context, listen: false);
   //   drawerProvider = Provider.of<DrawerProvider>(context, listen: false);
@@ -17,16 +19,9 @@ class SignInHelper {
   //       Provider.of<AuthenticationProvider>(context, listen: false);
   }
 
-  // Future<void> login() async {
-  //   User? user = await signInApi.login(
-  //     username: signInProvider.username,
-  //     password: signInProvider.password,
-  //   );
-  //   if (user == null) return;
-  //   authentication.user = user;
-  //   authentication.token = user.token;
-  //   if (user.listOrganization.isEmpty) return;
-  //   drawerProvider.organization = user.listOrganization.first;
-  //   return;
-  // }
+  Future<void> login() async {
+    authenticationProvider.setToken =
+      await LoginRepositoryGrpc()
+          .authentication(signInProvider.username, signInProvider.password);
+  }
 }

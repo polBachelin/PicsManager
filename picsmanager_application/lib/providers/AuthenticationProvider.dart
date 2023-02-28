@@ -3,27 +3,14 @@ import 'package:flutter/cupertino.dart';
 import '../models/core/User.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
-  User _user = User(
-    id: 0,
-    token: "",
-    firstname: "",
-    lastName: "",
-    email: "",
-  );
 
-  User get user => _user;
+  String _token = "ghkgkhgkgkg";
 
-  set user(User value) {
-    _user = value;
-    notifyListeners();
-  }
+  String get getToken => _token;
 
-  String _token = "";
-
-  String get token => _token;
-
-  set token(String value) {
+  set setToken(String value) {
     _token = value;
     notifyListeners();
   }
+
 }

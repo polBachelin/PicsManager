@@ -9,22 +9,4 @@ class ViewProvider extends ChangeNotifier {
     _page = value;
     notifyListeners();
   }
-
-  late bool _expansionPanelTasks;
-
-  bool get expansionPanelTasks => _expansionPanelTasks;
-
-  set expansionPanelTasks(bool value) {
-    _expansionPanelTasks = value;
-    notifyListeners();
-  }
-
-  DateTime _selectedDay = DateTime.now();
-
-  DateTime get selectedDay => _selectedDay;
-
-  set selectedDay(DateTime value) {
-    _selectedDay = value;
-    notifyListeners();
-  }
 }
