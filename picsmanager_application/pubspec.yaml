@@ -39,6 +39,8 @@ dependencies:
   protobuf: ^2.1.0
   grpc: ^3.1.0
   camera: ^0.10.3+2
+  animator: ^3.2.0
+  flutter_svg: ^1.1.5
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +69,7 @@ flutter:
     - assets/images/paysage1.jpeg
     - assets/images/paysage2.jpeg
     - assets/images/paysage3.jpeg
+    - assets/images/logo.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
