@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:animator/animator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/CameraProvider.dart';
+import 'package:picsmanager_application/ressources/Images.dart';
 import 'package:picsmanager_application/views/homePages/HomePage.dart';
 import 'package:picsmanager_application/views/loginPages/SignInPage.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +35,27 @@ class _LaunchPageState extends State<LaunchPage> {
 
           nav.push(MaterialPageRoute(builder: (context) => startPage));
         }));
-    return Container();
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Animator(
+                duration: const Duration(milliseconds: 1000),
+                tween: ColorTween(
+                  begin: Colors.red,
+                  end: Colors.yellow,
+                ),
+                cycles: 0,
+                builder: (context, state, child) {
+                  return SvgPicture.asset(ImagesConfig.logo,
+                      color: state.value as Color);
+                }),
+          ],
+        ),
+      ),
+    );
   }
 }
