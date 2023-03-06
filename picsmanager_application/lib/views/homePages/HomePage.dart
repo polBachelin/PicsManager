@@ -1,9 +1,12 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/providers/CameraProvider.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
 import 'package:picsmanager_application/views/homePages/AlbumPage.dart';
 import 'package:picsmanager_application/views/homePages/PicturesPage.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
+import 'package:image/image.dart' as img;
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -44,7 +47,7 @@ class HomePage extends StatelessWidget {
               Center(
                 child: Container(
                   color: Colors.grey,
-                  alignment: Alignment.centerRight,
+                  alignment: Alignment.topCenter,
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: Container(
@@ -70,24 +73,39 @@ class HomePage extends StatelessWidget {
 
 Widget test1({required BuildContext context}) {
   CameraProvider camera = Provider.of<CameraProvider>(context, listen: true);
-
-  return Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Selector<CameraProvider, Widget>(
-            selector: (context, provider) => provider.show,
-            builder: (context, data, child) {
-              return Container(
-                  alignment: Alignment.centerRight,
-                  width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height-200,
-              color: Colors.white,
-              child: data);
-            },
-          ),
-          OutlinedButton(onPressed: () {
-            camera.picture;
-          }, child: const Text("Take Picture"))
-        ],
-      );
+  var taille = camera.controller.value;
+  print(taille.aspectRatio);
+  var scale = MediaQuery.of(context).size.aspectRatio * taille.aspectRatio;
+  print(scale);
+  if (scale < 1) scale = 1 / scale;
+  return Container(
+    alignment: Alignment.centerRight,
+    width: MediaQuery.of(context).size.width,
+    height: MediaQuery.of(context).size.height,
+    child: Stack(
+      children: [
+        Selector<CameraProvider, Widget>(
+          selector: (context, provider) => provider.show,
+          builder: (context, data, child) {
+            return Transform.scale(
+                scale: scale,
+                child: Center(
+                    child: data)
+            );
+          },
+        ),
+        Container(
+          alignment: Alignment.bottomCenter,
+          child: OutlinedButton(
+              onPressed: () async {
+                XFile file = await camera.picture;
+                final path = file.path;
+                final bytes = await File(path).readAsBytes();
+                final img.Image? image = img.decodeImage(bytes);
+                },
+              child: const Text("Take Picture")),
+        )
+      ],
+    ),
+  );
 }
