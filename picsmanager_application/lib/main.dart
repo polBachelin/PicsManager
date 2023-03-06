@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:picsmanager_application/Splashscreen.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/CameraProvider.dart';
 import 'package:picsmanager_application/providers/SignInProvider.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
+import 'package:picsmanager_application/views/launchPage/LaunchPage.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: Splashscreen()
+          home: const LaunchPage()
       ),
     );
   }
