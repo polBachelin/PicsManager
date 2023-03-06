@@ -1,18 +1,15 @@
 FROM golang:1.18
 
-# Set the Current Working Directory inside the container
-WORKDIR /app
+WORKDIR /data
 
-# We want to populate the module cache based on the go.{mod,sum} files.
 COPY go.mod .
 COPY go.sum .
+# RUN apk --no-cache add ca-certificates
 
-RUN go mod download
+RUN go mod vendor
 
 COPY . .
 
-# Build the Go app
-RUN go build -o app ./init
+RUN go build  -o app ./init
 
-# Run the binary program produced by `go install`
 CMD ["./app"]

@@ -5,6 +5,7 @@ import (
 	"crypto/sha512"
 	"encoding/hex"
 	"errors"
+	"log"
 	"math/rand"
 	"picsManager/backend/internal/models"
 	"picsManager/backend/internal/services"
@@ -56,6 +57,7 @@ func generateName(name string) string {
 func (s *UserServiceController) CreateUser(ctx context.Context, req *pbUser.CreateUserRequest) (*pbUser.CreateUserResponse, error) {
 	var user models.User
 
+	log.Printf("Creating user")
 	svc := services.NewUserService()
 	ok, err := validateNewUser(req, svc)
 	if ok {
@@ -66,7 +68,8 @@ func (s *UserServiceController) CreateUser(ctx context.Context, req *pbUser.Crea
 		if err != nil {
 			return nil, err
 		}
-		return &pbUser.CreateUserResponse{User: &pbUser.UserMessage{UserId: res.(primitive.ObjectID).Hex(), Name: user.Name, Email: user.Email}}, nil
+		id := res.InsertedID.(primitive.ObjectID).String()
+		return &pbUser.CreateUserResponse{User: &pbUser.UserMessage{UserId: id, Name: user.Name, Email: user.Email}}, nil
 	}
 	return nil, errors.New(err)
 }

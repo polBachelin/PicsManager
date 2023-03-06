@@ -14,7 +14,7 @@ var (
 	dbPort     = utils.GetEnvVar("DB_PORT", "27017")
 	dbUsername = utils.GetEnvVar("DB_USERNAME", "root")
 	dbPass     = utils.GetEnvVar("DB_PASSWORD", "pass12345")
-	dbName     = utils.GetEnvVar("DB_NAME", "cash")
+	dbName     = utils.GetEnvVar("DB_NAME", "picsManager")
 	uri        = "mongodb://" + dbUsername + ":" + dbPass + "@" + dbHost + ":" + dbPort
 )
 

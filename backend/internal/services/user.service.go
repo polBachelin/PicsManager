@@ -6,6 +6,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func NewUserService() *Service {
@@ -45,7 +46,7 @@ func (u Service) GetUserByName(name string) (models.User, error) {
 	return result, nil
 }
 
-func (u Service) CreateUser(obj models.User) (interface{}, error) {
+func (u Service) CreateUser(obj models.User) (*mongo.InsertOneResult, error) {
 	if obj.ID == primitive.NilObjectID {
 		obj.ID = primitive.NewObjectID()
 	}
