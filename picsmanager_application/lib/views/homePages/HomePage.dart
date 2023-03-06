@@ -72,17 +72,22 @@ Widget test1({required BuildContext context}) {
   CameraProvider camera = Provider.of<CameraProvider>(context, listen: true);
 
   return Column(
-    mainAxisSize: MainAxisSize.max,
-    children: [
-      Selector<CameraProvider, Widget>(
-        selector: (context, provider) => provider.show,
-        builder: (context, data, child) {
-          return data;
-        },
-      ),
-      OutlinedButton(onPressed: () {
-        camera.picture;
-      }, child: const Text("Take Picture"))
-    ],
-  );
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Selector<CameraProvider, Widget>(
+            selector: (context, provider) => provider.show,
+            builder: (context, data, child) {
+              return Container(
+                  alignment: Alignment.centerRight,
+                  width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height-200,
+              color: Colors.white,
+              child: data);
+            },
+          ),
+          OutlinedButton(onPressed: () {
+            camera.picture;
+          }, child: const Text("Take Picture"))
+        ],
+      );
 }
