@@ -41,6 +41,7 @@ dependencies:
   camera: ^0.10.3+2
   animator: ^3.2.0
   flutter_svg: ^1.1.5
+  image: ^4.0.15
 
 dev_dependencies:
   flutter_test:
