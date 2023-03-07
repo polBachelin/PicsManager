@@ -30,12 +30,13 @@ class _SignUpPageState extends State<SignUpPage> {
         appBar: AppBar(
           leading: GestureDetector(
             child: IconButton(
-                icon: Icon(Icons.arrow_back,
-                  size: 20,),
+                icon: Icon(
+                  Icons.arrow_back,
+                  size: 20,
+                ),
                 onPressed: () {
                   Navigator.pop(context);
-                }
-            ),
+                }),
           ),
         ),
         body: SingleChildScrollView(
