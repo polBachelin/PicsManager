@@ -10,7 +10,8 @@ class LoginRepositoryGrpc extends LoginRepository {
     port: NetworkConfig.port,
     options: const ChannelOptions(credentials: ChannelCredentials.secure()),
   );
-  late final AuthenticationServiceClient _stubAuth  = AuthenticationServiceClient(_client);
+  late final AuthenticationServiceClient _stubAuth =
+      AuthenticationServiceClient(_client);
 
   @override
   Future<String> authentication(String login, String password) async {

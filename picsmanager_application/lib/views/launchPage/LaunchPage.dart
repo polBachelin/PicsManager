@@ -20,7 +20,8 @@ class LaunchPage extends StatefulWidget {
 class _LaunchPageState extends State<LaunchPage> {
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => Timer(const Duration(seconds: 2), () async {
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        Timer(const Duration(seconds: 2), () async {
           final nav = Navigator.of(context);
 
           // TODO CALL INIT HERE

@@ -7,21 +7,19 @@ import '../../repositories/LoginRepositoryGrpc.dart';
 import '../core/User.dart';
 
 class SignInHelper {
-
   late BuildContext context;
   late SignInProvider signInProvider;
   late AuthenticationProvider authenticationProvider;
 
   SignInHelper({required this.context}) {
-  //   signInProvider = Provider.of<SignInProvider>(context, listen: false);
-  //   drawerProvider = Provider.of<DrawerProvider>(context, listen: false);
-  //   authentication =
-  //       Provider.of<AuthenticationProvider>(context, listen: false);
+    //   signInProvider = Provider.of<SignInProvider>(context, listen: false);
+    //   drawerProvider = Provider.of<DrawerProvider>(context, listen: false);
+    //   authentication =
+    //       Provider.of<AuthenticationProvider>(context, listen: false);
   }
 
   Future<void> login() async {
-    authenticationProvider.setToken =
-      await LoginRepositoryGrpc()
-          .authentication(signInProvider.username, signInProvider.password);
+    authenticationProvider.setToken = await LoginRepositoryGrpc()
+        .authentication(signInProvider.username, signInProvider.password);
   }
 }
