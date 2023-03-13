@@ -19,7 +19,6 @@ func (a Service) CreateAlbum(obj models.Album) (*mongo.InsertOneResult, error) {
 	if obj.ID == primitive.NilObjectID {
 		obj.ID = primitive.NewObjectID()
 	}
-	log.Println("creating album")
 	res, err := a.collection.InsertOne(context.TODO(), obj)
 	return res, err
 }

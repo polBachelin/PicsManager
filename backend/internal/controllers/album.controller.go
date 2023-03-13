@@ -30,7 +30,7 @@ func (s *AlbumServiceController) CreateAlbum(ctx context.Context, req *pbAlbum.C
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to create album")
 	}
-	return &pbAlbum.CreateAlbumResponse{Album: &pbAlbum.AlbumMessage{Name: album.Name, OwnerName: album.OwnerID.String(), AlbumId: res.InsertedID.(primitive.ObjectID).String()}}, nil
+	return &pbAlbum.CreateAlbumResponse{Album: &pbAlbum.AlbumMessage{Name: album.Name, OwnerName: album.OwnerID.Hex(), AlbumId: res.InsertedID.(primitive.ObjectID).Hex()}}, nil
 }
 
 func (s *AlbumServiceController) UpdateAlbum(ctx context.Context, req *pbAlbum.UpdateAlbumRequest) (*pbAlbum.UpdateAlbumResponse, error) {

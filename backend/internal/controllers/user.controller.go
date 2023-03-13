@@ -66,7 +66,7 @@ func (s *UserServiceController) CreateUser(ctx context.Context, req *pbUser.Crea
 		if err != nil {
 			return nil, err
 		}
-		id := res.InsertedID.(primitive.ObjectID).String()
+		id := res.InsertedID.(primitive.ObjectID).Hex()
 		return &pbUser.CreateUserResponse{User: &pbUser.UserMessage{UserId: id, Name: user.Name, Email: user.Email}}, nil
 	}
 	return nil, errors.New(err)

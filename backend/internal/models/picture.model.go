@@ -6,6 +6,7 @@ import (
 
 type Picture struct {
 	ID       primitive.ObjectID   `bson:"_id" json:"id,omitempty"`
+	Name     string               `bson:"name"`
 	Data     []byte               `bson:"data" json:"data"`
 	Tags     []string             `bson:"tags" json:"tags"`
 	AlbumID  primitive.ObjectID   `bson:"albumId" json:"albumId"`
