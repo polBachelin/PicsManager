@@ -98,6 +98,7 @@ func (s *PictureServiceController) ListAlbumPictures(req *pbPicture.ListAlbumPic
 }
 
 func (s *PictureServiceController) ListPictures(req *pbPicture.ListPicturesRequest, stream pbPicture.PictureService_ListPicturesServer) error {
+	log.Println("Listing pictures...")
 	userID, err := GetIdFromContext(stream.Context())
 	if err != nil {
 		return contextIDError

@@ -11,8 +11,8 @@ service PictureService {
   rpc ListPictures(ListPicturesRequest) returns (stream ListPicturesResponse);
   rpc ListAlbumPictures(ListAlbumPicturesRequest) returns (stream ListAlbumPicturesResponse);
 
-  rpc SearchPicturesByTag(SearchPicturesByTagRequest) returns (SearchPicturesByTagResponse);
-  rpc SearchPicturesByName(SearchPicturesByNameRequest) returns (SearchPicturesByNameResponse);
+  rpc SearchPicturesByTag(SearchPicturesByTagRequest) returns (stream SearchPicturesByTagResponse);
+  rpc SearchPicturesByName(SearchPicturesByNameRequest) returns (stream SearchPicturesByNameResponse);
 }
 
 message CreatePictureRequest {
@@ -61,7 +61,7 @@ message SearchPicturesByTagRequest {
 }
 
 message SearchPicturesByTagResponse {
-  repeated PictureMessage pictures = 1;
+  PictureMessage pictures = 1;
 }
 
 message SearchPicturesByNameRequest {
@@ -69,7 +69,7 @@ message SearchPicturesByNameRequest {
 }
 
 message SearchPicturesByNameResponse {
-  repeated PictureMessage pictures = 1;
+  PictureMessage pictures = 1;
 }
 
 message PictureMessage {

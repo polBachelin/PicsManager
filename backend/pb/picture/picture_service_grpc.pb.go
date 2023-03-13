@@ -27,8 +27,8 @@ type PictureServiceClient interface {
 	DeletePicture(ctx context.Context, in *DeletePictureRequest, opts ...grpc.CallOption) (*DeletePictureResponse, error)
 	ListPictures(ctx context.Context, in *ListPicturesRequest, opts ...grpc.CallOption) (PictureService_ListPicturesClient, error)
 	ListAlbumPictures(ctx context.Context, in *ListAlbumPicturesRequest, opts ...grpc.CallOption) (PictureService_ListAlbumPicturesClient, error)
-	SearchPicturesByTag(ctx context.Context, in *SearchPicturesByTagRequest, opts ...grpc.CallOption) (*SearchPicturesByTagResponse, error)
-	SearchPicturesByName(ctx context.Context, in *SearchPicturesByNameRequest, opts ...grpc.CallOption) (*SearchPicturesByNameResponse, error)
+	SearchPicturesByTag(ctx context.Context, in *SearchPicturesByTagRequest, opts ...grpc.CallOption) (PictureService_SearchPicturesByTagClient, error)
+	SearchPicturesByName(ctx context.Context, in *SearchPicturesByNameRequest, opts ...grpc.CallOption) (PictureService_SearchPicturesByNameClient, error)
 }
 
 type pictureServiceClient struct {
@@ -130,22 +130,68 @@ func (x *pictureServiceListAlbumPicturesClient) Recv() (*ListAlbumPicturesRespon
 	return m, nil
 }
 
-func (c *pictureServiceClient) SearchPicturesByTag(ctx context.Context, in *SearchPicturesByTagRequest, opts ...grpc.CallOption) (*SearchPicturesByTagResponse, error) {
-	out := new(SearchPicturesByTagResponse)
-	err := c.cc.Invoke(ctx, "/PictureService/SearchPicturesByTag", in, out, opts...)
+func (c *pictureServiceClient) SearchPicturesByTag(ctx context.Context, in *SearchPicturesByTagRequest, opts ...grpc.CallOption) (PictureService_SearchPicturesByTagClient, error) {
+	stream, err := c.cc.NewStream(ctx, &PictureService_ServiceDesc.Streams[2], "/PictureService/SearchPicturesByTag", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &pictureServiceSearchPicturesByTagClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
 }
 
-func (c *pictureServiceClient) SearchPicturesByName(ctx context.Context, in *SearchPicturesByNameRequest, opts ...grpc.CallOption) (*SearchPicturesByNameResponse, error) {
-	out := new(SearchPicturesByNameResponse)
-	err := c.cc.Invoke(ctx, "/PictureService/SearchPicturesByName", in, out, opts...)
+type PictureService_SearchPicturesByTagClient interface {
+	Recv() (*SearchPicturesByTagResponse, error)
+	grpc.ClientStream
+}
+
+type pictureServiceSearchPicturesByTagClient struct {
+	grpc.ClientStream
+}
+
+func (x *pictureServiceSearchPicturesByTagClient) Recv() (*SearchPicturesByTagResponse, error) {
+	m := new(SearchPicturesByTagResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *pictureServiceClient) SearchPicturesByName(ctx context.Context, in *SearchPicturesByNameRequest, opts ...grpc.CallOption) (PictureService_SearchPicturesByNameClient, error) {
+	stream, err := c.cc.NewStream(ctx, &PictureService_ServiceDesc.Streams[3], "/PictureService/SearchPicturesByName", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &pictureServiceSearchPicturesByNameClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type PictureService_SearchPicturesByNameClient interface {
+	Recv() (*SearchPicturesByNameResponse, error)
+	grpc.ClientStream
+}
+
+type pictureServiceSearchPicturesByNameClient struct {
+	grpc.ClientStream
+}
+
+func (x *pictureServiceSearchPicturesByNameClient) Recv() (*SearchPicturesByNameResponse, error) {
+	m := new(SearchPicturesByNameResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 // PictureServiceServer is the server API for PictureService service.
@@ -157,8 +203,8 @@ type PictureServiceServer interface {
 	DeletePicture(context.Context, *DeletePictureRequest) (*DeletePictureResponse, error)
 	ListPictures(*ListPicturesRequest, PictureService_ListPicturesServer) error
 	ListAlbumPictures(*ListAlbumPicturesRequest, PictureService_ListAlbumPicturesServer) error
-	SearchPicturesByTag(context.Context, *SearchPicturesByTagRequest) (*SearchPicturesByTagResponse, error)
-	SearchPicturesByName(context.Context, *SearchPicturesByNameRequest) (*SearchPicturesByNameResponse, error)
+	SearchPicturesByTag(*SearchPicturesByTagRequest, PictureService_SearchPicturesByTagServer) error
+	SearchPicturesByName(*SearchPicturesByNameRequest, PictureService_SearchPicturesByNameServer) error
 	mustEmbedUnimplementedPictureServiceServer()
 }
 
@@ -181,11 +227,11 @@ func (UnimplementedPictureServiceServer) ListPictures(*ListPicturesRequest, Pict
 func (UnimplementedPictureServiceServer) ListAlbumPictures(*ListAlbumPicturesRequest, PictureService_ListAlbumPicturesServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListAlbumPictures not implemented")
 }
-func (UnimplementedPictureServiceServer) SearchPicturesByTag(context.Context, *SearchPicturesByTagRequest) (*SearchPicturesByTagResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SearchPicturesByTag not implemented")
+func (UnimplementedPictureServiceServer) SearchPicturesByTag(*SearchPicturesByTagRequest, PictureService_SearchPicturesByTagServer) error {
+	return status.Errorf(codes.Unimplemented, "method SearchPicturesByTag not implemented")
 }
-func (UnimplementedPictureServiceServer) SearchPicturesByName(context.Context, *SearchPicturesByNameRequest) (*SearchPicturesByNameResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SearchPicturesByName not implemented")
+func (UnimplementedPictureServiceServer) SearchPicturesByName(*SearchPicturesByNameRequest, PictureService_SearchPicturesByNameServer) error {
+	return status.Errorf(codes.Unimplemented, "method SearchPicturesByName not implemented")
 }
 func (UnimplementedPictureServiceServer) mustEmbedUnimplementedPictureServiceServer() {}
 
@@ -296,40 +342,46 @@ func (x *pictureServiceListAlbumPicturesServer) Send(m *ListAlbumPicturesRespons
 	return x.ServerStream.SendMsg(m)
 }
 
-func _PictureService_SearchPicturesByTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchPicturesByTagRequest)
-	if err := dec(in); err != nil {
-		return nil, err
+func _PictureService_SearchPicturesByTag_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SearchPicturesByTagRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
 	}
-	if interceptor == nil {
-		return srv.(PictureServiceServer).SearchPicturesByTag(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/PictureService/SearchPicturesByTag",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PictureServiceServer).SearchPicturesByTag(ctx, req.(*SearchPicturesByTagRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return srv.(PictureServiceServer).SearchPicturesByTag(m, &pictureServiceSearchPicturesByTagServer{stream})
 }
 
-func _PictureService_SearchPicturesByName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchPicturesByNameRequest)
-	if err := dec(in); err != nil {
-		return nil, err
+type PictureService_SearchPicturesByTagServer interface {
+	Send(*SearchPicturesByTagResponse) error
+	grpc.ServerStream
+}
+
+type pictureServiceSearchPicturesByTagServer struct {
+	grpc.ServerStream
+}
+
+func (x *pictureServiceSearchPicturesByTagServer) Send(m *SearchPicturesByTagResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _PictureService_SearchPicturesByName_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SearchPicturesByNameRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
 	}
-	if interceptor == nil {
-		return srv.(PictureServiceServer).SearchPicturesByName(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/PictureService/SearchPicturesByName",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PictureServiceServer).SearchPicturesByName(ctx, req.(*SearchPicturesByNameRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return srv.(PictureServiceServer).SearchPicturesByName(m, &pictureServiceSearchPicturesByNameServer{stream})
+}
+
+type PictureService_SearchPicturesByNameServer interface {
+	Send(*SearchPicturesByNameResponse) error
+	grpc.ServerStream
+}
+
+type pictureServiceSearchPicturesByNameServer struct {
+	grpc.ServerStream
+}
+
+func (x *pictureServiceSearchPicturesByNameServer) Send(m *SearchPicturesByNameResponse) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 // PictureService_ServiceDesc is the grpc.ServiceDesc for PictureService service.
@@ -351,14 +403,6 @@ var PictureService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "DeletePicture",
 			Handler:    _PictureService_DeletePicture_Handler,
 		},
-		{
-			MethodName: "SearchPicturesByTag",
-			Handler:    _PictureService_SearchPicturesByTag_Handler,
-		},
-		{
-			MethodName: "SearchPicturesByName",
-			Handler:    _PictureService_SearchPicturesByName_Handler,
-		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
@@ -369,6 +413,16 @@ var PictureService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "ListAlbumPictures",
 			Handler:       _PictureService_ListAlbumPictures_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "SearchPicturesByTag",
+			Handler:       _PictureService_SearchPicturesByTag_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "SearchPicturesByName",
+			Handler:       _PictureService_SearchPicturesByName_Handler,
 			ServerStreams: true,
 		},
 	},
