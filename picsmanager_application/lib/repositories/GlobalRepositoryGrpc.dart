@@ -19,7 +19,7 @@ class GlobalRepositoryGrpc extends GlobalRepository {
   GlobalRepositoryGrpc(this._token);
 
   @override
-  Future<Stream<AlbumMessage>> fetchAlbums() async {
+  Future<Stream<AlbumMessage>> fetchAlbums() {
     final request = ListAlbumsRequest();
     final tmp = _stubAlbum.listAlbums(request).asyncMap((event) => event.albums);
 
@@ -27,7 +27,7 @@ class GlobalRepositoryGrpc extends GlobalRepository {
   }
 
   @override
-  Future<Stream<PictureMessage>> fetchImages() async {
+  Future<Stream<PictureMessage>> fetchImages() {
     final request = ListPicturesRequest();
     final tmp = _stubPicture.listPictures(request).asyncMap((event) => event.pictures);
 
