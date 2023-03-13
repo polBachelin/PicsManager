@@ -39,6 +39,7 @@ func main() {
 	interceptor := services.NewAuthInterceptor()
 	s := grpc.NewServer(
 		grpc.UnaryInterceptor(interceptor.Unary()),
+		grpc.StreamInterceptor(interceptor.Stream()),
 	)
 	pbUser.RegisterUserServiceServer(s, &controllers.UserServiceController{})
 	pbAlbum.RegisterAlbumServiceServer(s, &controllers.AlbumServiceController{})

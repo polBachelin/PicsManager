@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"picsManager/backend/internal/services"
 	pbAuth "picsManager/backend/pb/authentication"
 
@@ -37,7 +38,11 @@ func (s *AuthServiceController) Authentication(ctx context.Context, req *pbAuth.
 }
 
 func GetIdFromContext(ctx context.Context) (primitive.ObjectID, error) {
-	md, _ := metadata.FromOutgoingContext(ctx)
+	md, _ := metadata.FromIncomingContext(ctx)
+	log.Println("metadata: ", md)
+	if md["id"] == nil {
+		return primitive.NilObjectID, status.Errorf(codes.Internal, "Could not retrieve ID from context")
+	}
 	userID, err := primitive.ObjectIDFromHex(fmt.Sprintf("%v", md["id"][0]))
 	if err != nil {
 		return primitive.NilObjectID, status.Errorf(codes.Internal, "Could not retrieve ID from context")

@@ -109,12 +109,14 @@ func (s *PictureServiceController) ListPictures(req *pbPicture.ListPicturesReque
 		return status.Errorf(codes.Internal, "Could not get all pictures cursor from DB")
 	}
 	var i int32 = 0
+	log.Println("got cursor: ", cur)
 	for cur.Next(context.TODO()) {
 		var elem models.Picture
 		err := cur.Decode(&elem)
 		if err != nil {
 			log.Fatal(err)
 		}
+		log.Println("Picture data: ", elem)
 		stream.Send(&pbPicture.ListPicturesResponse{Pictures: buildPictureMessage(elem), Index: i})
 		i++
 	}
@@ -122,10 +124,10 @@ func (s *PictureServiceController) ListPictures(req *pbPicture.ListPicturesReque
 	return nil
 }
 
-func (s *PictureServiceController) SearchPicturesByTag(ctx context.Context, req *pbPicture.SearchPicturesByTagRequest) (*pbPicture.SearchPicturesByTagResponse, error) {
-	return nil, nil
+func (s *PictureServiceController) SearchPicturesByName(req *pbPicture.SearchPicturesByNameRequest, stream pbPicture.PictureService_SearchPicturesByNameServer) error {
+	return nil
 }
 
-func (s *PictureServiceController) SearchPicturesByName(ctx context.Context, req *pbPicture.SearchPicturesByNameRequest) (*pbPicture.SearchPicturesByNameResponse, error) {
-	return nil, nil
+func (s *PictureServiceController) SearchPicturesByTag(req *pbPicture.SearchPicturesByTagRequest, stream pbPicture.PictureService_SearchPicturesByTagServer) error {
+	return nil
 }
