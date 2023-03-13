@@ -63,7 +63,13 @@ func (s *PictureServiceController) UpdatePicture(ctx context.Context, req *pbPic
 }
 
 func (s *PictureServiceController) DeletePicture(ctx context.Context, req *pbPicture.DeletePictureRequest) (*pbPicture.DeletePictureResponse, error) {
-	return nil, nil
+	svc := services.NewPictureService()
+	id, err := primitive.ObjectIDFromHex(req.GetPictureId())
+	if err != nil {
+		return nil, status.Errorf(codes.InvalidArgument, "Could not convert ID to ObjectID")
+	}
+	svc.DeletePicture(id)
+	return &pbPicture.DeletePictureResponse{}, nil
 }
 
 func (s *PictureServiceController) ListAlbumPictures(req *pbPicture.ListAlbumPicturesRequest, serv pbPicture.PictureService_ListAlbumPicturesServer) error {

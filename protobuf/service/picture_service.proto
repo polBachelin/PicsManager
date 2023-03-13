@@ -38,10 +38,7 @@ message DeletePictureRequest {
   string picture_id = 1;
 }
 
-message DeletePictureResponse {
-  int32 index = 1;
-  PictureMessage pictures = 2;
-}
+message DeletePictureResponse {}
 
 message ListPicturesRequest {}
 
@@ -51,7 +48,7 @@ message ListPicturesResponse {
 }
 
 message ListAlbumPicturesRequest {}
-
+  
 message ListAlbumPicturesResponse {
   int32 index = 1;
   PictureMessage pictures = 2;
