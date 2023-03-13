@@ -7,6 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func NewPictureService() *Service {
@@ -40,4 +41,23 @@ func (p Service) DeletePicture(id primitive.ObjectID) (interface{}, error) {
 func (p Service) UpdatePicture(obj models.Picture) (*mongo.UpdateResult, error) {
 	update := bson.M{"$set": bson.M{"name": obj.Name, "data": obj.Data, "tags": obj.Tags, "albumId": obj.AlbumID, "ownerId": obj.OwnerID}}
 	return p.collection.UpdateOne(context.TODO(), bson.M{"_id": obj.ID}, update)
+}
+
+func (p Service) GetAllPicturesCursor(id primitive.ObjectID) (*mongo.Cursor, error) {
+	findOptions := options.Find()
+	cur, err := p.collection.Find(context.TODO(), bson.M{"_id": id}, findOptions)
+	if err != nil {
+		return nil, err
+	}
+	return cur, nil
+
+}
+
+func (p Service) GetAllPicturesAlbumCursor(id primitive.ObjectID, albumID primitive.ObjectID) (*mongo.Cursor, error) {
+	findOptions := options.Find()
+	cur, err := p.collection.Find(context.TODO(), bson.M{"_id": id, "album_id": albumID}, findOptions)
+	if err != nil {
+		return nil, err
+	}
+	return cur, nil
 }

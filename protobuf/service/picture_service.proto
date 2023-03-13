@@ -47,7 +47,9 @@ message ListPicturesResponse {
   PictureMessage pictures = 2;
 }
 
-message ListAlbumPicturesRequest {}
+message ListAlbumPicturesRequest {
+  string album_id = 1;
+}
   
 message ListAlbumPicturesResponse {
   int32 index = 1;

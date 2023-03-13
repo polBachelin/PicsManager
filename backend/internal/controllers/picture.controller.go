@@ -16,6 +16,8 @@ type PictureServiceController struct {
 	pbPicture.UnimplementedPictureServiceServer
 }
 
+var contextIDError = status.Errorf(codes.InvalidArgument, "Could not convert picture id to ObjectID")
+
 func buildPictureMessage(pic models.Picture) *pbPicture.PictureMessage {
 	return &pbPicture.PictureMessage{AlbumId: pic.AlbumID.Hex(), OwnerName: pic.OwnerID.Hex(), Data: pic.Data, Name: pic.Name, ImageId: pic.ID.Hex(), Tags: pic.Tags}
 }
@@ -51,7 +53,7 @@ func (s *PictureServiceController) UpdatePicture(ctx context.Context, req *pbPic
 	newPicture.AlbumID, err = primitive.ObjectIDFromHex(req.Pictures.AlbumId)
 	newPicture.ID, err = primitive.ObjectIDFromHex(req.Pictures.ImageId)
 	if err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "Could not convert picture id to ObjectID")
+		return nil, contextIDError
 
 	}
 	newPicture.OwnerID = userID
@@ -66,17 +68,56 @@ func (s *PictureServiceController) DeletePicture(ctx context.Context, req *pbPic
 	svc := services.NewPictureService()
 	id, err := primitive.ObjectIDFromHex(req.GetPictureId())
 	if err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "Could not convert ID to ObjectID")
+		return nil, contextIDError
 	}
 	svc.DeletePicture(id)
 	return &pbPicture.DeletePictureResponse{}, nil
 }
 
-func (s *PictureServiceController) ListAlbumPictures(req *pbPicture.ListAlbumPicturesRequest, serv pbPicture.PictureService_ListAlbumPicturesServer) error {
+func (s *PictureServiceController) ListAlbumPictures(req *pbPicture.ListAlbumPicturesRequest, stream pbPicture.PictureService_ListAlbumPicturesServer) error {
+	userID, err := GetIdFromContext(stream.Context())
+	albumID, err := primitive.ObjectIDFromHex(req.GetAlbumId())
+	if err != nil {
+		return contextIDError
+	}
+	svc := services.NewPictureService()
+	cur, err := svc.GetAllPicturesAlbumCursor(userID, albumID)
+	if err != nil {
+		return status.Errorf(codes.Internal, "Could not get all pictures cursor from DB")
+	}
+	for cur.Next(context.TODO()) {
+		var elem models.Picture
+		err := cur.Decode(&elem)
+		if err != nil {
+			log.Fatal(err)
+		}
+		stream.Send(&pbPicture.ListAlbumPicturesResponse{Pictures: buildPictureMessage(elem)})
+	}
+	defer cur.Close(context.TODO())
 	return nil
 }
 
-func (s *PictureServiceController) ListPictures(req *pbPicture.ListPicturesRequest, srv pbPicture.PictureService_ListPicturesServer) error {
+func (s *PictureServiceController) ListPictures(req *pbPicture.ListPicturesRequest, stream pbPicture.PictureService_ListPicturesServer) error {
+	userID, err := GetIdFromContext(stream.Context())
+	if err != nil {
+		return contextIDError
+	}
+	svc := services.NewPictureService()
+	cur, err := svc.GetAllPicturesCursor(userID)
+	if err != nil {
+		return status.Errorf(codes.Internal, "Could not get all pictures cursor from DB")
+	}
+	var i int32 = 0
+	for cur.Next(context.TODO()) {
+		var elem models.Picture
+		err := cur.Decode(&elem)
+		if err != nil {
+			log.Fatal(err)
+		}
+		stream.Send(&pbPicture.ListPicturesResponse{Pictures: buildPictureMessage(elem), Index: i})
+		i++
+	}
+	defer cur.Close(context.TODO())
 	return nil
 }
 
