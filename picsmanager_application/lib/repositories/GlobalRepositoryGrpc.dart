@@ -12,9 +12,9 @@ class GlobalRepositoryGrpc extends GlobalRepository {
     port: NetworkConfig.port,
     options: const ChannelOptions(credentials: ChannelCredentials.secure()),
   );
-  late final UserServiceClient _stubUser = UserServiceClient(_client, options: CallOptions(metadata: {'id_token': _token}));
-  late final AlbumServiceClient _stubAlbum = AlbumServiceClient(_client, options: CallOptions(metadata: {'id_token': _token}));
-  late final PictureServiceClient _stubPicture = PictureServiceClient(_client, options: CallOptions(metadata: {'id_token': _token}));
+  late final UserServiceClient _stubUser = UserServiceClient(_client, options: CallOptions(metadata: {'authorization': _token}));
+  late final AlbumServiceClient _stubAlbum = AlbumServiceClient(_client, options: CallOptions(metadata: {'authorization': _token}));
+  late final PictureServiceClient _stubPicture = PictureServiceClient(_client, options: CallOptions(metadata: {'authorization': _token}));
 
   GlobalRepositoryGrpc(this._token);
 
