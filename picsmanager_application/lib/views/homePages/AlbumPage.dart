@@ -1,109 +1,129 @@
 import 'package:flutter/material.dart';
 
 Widget albumPage({required BuildContext context}) {
-  return Container(
-    alignment: Alignment.centerRight,
-    width: MediaQuery.of(context).size.width,
-    height: MediaQuery.of(context).size.height,
-    color: Colors.white,
-    padding: paddingDimension(context: context),
-    child: SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: scrollAlbum(),
-    ),
+  return SizedBox(
+    width: double.infinity,
+    height: double.infinity,
+    child: scrollAlbum(),
   );
 }
 
 Widget scrollAlbum() {
-  return SingleChildScrollView(
-    child: Column(
-      children: <Widget>[
-        rowPictures(
-          image: 'assets/images/paysage1.jpeg',
-          imageName: "Nom de l'album",
-          image2: 'assets/images/paysage1.jpeg',
-          imageName2: "Nom de l'album",
+  return Column(
+    children: [
+      SizedBox(height: 10),
+      Row(
+        children: [
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                icon: IconButton(
+                  onPressed: null,
+                  icon: const Icon(Icons.search),
+                ),
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          IconButton(
+            onPressed: null,
+            icon: const Icon(Icons.close),
+          ),
+        ],
+      ),
+      SizedBox(height: 10),
+      Expanded(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              rowPictures(
+                image: 'assets/images/paysage1.jpeg',
+                imageName: "Nom de l'album",
+                image2: 'assets/images/paysage1.jpeg',
+                imageName2: "Nom de l'album",
+              ),
+              const SizedBox(height: 10),
+              rowPictures(
+                image: 'assets/images/paysage1.jpeg',
+                imageName: "Nom de l'album",
+                image2: 'assets/images/paysage1.jpeg',
+                imageName2: "Nom de l'album",
+              ),
+              const SizedBox(height: 10),
+              rowPictures(
+                image: 'assets/images/paysage1.jpeg',
+                imageName: "Nom de l'album",
+                image2: 'assets/images/paysage1.jpeg',
+                imageName2: "Nom de l'album",
+              ),
+              const SizedBox(height: 10),
+              rowPictures(
+                image: 'assets/images/paysage1.jpeg',
+                imageName: "Nom de l'album",
+                image2: 'assets/images/paysage1.jpeg',
+                imageName2: "Nom de l'album",
+              ),
+              const SizedBox(height: 10),
+              rowPictures(
+                image: 'assets/images/paysage1.jpeg',
+                imageName: "Nom de l'album",
+                image2: 'assets/images/paysage1.jpeg',
+                imageName2: "Nom de l'album",
+              ),
+              const SizedBox(height: 10),
+              rowPictures(
+                image: 'assets/images/paysage1.jpeg',
+                imageName: "Nom de l'album",
+                image2: 'assets/images/paysage1.jpeg',
+                imageName2: "Nom de l'album",
+              ),
+              const SizedBox(height: 10),
+              rowPictures(
+                image: 'assets/images/paysage1.jpeg',
+                imageName: "Nom de l'album",
+                image2: 'assets/images/paysage1.jpeg',
+                imageName2: "Nom de l'album",
+              ),
+              const SizedBox(height: 10),
+              rowPictures(
+                image: 'assets/images/paysage1.jpeg',
+                imageName: "Nom de l'album",
+                image2: 'assets/images/paysage1.jpeg',
+                imageName2: "Nom de l'album",
+              ),
+              SizedBox(height: 10),
+              rowPictures(
+                image: 'assets/images/paysage1.jpeg',
+                imageName: "Nom de l'album",
+                image2: 'assets/images/paysage1.jpeg',
+                imageName2: "Nom de l'album",
+              ),
+              const SizedBox(height: 10),
+              rowPictures(
+                image: 'assets/images/paysage1.jpeg',
+                imageName: "Nom de l'album",
+                image2: 'assets/images/paysage1.jpeg',
+                imageName2: "Nom de l'album",
+              ),
+              const SizedBox(height: 10),
+              rowPictures(
+                image: 'assets/images/paysage1.jpeg',
+                imageName: "Nom de l'album",
+                image2: 'assets/images/paysage1.jpeg',
+                imageName2: "Nom de l'album",
+              ),
+              const SizedBox(height: 10),
+              rowPictures(
+                image: 'assets/images/paysage1.jpeg',
+                imageName: "Nom de l'album",
+                image2: 'assets/images/paysage1.jpeg',
+                imageName2: "Nom de l'album",
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 10),
-        rowPictures(
-          image: 'assets/images/paysage1.jpeg',
-          imageName: "Nom de l'album",
-          image2: 'assets/images/paysage1.jpeg',
-          imageName2: "Nom de l'album",
-        ),
-        const SizedBox(height: 10),
-        rowPictures(
-          image: 'assets/images/paysage1.jpeg',
-          imageName: "Nom de l'album",
-          image2: 'assets/images/paysage1.jpeg',
-          imageName2: "Nom de l'album",
-        ),
-        const SizedBox(height: 10),
-        rowPictures(
-          image: 'assets/images/paysage1.jpeg',
-          imageName: "Nom de l'album",
-          image2: 'assets/images/paysage1.jpeg',
-          imageName2: "Nom de l'album",
-        ),
-        const SizedBox(height: 10),
-        rowPictures(
-          image: 'assets/images/paysage1.jpeg',
-          imageName: "Nom de l'album",
-          image2: 'assets/images/paysage1.jpeg',
-          imageName2: "Nom de l'album",
-        ),
-        const SizedBox(height: 10),
-        rowPictures(
-          image: 'assets/images/paysage1.jpeg',
-          imageName: "Nom de l'album",
-          image2: 'assets/images/paysage1.jpeg',
-          imageName2: "Nom de l'album",
-        ),
-        const SizedBox(height: 10),
-        rowPictures(
-          image: 'assets/images/paysage1.jpeg',
-          imageName: "Nom de l'album",
-          image2: 'assets/images/paysage1.jpeg',
-          imageName2: "Nom de l'album",
-        ),
-        const SizedBox(height: 10),
-        rowPictures(
-          image: 'assets/images/paysage1.jpeg',
-          imageName: "Nom de l'album",
-          image2: 'assets/images/paysage1.jpeg',
-          imageName2: "Nom de l'album",
-        ),
-        SizedBox(height: 10),
-        rowPictures(
-          image: 'assets/images/paysage1.jpeg',
-          imageName: "Nom de l'album",
-          image2: 'assets/images/paysage1.jpeg',
-          imageName2: "Nom de l'album",
-        ),
-        const SizedBox(height: 10),
-        rowPictures(
-          image: 'assets/images/paysage1.jpeg',
-          imageName: "Nom de l'album",
-          image2: 'assets/images/paysage1.jpeg',
-          imageName2: "Nom de l'album",
-        ),
-        const SizedBox(height: 10),
-        rowPictures(
-          image: 'assets/images/paysage1.jpeg',
-          imageName: "Nom de l'album",
-          image2: 'assets/images/paysage1.jpeg',
-          imageName2: "Nom de l'album",
-        ),
-        const SizedBox(height: 10),
-        rowPictures(
-          image: 'assets/images/paysage1.jpeg',
-          imageName: "Nom de l'album",
-          image2: 'assets/images/paysage1.jpeg',
-          imageName2: "Nom de l'album",
-        ),
-      ],
-    ),
+      ),
+    ],
   );
 }
 
