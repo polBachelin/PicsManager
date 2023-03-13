@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
   @override
   Widget build(BuildContext context) {
     ViewProvider viewProvider =
@@ -38,15 +37,7 @@ class HomePage extends StatelessWidget {
         body: Selector<ViewProvider, int>(
             selector: (context, provider) => provider.page,
             builder: (context, data, child) {
-              return Row(mainAxisSize: MainAxisSize.max, children: [
-                //NavigationRailWidget(context: context, provider: viewProvider),
-                Center(
-                  child: Container(
-                    color: Colors.grey,
-                    alignment: Alignment.topCenter,
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    child: Container(
+              return SizedBox(
                       width: double.infinity,
                       height: double.infinity,
                       child: () {
@@ -59,10 +50,7 @@ class HomePage extends StatelessWidget {
                             return albumPage(context: context);
                         }
                       }(),
-                    ),
-                  ),
-                ),
-              ]);
+                    );
             }));
   }
 }
