@@ -6,6 +6,11 @@ import (
 	"fmt"
 	"picsManager/backend/internal/services"
 	pbAuth "picsManager/backend/pb/authentication"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 )
 
 type AuthServiceController struct {
@@ -29,4 +34,14 @@ func (s *AuthServiceController) Authentication(ctx context.Context, req *pbAuth.
 		return nil, errors.New("Could not generate token")
 	}
 	return &pbAuth.AuthenticationResponse{Token: tokenString}, nil
+}
+
+func GetIdFromContext(ctx context.Context) (primitive.ObjectID, error) {
+	md, _ := metadata.FromOutgoingContext(ctx)
+	userID, err := primitive.ObjectIDFromHex(fmt.Sprintf("%v", md["id"][0]))
+	if err != nil {
+		return primitive.NilObjectID, status.Errorf(codes.Internal, "Could not retrieve ID from context")
+	}
+	return userID, err
+
 }

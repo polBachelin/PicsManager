@@ -1,13 +1,13 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"fmt"
 	"log"
 	"net"
 
 	"picsManager/backend/internal/controllers"
+	"picsManager/backend/internal/services"
 	pbAlbum "picsManager/backend/pb/album"
 	pbAuth "picsManager/backend/pb/authentication"
 	pbPicture "picsManager/backend/pb/picture"
@@ -30,26 +30,15 @@ func streamInterceptor(
 	return handler(srv, stream)
 }
 
-func unaryInterceptor(
-	ctx context.Context,
-	req interface{},
-	info *grpc.UnaryServerInfo,
-	handler grpc.UnaryHandler,
-) (interface{}, error) {
-	log.Println("--> unary interceptor: ", info.FullMethod)
-	return handler(ctx, req)
-}
-
 func main() {
 	flag.Parse()
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-
+	interceptor := services.NewAuthInterceptor()
 	s := grpc.NewServer(
-		grpc.UnaryInterceptor(unaryInterceptor),
-		grpc.StreamInterceptor(streamInterceptor),
+		grpc.UnaryInterceptor(interceptor.Unary()),
 	)
 	pbUser.RegisterUserServiceServer(s, &controllers.UserServiceController{})
 	pbAlbum.RegisterAlbumServiceServer(s, &controllers.AlbumServiceController{})

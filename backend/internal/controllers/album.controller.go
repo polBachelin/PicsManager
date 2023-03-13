@@ -2,7 +2,14 @@ package controllers
 
 import (
 	"context"
+	"log"
+	"picsManager/backend/internal/models"
+	"picsManager/backend/internal/services"
 	pbAlbum "picsManager/backend/pb/album"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type AlbumServiceController struct {
@@ -10,7 +17,20 @@ type AlbumServiceController struct {
 }
 
 func (s *AlbumServiceController) CreateAlbum(ctx context.Context, req *pbAlbum.CreateAlbumRequest) (*pbAlbum.CreateAlbumResponse, error) {
-	return nil, nil
+	userID, err := GetIdFromContext(ctx)
+	if err != nil {
+		log.Println("Error: ", err)
+		return nil, err
+	}
+	albumSvc := services.NewAlbumService()
+	var album models.Album
+	album.Name = req.GetName()
+	album.OwnerID = userID
+	res, err := albumSvc.CreateAlbum(album)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Failed to create album")
+	}
+	return &pbAlbum.CreateAlbumResponse{Album: &pbAlbum.AlbumMessage{Name: album.Name, OwnerName: album.OwnerID.String(), AlbumId: res.InsertedID.(primitive.ObjectID).String()}}, nil
 }
 
 func (s *AlbumServiceController) UpdateAlbum(ctx context.Context, req *pbAlbum.UpdateAlbumRequest) (*pbAlbum.UpdateAlbumResponse, error) {
