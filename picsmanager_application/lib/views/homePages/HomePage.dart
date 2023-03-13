@@ -1,12 +1,10 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:picsmanager_application/providers/CameraProvider.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
 import 'package:picsmanager_application/views/homePages/AlbumPage.dart';
+import 'package:picsmanager_application/views/homePages/CameraPage.dart';
+import 'package:picsmanager_application/views/appBar/MyAppBar.dart';
 import 'package:picsmanager_application/views/homePages/PicturesPage.dart';
 import 'package:provider/provider.dart';
-import 'dart:io';
-import 'package:image/image.dart' as img;
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -17,7 +15,7 @@ class HomePage extends StatelessWidget {
         Provider.of<ViewProvider>(context, listen: false);
 
     return Scaffold(
-        appBar: AppBar(),
+        appBar: MyAppBar(),
         bottomNavigationBar: Selector<ViewProvider, int>(
           selector: (context, provider) => provider.page,
           builder: (context, data, child) {
@@ -29,10 +27,10 @@ class HomePage extends StatelessWidget {
               selectedItemColor: Colors.grey[900],
               unselectedItemColor: Colors.grey[700],
               items: const [
-                BottomNavigationBarItem(icon: Icon(Icons.folder), label: ''),
+                BottomNavigationBarItem(icon: Icon(Icons.panorama), label: ''),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.add_a_photo_outlined), label: ''),
-                BottomNavigationBarItem(icon: Icon(Icons.panorama), label: '')
+                BottomNavigationBarItem(icon: Icon(Icons.folder), label: '')
               ],
             );
           },
@@ -56,7 +54,7 @@ class HomePage extends StatelessWidget {
                           case 0:
                             return picturesPage(context: context);
                           case 1:
-                            return test1(context: context);
+                            return cameraPage(context: context);
                           case 2:
                             return albumPage(context: context);
                         }
@@ -69,48 +67,3 @@ class HomePage extends StatelessWidget {
   }
 }
 
-Widget test1({required BuildContext context}) {
-  CameraProvider camera = Provider.of<CameraProvider>(context, listen: true);
-  var theSize = camera.controller.value;
-  var scale = MediaQuery.of(context).size.aspectRatio * theSize.aspectRatio;
-  if (scale < 1) scale = 1 / scale;
-  return Container(
-    alignment: Alignment.centerRight,
-    width: MediaQuery.of(context).size.width,
-    height: MediaQuery.of(context).size.height,
-    child: Stack(
-      children: [
-        Selector<CameraProvider, Widget>(
-          selector: (context, provider) => provider.show,
-          builder: (context, data, child) {
-            return Transform.scale(scale: scale, child: Center(child: data));
-          },
-        ),
-        Container(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: 70,
-            width: 70,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-            ),
-            child: OutlinedButton(
-              onPressed: () async {
-                XFile file = await camera.picture;
-                final path = file.path;
-                final bytes = await File(path).readAsBytes();
-                final img.Image? image = img.decodeImage(bytes);
-              },
-              child: const Icon(
-                Icons.photo_camera,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
