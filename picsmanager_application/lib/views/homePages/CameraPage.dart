@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:picsmanager_application/providers/CameraProvider.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
@@ -37,7 +40,8 @@ Widget cameraPage({required BuildContext context}) {
                 XFile file = await camera.picture;
                 final path = file.path;
                 final bytes = await File(path).readAsBytes();
-                final img.Image? image = img.decodeImage(bytes);
+                final compressed = await FlutterImageCompress.compressWithList(bytes, quality: 80);
+                final img.Image? image = img.decodeImage(compressed);
               },
               style: ButtonStyle(
                   side: MaterialStateProperty.all(
