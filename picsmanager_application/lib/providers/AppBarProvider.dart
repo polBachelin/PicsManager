@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 class AppBarProvider extends ChangeNotifier {
-  bool _isEditing = false;
-  bool _isRuleOpen = false;
+  bool _shareFolder = true;
+  bool _shareUser = true;
   bool _isDrawerOpen = true;
 
-  bool get isEditing => _isEditing;
+  bool get shareFolder => _shareFolder;
 
-  set isEditing(bool value) {
-    _isEditing = value;
+  set shareFolder(bool value) {
+    _shareFolder = value;
     notifyListeners();
   }
 
-  bool get isRuleOpen => _isRuleOpen;
+  bool get shareUser => _shareUser;
 
-  set isRuleOpen(bool value) {
-    _isRuleOpen = value;
+  set shareUser(bool value) {
+    _shareUser = value;
     notifyListeners();
   }
 

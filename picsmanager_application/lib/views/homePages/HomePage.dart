@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:picsmanager_application/providers/AppBarProvider.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
 import 'package:picsmanager_application/views/homePages/AlbumPage.dart';
 import 'package:picsmanager_application/views/homePages/CameraPage.dart';
@@ -8,10 +9,13 @@ import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     ViewProvider viewProvider =
         Provider.of<ViewProvider>(context, listen: false);
+    AppBarProvider appBarProvider =
+        Provider.of<AppBarProvider>(context, listen: false);
 
     return Scaffold(
         appBar: MyAppBar(),
@@ -22,6 +26,8 @@ class HomePage extends StatelessWidget {
               currentIndex: viewProvider.page,
               onTap: (int page) {
                 viewProvider.page = page;
+                appBarProvider.shareUser = true;
+                appBarProvider.shareFolder = true;
               },
               selectedItemColor: Colors.grey[900],
               unselectedItemColor: Colors.grey[700],
@@ -38,20 +44,19 @@ class HomePage extends StatelessWidget {
             selector: (context, provider) => provider.page,
             builder: (context, data, child) {
               return SizedBox(
-                      width: double.infinity,
-                      height: double.infinity,
-                      child: () {
-                        switch (viewProvider.page) {
-                          case 0:
-                            return picturesPage(context: context);
-                          case 1:
-                            return cameraPage(context: context);
-                          case 2:
-                            return albumPage(context: context);
-                        }
-                      }(),
-                    );
+                width: double.infinity,
+                height: double.infinity,
+                child: () {
+                  switch (viewProvider.page) {
+                    case 0:
+                      return picturesPage(context: context);
+                    case 1:
+                      return cameraPage(context: context);
+                    case 2:
+                      return albumPage(context: context);
+                  }
+                }(),
+              );
             }));
   }
 }
-

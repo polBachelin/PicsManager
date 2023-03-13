@@ -3,6 +3,7 @@ import 'package:picsmanager_application/providers/AppBarProvider.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 import 'SettingOverlay.dart';
 
@@ -40,77 +41,46 @@ class _MyAppBar extends State<MyAppBar> {
         icon: const Icon(Icons.supervised_user_circle_outlined),
       ),
       actions: <Widget>[
-        Selector<AppBarProvider, bool>(
-          selector: (_, provider) => provider.isEditing,
+        Selector2<ViewProvider, AppBarProvider, Tuple2<int, bool>>(
+          selector: (_, provider1, provider2) =>
+              Tuple2(provider1.page, provider2.shareFolder),
           shouldRebuild: (previous, next) => true,
-          builder: (_, isEditing, __) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                ),
-                onPressed: () {
-                  appBarProvider.isEditing = !isEditing;
-                },
-                child: Row(
-                  children: [
-                    Text(
-                      isEditing ? "Editing" : "Read only",
-                      style: TextStyle(color: Colors.blue),
+          builder: (_, data, __) {
+            return data.item1 == 2
+                ? IconButton(
+                    onPressed: () {
+                      appBarProvider.shareFolder = !data.item2;
+                    },
+                    icon: Icon(
+                      data.item2 ? Icons.people : Icons.people_alt_outlined,
+                      color: Colors.white,
                     ),
-                    Icon(
-                      isEditing ? Icons.border_color : Icons.find_in_page,
-                      color: Colors.blue,
-                    ),
-                  ],
-                ),
-              ),
-            );
+                  )
+                : Container();
           },
         ),
-        Container(width: 20),
+        Selector2<ViewProvider, AppBarProvider, Tuple2<int, bool>>(
+          selector: (_, provider1, provider2) =>
+              Tuple2(provider1.page, provider2.shareUser),
+          shouldRebuild: (previous, next) => true,
+          builder: (_, data, __) {
+            return data.item1 == 0
+                ? IconButton(
+                    onPressed: () {
+                      appBarProvider.shareUser = !data.item2;
+                    },
+                    icon: Icon(
+                      data.item2
+                          ? Icons.folder_copy
+                          : Icons.folder_copy_outlined,
+                      color: Colors.white,
+                    ),
+                  )
+                : Container();
+          },
+        ),
+        SizedBox(width: 10),
       ],
     );
   }
 }
-//
-// PreferredSize bottomBar({required ViewProvider provider}) {
-//   return PreferredSize(
-//     preferredSize: const Size.fromHeight(1),
-//     child: Selector<ViewProvider, int>(
-//       selector: (context, provider) => provider.page,
-//       builder: (context, data, child) {
-//         return provider.page == 1
-//             ? Container()
-//             : Column(
-//                 children: [
-//                   Row(
-//                     children: <Widget>[
-//                       Expanded(
-//                         child: TextField(
-//                           decoration: InputDecoration(
-//                             icon: IconButton(
-//                               onPressed: null,
-//                               icon: const Icon(Icons.search),
-//                             ),
-//                             border: OutlineInputBorder(),
-//                           ),
-//                         ),
-//                       ),
-//                       IconButton(
-//                         onPressed: null,
-//                         icon: const Icon(Icons.close),
-//                       ),
-//                     ],
-//                   ),
-//                   SizedBox(
-//                     height: 5,
-//                   )
-//                 ],
-//               );
-//       },
-//     ),
-//   );
-// }
