@@ -7,7 +7,7 @@ Widget picturesPage({required BuildContext context}) {
     height: MediaQuery.of(context).size.height,
     color: Colors.white,
     padding: paddingDimension(context: context),
-    child: Container(
+    child: SizedBox(
       width: double.infinity,
       height: double.infinity,
       child: scrollPictures(),
@@ -19,53 +19,29 @@ Widget scrollPictures() {
   return SingleChildScrollView(
     child: Column(
       children: <Widget>[
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         rowPictures(),
       ],
     ),

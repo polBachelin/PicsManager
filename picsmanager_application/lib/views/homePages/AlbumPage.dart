@@ -7,7 +7,7 @@ Widget albumPage({required BuildContext context}) {
     height: MediaQuery.of(context).size.height,
     color: Colors.white,
     padding: paddingDimension(context: context),
-    child: Container(
+    child: SizedBox(
       width: double.infinity,
       height: double.infinity,
       child: scrollAlbum(),
@@ -19,76 +19,118 @@ Widget scrollAlbum() {
   return SingleChildScrollView(
     child: Column(
       children: <Widget>[
-        rowPictures(),
-        SizedBox(
-          height: 10,
+        rowPictures(
+          image: 'assets/images/paysage1.jpeg',
+          imageName: "Nom de l'album",
+          image2: 'assets/images/paysage1.jpeg',
+          imageName2: "Nom de l'album",
         ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
+        const SizedBox(height: 10),
+        rowPictures(
+          image: 'assets/images/paysage1.jpeg',
+          imageName: "Nom de l'album",
+          image2: 'assets/images/paysage1.jpeg',
+          imageName2: "Nom de l'album",
         ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
+        const SizedBox(height: 10),
+        rowPictures(
+          image: 'assets/images/paysage1.jpeg',
+          imageName: "Nom de l'album",
+          image2: 'assets/images/paysage1.jpeg',
+          imageName2: "Nom de l'album",
         ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
+        const SizedBox(height: 10),
+        rowPictures(
+          image: 'assets/images/paysage1.jpeg',
+          imageName: "Nom de l'album",
+          image2: 'assets/images/paysage1.jpeg',
+          imageName2: "Nom de l'album",
         ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
+        const SizedBox(height: 10),
+        rowPictures(
+          image: 'assets/images/paysage1.jpeg',
+          imageName: "Nom de l'album",
+          image2: 'assets/images/paysage1.jpeg',
+          imageName2: "Nom de l'album",
         ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
+        const SizedBox(height: 10),
+        rowPictures(
+          image: 'assets/images/paysage1.jpeg',
+          imageName: "Nom de l'album",
+          image2: 'assets/images/paysage1.jpeg',
+          imageName2: "Nom de l'album",
         ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
+        const SizedBox(height: 10),
+        rowPictures(
+          image: 'assets/images/paysage1.jpeg',
+          imageName: "Nom de l'album",
+          image2: 'assets/images/paysage1.jpeg',
+          imageName2: "Nom de l'album",
         ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
+        const SizedBox(height: 10),
+        rowPictures(
+          image: 'assets/images/paysage1.jpeg',
+          imageName: "Nom de l'album",
+          image2: 'assets/images/paysage1.jpeg',
+          imageName2: "Nom de l'album",
         ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
+        SizedBox(height: 10),
+        rowPictures(
+          image: 'assets/images/paysage1.jpeg',
+          imageName: "Nom de l'album",
+          image2: 'assets/images/paysage1.jpeg',
+          imageName2: "Nom de l'album",
         ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
+        const SizedBox(height: 10),
+        rowPictures(
+          image: 'assets/images/paysage1.jpeg',
+          imageName: "Nom de l'album",
+          image2: 'assets/images/paysage1.jpeg',
+          imageName2: "Nom de l'album",
         ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
+        const SizedBox(height: 10),
+        rowPictures(
+          image: 'assets/images/paysage1.jpeg',
+          imageName: "Nom de l'album",
+          image2: 'assets/images/paysage1.jpeg',
+          imageName2: "Nom de l'album",
         ),
-        rowPictures(),
+        const SizedBox(height: 10),
+        rowPictures(
+          image: 'assets/images/paysage1.jpeg',
+          imageName: "Nom de l'album",
+          image2: 'assets/images/paysage1.jpeg',
+          imageName2: "Nom de l'album",
+        ),
       ],
     ),
   );
 }
 
-Widget rowPictures() {
+Widget rowPictures(
+    {required String image,
+    required String imageName,
+    required String image2,
+    required String imageName2}) {
   return Row(
     children: <Widget>[
-      Expanded(child: albumCards(text: 'assets/images/paysage1.jpeg')),
+      Expanded(child: albumCards(image: image, imageName: imageName)),
       SizedBox(
         width: 10,
       ),
       Expanded(
-        child: albumCards(text: 'assets/images/paysage1.jpeg'),
+        child: albumCards(image: image2, imageName: imageName2),
       ),
     ],
   );
 }
 
-Widget albumCards({required String text}) {
+Widget albumCards({required String image, required String imageName}) {
   return Card(
     child: Column(
       children: <Widget>[
-        Image.asset(text),
-        Text("Nom de l'album"),
+        Image.asset(image),
+        Text(imageName),
       ],
     ),
   );
