@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:picsmanager_application/providers/AppBarProvider.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/CameraProvider.dart';
+import 'package:picsmanager_application/providers/PicturePageProvider.dart';
 import 'package:picsmanager_application/providers/SignInProvider.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
 import 'package:picsmanager_application/views/launchPage/LaunchPage.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ViewProvider()),
         ChangeNotifierProvider(create: (_) => CameraProvider()),
         ChangeNotifierProvider(create: (_) => AppBarProvider()),
+        ChangeNotifierProvider(create: (_) => PicturePageProvider()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
