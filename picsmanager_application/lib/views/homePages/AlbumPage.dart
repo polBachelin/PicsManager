@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:picsmanager_application/models/core/Album.dart';
+import 'package:picsmanager_application/providers/AlbumProvider.dart';
+import 'package:provider/provider.dart';
 
 Widget albumPage({required BuildContext context}) {
   return SizedBox(
     width: double.infinity,
     height: double.infinity,
-    child: scrollAlbum(),
+    child: scrollAlbum(context),
   );
 }
 
-Widget scrollAlbum() {
+Widget scrollAlbum(BuildContext context) {
+  AlbumProvider albumProvider =
+      Provider.of<AlbumProvider>(context, listen: false);
   return Column(
     children: [
       SizedBox(height: 10),
@@ -34,124 +39,83 @@ Widget scrollAlbum() {
       SizedBox(height: 10),
       Expanded(
         child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              rowPictures(
-                image: 'assets/images/paysage1.jpeg',
-                imageName: "Nom de l'album",
-                image2: 'assets/images/paysage1.jpeg',
-                imageName2: "Nom de l'album",
-              ),
-              const SizedBox(height: 10),
-              rowPictures(
-                image: 'assets/images/paysage1.jpeg',
-                imageName: "Nom de l'album",
-                image2: 'assets/images/paysage1.jpeg',
-                imageName2: "Nom de l'album",
-              ),
-              const SizedBox(height: 10),
-              rowPictures(
-                image: 'assets/images/paysage1.jpeg',
-                imageName: "Nom de l'album",
-                image2: 'assets/images/paysage1.jpeg',
-                imageName2: "Nom de l'album",
-              ),
-              const SizedBox(height: 10),
-              rowPictures(
-                image: 'assets/images/paysage1.jpeg',
-                imageName: "Nom de l'album",
-                image2: 'assets/images/paysage1.jpeg',
-                imageName2: "Nom de l'album",
-              ),
-              const SizedBox(height: 10),
-              rowPictures(
-                image: 'assets/images/paysage1.jpeg',
-                imageName: "Nom de l'album",
-                image2: 'assets/images/paysage1.jpeg',
-                imageName2: "Nom de l'album",
-              ),
-              const SizedBox(height: 10),
-              rowPictures(
-                image: 'assets/images/paysage1.jpeg',
-                imageName: "Nom de l'album",
-                image2: 'assets/images/paysage1.jpeg',
-                imageName2: "Nom de l'album",
-              ),
-              const SizedBox(height: 10),
-              rowPictures(
-                image: 'assets/images/paysage1.jpeg',
-                imageName: "Nom de l'album",
-                image2: 'assets/images/paysage1.jpeg',
-                imageName2: "Nom de l'album",
-              ),
-              const SizedBox(height: 10),
-              rowPictures(
-                image: 'assets/images/paysage1.jpeg',
-                imageName: "Nom de l'album",
-                image2: 'assets/images/paysage1.jpeg',
-                imageName2: "Nom de l'album",
-              ),
-              SizedBox(height: 10),
-              rowPictures(
-                image: 'assets/images/paysage1.jpeg',
-                imageName: "Nom de l'album",
-                image2: 'assets/images/paysage1.jpeg',
-                imageName2: "Nom de l'album",
-              ),
-              const SizedBox(height: 10),
-              rowPictures(
-                image: 'assets/images/paysage1.jpeg',
-                imageName: "Nom de l'album",
-                image2: 'assets/images/paysage1.jpeg',
-                imageName2: "Nom de l'album",
-              ),
-              const SizedBox(height: 10),
-              rowPictures(
-                image: 'assets/images/paysage1.jpeg',
-                imageName: "Nom de l'album",
-                image2: 'assets/images/paysage1.jpeg',
-                imageName2: "Nom de l'album",
-              ),
-              const SizedBox(height: 10),
-              rowPictures(
-                image: 'assets/images/paysage1.jpeg',
-                imageName: "Nom de l'album",
-                image2: 'assets/images/paysage1.jpeg',
-                imageName2: "Nom de l'album",
-              ),
-            ],
-          ),
+          child: Selector<AlbumProvider, List<Album>>(
+            selector: (_, provider) => provider.albums,
+            builder: (_, data, __){
+              return Wrap(
+                children: <Widget>[
+                  const SizedBox(height: 10),
+                  albumCards(
+                    context: context,
+                    image: 'assets/images/paysage1.jpeg',
+                    imageName: "Nom de l'album",
+                  ),
+                  albumCards(
+                    context: context,
+                    image: 'assets/images/paysage1.jpeg',
+                    imageName: "Nom de l'album",
+                  ),
+                  albumCards(
+                    context: context,
+                    image: 'assets/images/paysage1.jpeg',
+                    imageName: "Nom de l'album",
+                  ),
+                  albumCards(
+                    context: context,
+                    image: 'assets/images/paysage1.jpeg',
+                    imageName: "Nom de l'album",
+                  ),
+                  albumCards(
+                    context: context,
+                    image: 'assets/images/paysage1.jpeg',
+                    imageName: "Nom de l'album",
+                  ),
+                  albumCards(
+                    context: context,
+                    image: 'assets/images/paysage1.jpeg',
+                    imageName: "Nom de l'album",
+                  ),
+                  albumCards(
+                    context: context,
+                    image: 'assets/images/paysage1.jpeg',
+                    imageName: "Nom de l'album",
+                  ),
+                  albumCards(
+                    context: context,
+                    image: 'assets/images/paysage1.jpeg',
+                    imageName: "Nom de l'album",
+                  ),
+                  albumCards(
+                    context: context,
+                    image: 'assets/images/paysage1.jpeg',
+                    imageName: "Nom de l'album",
+                  ),
+                  albumCards(
+                    context: context,
+                    image: 'assets/images/paysage1.jpeg',
+                    imageName: "Nom de l'album",
+                  ),
+                ],
+              );
+            },
+          )
         ),
       ),
     ],
   );
 }
 
-Widget rowPictures(
-    {required String image,
-    required String imageName,
-    required String image2,
-    required String imageName2}) {
-  return Row(
-    children: <Widget>[
-      Expanded(child: albumCards(image: image, imageName: imageName)),
-      SizedBox(
-        width: 10,
+Widget albumCards({required BuildContext context, required String image, required String imageName}) {
+  return Container(
+    width: MediaQuery.of(context).size.width * 0.49,
+    child: Card(
+      margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+      child: Column(
+        children: <Widget>[
+          Image.asset(image),
+          Text(imageName),
+        ],
       ),
-      Expanded(
-        child: albumCards(image: image2, imageName: imageName2),
-      ),
-    ],
-  );
-}
-
-Widget albumCards({required String image, required String imageName}) {
-  return Card(
-    child: Column(
-      children: <Widget>[
-        Image.asset(image),
-        Text(imageName),
-      ],
     ),
   );
 }
