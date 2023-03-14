@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:picsmanager_application/models/core/Picture.dart';
+import 'package:picsmanager_application/providers/PicturePageProvider.dart';
+import 'package:provider/provider.dart';
 
 Widget picturesPage({required BuildContext context}) {
   return Container(
@@ -11,6 +14,8 @@ Widget picturesPage({required BuildContext context}) {
 }
 
 Widget scrollPictures({required BuildContext context}) {
+  PicturePageProvider picturePageProvider =
+  Provider.of<PicturePageProvider>(context, listen: false);
   return Column(
     children: [
       SizedBox(height: 10),
@@ -36,67 +41,68 @@ Widget scrollPictures({required BuildContext context}) {
       SizedBox(height: 10),
       Expanded(
         child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 10),
-              rowPictures(),
-              const SizedBox(height: 10),
-              rowPictures(),
-              const SizedBox(height: 10),
-              rowPictures(),
-              const SizedBox(height: 10),
-              rowPictures(),
-              const SizedBox(height: 10),
-              rowPictures(),
-              const SizedBox(height: 10),
-              rowPictures(),
-              const SizedBox(height: 10),
-              rowPictures(),
-              const SizedBox(height: 10),
-              rowPictures(),
-              const SizedBox(height: 10),
-              rowPictures(),
-              const SizedBox(height: 10),
-              rowPictures(),
-              const SizedBox(height: 10),
-              rowPictures(),
-              const SizedBox(height: 10),
-              rowPictures(),
-            ],
-          ),
+            child: Selector<PicturePageProvider, List<Picture>>(
+              selector: (_, provider) => provider.pictures,
+              builder: (_, data, __){
+                return Wrap(
+                  children: <Widget>[
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
+                  ],
+                );
+              },
+            )
         ),
       )
     ],
   );
 }
 
-Widget rowPictures() {
-  return Row(
-    children: <Widget>[
-      Expanded(
-        child: Image.asset('assets/images/paysage1.jpeg'),
-      ),
-      SizedBox(
-        width: 10,
-      ),
-      Expanded(
-        child: Image.asset('assets/images/paysage2.jpeg'),
-      ),
-      SizedBox(
-        width: 10,
-      ),
-      Expanded(
-        child: Image.asset('assets/images/paysage3.jpeg'),
-      ),
-    ],
+Widget cardPicture({required BuildContext context, required String picture /*required Picture picture*/}) {
+  return SizedBox(
+    width: MediaQuery
+        .of(context)
+        .size
+        .width * 0.33,
+    child: Image.asset('assets/images/paysage3.jpeg'),
+
   );
 }
 
+
 EdgeInsets paddingDimension({required BuildContext context}) {
   return EdgeInsets.fromLTRB(
-    MediaQuery.of(context).size.width * 0.02,
+    MediaQuery
+        .of(context)
+        .size
+        .width * 0.02,
     0,
-    MediaQuery.of(context).size.width * 0.02,
+    MediaQuery
+        .of(context)
+        .size
+        .width * 0.02,
     0,
   );
 }
