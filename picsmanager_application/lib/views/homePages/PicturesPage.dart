@@ -47,7 +47,7 @@ Widget scrollPictures({required BuildContext context}) {
 
                 return Wrap(
                   children: data.map((e) =>
-                      cardPicture(context: context, picture: 'assets/images/paysage3.jpeg')
+                      cardPicture(context: context, picture: e)
                   ).toList()
                 );
               },
@@ -58,13 +58,13 @@ Widget scrollPictures({required BuildContext context}) {
   );
 }
 
-Widget cardPicture({required BuildContext context, required String picture /*required Picture picture*/}) {
+Widget cardPicture({required BuildContext context, required Picture picture}) {
   return SizedBox(
     width: MediaQuery
         .of(context)
         .size
         .width * 0.33,
-    child: Image.asset('assets/images/paysage3.jpeg'),
+    child: picture.visualPicture,
 
   );
 }
