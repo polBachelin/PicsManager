@@ -11,5 +11,5 @@ type Picture struct {
 	Tags     []string             `bson:"tags" json:"tags"`
 	AlbumID  primitive.ObjectID   `bson:"albumId" json:"albumId"`
 	OwnerID  primitive.ObjectID   `bson:"ownerId" json:"ownerId,omitempty"`
-	AccessID []primitive.ObjectID `bson:"accessIds" json:"access_ids, omitempty"`
+	AccessID []primitive.ObjectID `bson:"accessIds" json:"access_ids,omitempty"`
 }

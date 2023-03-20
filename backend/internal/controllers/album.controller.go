@@ -41,7 +41,7 @@ func (s *AlbumServiceController) CreateAlbum(ctx context.Context, req *pbAlbum.C
 func (s *AlbumServiceController) UpdateAlbum(ctx context.Context, req *pbAlbum.UpdateAlbumRequest) (*pbAlbum.UpdateAlbumResponse, error) {
 	userID, err := GetIdFromContext(ctx)
 	if err != nil {
-		log.Printf("Error: ", err)
+		log.Printf("Error: %s", err)
 		return nil, err
 	}
 	svc := services.NewAlbumService()
