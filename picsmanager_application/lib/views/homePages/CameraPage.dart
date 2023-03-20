@@ -1,12 +1,10 @@
-import 'dart:typed_data';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:picsmanager_application/providers/CameraProvider.dart';
+import 'package:picsmanager_application/ressources/Network.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
-import 'package:image/image.dart' as img;
 
 Widget cameraPage({required BuildContext context}) {
   CameraProvider camera = Provider.of<CameraProvider>(context, listen: true);
@@ -41,7 +39,9 @@ Widget cameraPage({required BuildContext context}) {
                 final path = file.path;
                 final bytes = await File(path).readAsBytes();
                 final compressed = await FlutterImageCompress.compressWithList(bytes, quality: 80);
-                final img.Image? image = img.decodeImage(compressed);
+
+                // TODO FILL TOKEN AND NAME
+                await NetworkManager("TOKEN").pictureRepository.uploadPicture(compressed, "NAME");
               },
               style: ButtonStyle(
                   side: MaterialStateProperty.all(

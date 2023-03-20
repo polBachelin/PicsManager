@@ -7,6 +7,6 @@ abstract class PictureRepository {
   Future<void> foreachPictures(Function(Picture) onFetch);
   Future<void> foreachPicturesFromAlbum(int album, Function(Picture) onFetch);
 
-  Future<void> uploadPicture(Picture toCreate);
+  Future<void> uploadPicture(List<int> image, String name);
   Future<void> sharedPicture(Picture source, int user);
 }
