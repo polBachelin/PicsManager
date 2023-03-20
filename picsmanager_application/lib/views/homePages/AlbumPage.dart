@@ -42,60 +42,16 @@ Widget scrollAlbum(BuildContext context) {
           child: Selector<AlbumProvider, List<Album>>(
             selector: (_, provider) => provider.albums,
             builder: (_, data, __){
+              final children = data.map((e) => albumCards(
+                  context: context,
+                  image: 'assets/images/paysage1.jpeg',
+                  imageName: e.name,
+                )
+              ).toList();
+              children.insert(0, const SizedBox(height: 10));
+
               return Wrap(
-                children: <Widget>[
-                  const SizedBox(height: 10),
-                  albumCards(
-                    context: context,
-                    image: 'assets/images/paysage1.jpeg',
-                    imageName: "Nom de l'album",
-                  ),
-                  albumCards(
-                    context: context,
-                    image: 'assets/images/paysage1.jpeg',
-                    imageName: "Nom de l'album",
-                  ),
-                  albumCards(
-                    context: context,
-                    image: 'assets/images/paysage1.jpeg',
-                    imageName: "Nom de l'album",
-                  ),
-                  albumCards(
-                    context: context,
-                    image: 'assets/images/paysage1.jpeg',
-                    imageName: "Nom de l'album",
-                  ),
-                  albumCards(
-                    context: context,
-                    image: 'assets/images/paysage1.jpeg',
-                    imageName: "Nom de l'album",
-                  ),
-                  albumCards(
-                    context: context,
-                    image: 'assets/images/paysage1.jpeg',
-                    imageName: "Nom de l'album",
-                  ),
-                  albumCards(
-                    context: context,
-                    image: 'assets/images/paysage1.jpeg',
-                    imageName: "Nom de l'album",
-                  ),
-                  albumCards(
-                    context: context,
-                    image: 'assets/images/paysage1.jpeg',
-                    imageName: "Nom de l'album",
-                  ),
-                  albumCards(
-                    context: context,
-                    image: 'assets/images/paysage1.jpeg',
-                    imageName: "Nom de l'album",
-                  ),
-                  albumCards(
-                    context: context,
-                    image: 'assets/images/paysage1.jpeg',
-                    imageName: "Nom de l'album",
-                  ),
-                ],
+                children: children
               );
             },
           )
