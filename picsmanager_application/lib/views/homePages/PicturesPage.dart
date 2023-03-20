@@ -44,33 +44,11 @@ Widget scrollPictures({required BuildContext context}) {
             child: Selector<PicturePageProvider, List<Picture>>(
               selector: (_, provider) => provider.pictures,
               builder: (_, data, __){
+
                 return Wrap(
-                  children: <Widget>[
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                    cardPicture(context: context, picture: 'assets/images/paysage3.jpeg'),
-                  ],
+                  children: data.map((e) =>
+                      cardPicture(context: context, picture: 'assets/images/paysage3.jpeg')
+                  ).toList()
                 );
               },
             )

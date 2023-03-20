@@ -1,12 +1,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:picsmanager_application/models/core/Album.dart';
+import 'package:picsmanager_application/ressources/Network.dart';
 
 class AlbumProvider extends ChangeNotifier {
-  List<Album> _albums = [];
+  final List<Album> _albums = List.empty(growable: true);
 
   List<Album> get albums => _albums;
 
-  setAlbums(Album value) {
-    _albums.add(value);
+  startTrending(String token) {
+    _albums.clear();
+    NetworkManager(token).albumRepository.foreachAlbums((source) {
+        _albums.add(source);
+        notifyListeners();
+      }
+    );
+  }
+
+  startTrendingOwned(String token) {
+    _albums.clear();
+    NetworkManager(token).albumRepository.foreachAlbumsOwned((source) {
+        _albums.add(source);
+        notifyListeners();
+      }
+    );
+  }
+
+  startTrendingShared(String token) {
+    _albums.clear();
+    NetworkManager(token).albumRepository.foreachAlbumsNotOwned((source) {
+        _albums.add(source);
+        notifyListeners();
+      }
+    );
   }
 }
