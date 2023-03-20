@@ -25,6 +25,7 @@ type PictureServiceClient interface {
 	CreatePicture(ctx context.Context, in *CreatePictureRequest, opts ...grpc.CallOption) (*CreatePictureResponse, error)
 	UpdatePicture(ctx context.Context, in *UpdatePictureRequest, opts ...grpc.CallOption) (*UpdatePictureResponse, error)
 	DeletePicture(ctx context.Context, in *DeletePictureRequest, opts ...grpc.CallOption) (*DeletePictureResponse, error)
+	AddAccessToPicture(ctx context.Context, in *AddAccessToPictureRequest, opts ...grpc.CallOption) (*AddAccessToPictureResponse, error)
 	ListPictures(ctx context.Context, in *ListPicturesRequest, opts ...grpc.CallOption) (PictureService_ListPicturesClient, error)
 	ListAlbumPictures(ctx context.Context, in *ListAlbumPicturesRequest, opts ...grpc.CallOption) (PictureService_ListAlbumPicturesClient, error)
 	SearchPicturesByTag(ctx context.Context, in *SearchPicturesByTagRequest, opts ...grpc.CallOption) (PictureService_SearchPicturesByTagClient, error)
@@ -60,6 +61,15 @@ func (c *pictureServiceClient) UpdatePicture(ctx context.Context, in *UpdatePict
 func (c *pictureServiceClient) DeletePicture(ctx context.Context, in *DeletePictureRequest, opts ...grpc.CallOption) (*DeletePictureResponse, error) {
 	out := new(DeletePictureResponse)
 	err := c.cc.Invoke(ctx, "/PictureService/DeletePicture", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pictureServiceClient) AddAccessToPicture(ctx context.Context, in *AddAccessToPictureRequest, opts ...grpc.CallOption) (*AddAccessToPictureResponse, error) {
+	out := new(AddAccessToPictureResponse)
+	err := c.cc.Invoke(ctx, "/PictureService/AddAccessToPicture", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -201,6 +211,7 @@ type PictureServiceServer interface {
 	CreatePicture(context.Context, *CreatePictureRequest) (*CreatePictureResponse, error)
 	UpdatePicture(context.Context, *UpdatePictureRequest) (*UpdatePictureResponse, error)
 	DeletePicture(context.Context, *DeletePictureRequest) (*DeletePictureResponse, error)
+	AddAccessToPicture(context.Context, *AddAccessToPictureRequest) (*AddAccessToPictureResponse, error)
 	ListPictures(*ListPicturesRequest, PictureService_ListPicturesServer) error
 	ListAlbumPictures(*ListAlbumPicturesRequest, PictureService_ListAlbumPicturesServer) error
 	SearchPicturesByTag(*SearchPicturesByTagRequest, PictureService_SearchPicturesByTagServer) error
@@ -220,6 +231,9 @@ func (UnimplementedPictureServiceServer) UpdatePicture(context.Context, *UpdateP
 }
 func (UnimplementedPictureServiceServer) DeletePicture(context.Context, *DeletePictureRequest) (*DeletePictureResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePicture not implemented")
+}
+func (UnimplementedPictureServiceServer) AddAccessToPicture(context.Context, *AddAccessToPictureRequest) (*AddAccessToPictureResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddAccessToPicture not implemented")
 }
 func (UnimplementedPictureServiceServer) ListPictures(*ListPicturesRequest, PictureService_ListPicturesServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListPictures not implemented")
@@ -296,6 +310,24 @@ func _PictureService_DeletePicture_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PictureServiceServer).DeletePicture(ctx, req.(*DeletePictureRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PictureService_AddAccessToPicture_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddAccessToPictureRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PictureServiceServer).AddAccessToPicture(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/PictureService/AddAccessToPicture",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PictureServiceServer).AddAccessToPicture(ctx, req.(*AddAccessToPictureRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -402,6 +434,10 @@ var PictureService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeletePicture",
 			Handler:    _PictureService_DeletePicture_Handler,
+		},
+		{
+			MethodName: "AddAccessToPicture",
+			Handler:    _PictureService_AddAccessToPicture_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

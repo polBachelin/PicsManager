@@ -26,6 +26,7 @@ func (s *AlbumServiceController) CreateAlbum(ctx context.Context, req *pbAlbum.C
 	var album models.Album
 	album.Name = req.GetName()
 	album.OwnerID = userID
+	album.AccessIDs = make([]primitive.ObjectID, 0)
 	res, err := albumSvc.CreateAlbum(album)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to create album")

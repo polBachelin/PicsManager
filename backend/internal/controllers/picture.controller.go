@@ -35,6 +35,7 @@ func (s *PictureServiceController) CreatePicture(ctx context.Context, req *pbPic
 	picture.Data = req.GetData()
 	picture.Tags = req.GetTags()
 	picture.Name = req.GetName()
+	picture.AccessID = make([]primitive.ObjectID, 0)
 	res, err := svc.CreatePicture(picture)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to create picture")
@@ -74,6 +75,20 @@ func (s *PictureServiceController) DeletePicture(ctx context.Context, req *pbPic
 	return &pbPicture.DeletePictureResponse{}, nil
 }
 
+func (s *PictureServiceController) AddAccessToPicture(ctx context.Context, req *pbPicture.AddAccessToPictureRequest) (*pbPicture.AddAccessToPictureResponse, error) {
+	svc := services.NewPictureService()
+	id, err := primitive.ObjectIDFromHex(req.GetPictureId())
+	accessId, err := primitive.ObjectIDFromHex(req.GetAccessId())
+	if err != nil {
+		return nil, contextIDError
+	}
+	_, err = svc.AddAccessToPicture(id, accessId)
+	if err != nil {
+		return nil, err
+	}
+	return &pbPicture.AddAccessToPictureResponse{}, nil
+}
+
 func (s *PictureServiceController) ListAlbumPictures(req *pbPicture.ListAlbumPicturesRequest, stream pbPicture.PictureService_ListAlbumPicturesServer) error {
 	userID, err := GetIdFromContext(stream.Context())
 	albumID, err := primitive.ObjectIDFromHex(req.GetAlbumId())
@@ -85,20 +100,21 @@ func (s *PictureServiceController) ListAlbumPictures(req *pbPicture.ListAlbumPic
 	if err != nil {
 		return status.Errorf(codes.Internal, "Could not get all pictures cursor from DB")
 	}
+	var i int32 = 0
 	for cur.Next(context.TODO()) {
 		var elem models.Picture
 		err := cur.Decode(&elem)
 		if err != nil {
 			log.Fatal(err)
 		}
-		stream.Send(&pbPicture.ListAlbumPicturesResponse{Pictures: buildPictureMessage(elem)})
+		stream.Send(&pbPicture.ListAlbumPicturesResponse{Pictures: buildPictureMessage(elem), Index: i})
+		i++
 	}
 	defer cur.Close(context.TODO())
 	return nil
 }
 
 func (s *PictureServiceController) ListPictures(req *pbPicture.ListPicturesRequest, stream pbPicture.PictureService_ListPicturesServer) error {
-	log.Println("Listing pictures...")
 	userID, err := GetIdFromContext(stream.Context())
 	if err != nil {
 		return contextIDError
@@ -106,17 +122,16 @@ func (s *PictureServiceController) ListPictures(req *pbPicture.ListPicturesReque
 	svc := services.NewPictureService()
 	cur, err := svc.GetAllPicturesCursor(userID)
 	if err != nil {
+		log.Printf("Could not get all pictures")
 		return status.Errorf(codes.Internal, "Could not get all pictures cursor from DB")
 	}
 	var i int32 = 0
-	log.Println("got cursor: ", cur)
 	for cur.Next(context.TODO()) {
 		var elem models.Picture
 		err := cur.Decode(&elem)
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Println("Picture data: ", elem)
 		stream.Send(&pbPicture.ListPicturesResponse{Pictures: buildPictureMessage(elem), Index: i})
 		i++
 	}

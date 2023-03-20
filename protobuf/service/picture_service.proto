@@ -8,6 +8,7 @@ service PictureService {
   rpc UpdatePicture(UpdatePictureRequest) returns (UpdatePictureResponse);
   rpc DeletePicture(DeletePictureRequest) returns (DeletePictureResponse);
 
+  rpc AddAccessToPicture(AddAccessToPictureRequest) returns (AddAccessToPictureResponse);
   rpc ListPictures(ListPicturesRequest) returns (stream ListPicturesResponse);
   rpc ListAlbumPictures(ListAlbumPicturesRequest) returns (stream ListAlbumPicturesResponse);
 
@@ -39,6 +40,13 @@ message DeletePictureRequest {
 }
 
 message DeletePictureResponse {}
+
+message AddAccessToPictureRequest {
+  string picture_id = 1;
+  string access_id = 2;
+}
+
+message AddAccessToPictureResponse {}
 
 message ListPicturesRequest {}
 

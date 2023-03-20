@@ -43,10 +43,16 @@ func (p Service) UpdatePicture(obj models.Picture) (*mongo.UpdateResult, error) 
 	return p.collection.UpdateOne(context.TODO(), bson.M{"_id": obj.ID}, update)
 }
 
+func (p Service) AddAccessToPicture(id primitive.ObjectID, accessId primitive.ObjectID) (*mongo.UpdateResult, error) {
+	update := bson.M{"$push": bson.M{"accessIds": accessId}}
+	return p.collection.UpdateOne(context.TODO(), bson.M{"_id": id}, update)
+}
+
 func (p Service) GetAllPicturesCursor(ownerID primitive.ObjectID) (*mongo.Cursor, error) {
 	findOptions := options.Find()
-	findOptions.SetLimit(100)
-	cur, err := p.collection.Find(context.TODO(), bson.M{"ownerId": ownerID}, findOptions)
+	tmp := []primitive.ObjectID{ownerID}
+	filter := bson.M{"$or": []interface{}{bson.M{"ownerId": ownerID}, bson.M{"accessIds": bson.M{"$in": tmp}}}}
+	cur, err := p.collection.Find(context.TODO(), filter, findOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +62,7 @@ func (p Service) GetAllPicturesCursor(ownerID primitive.ObjectID) (*mongo.Cursor
 
 func (p Service) GetAllPicturesAlbumCursor(ownerID primitive.ObjectID, albumID primitive.ObjectID) (*mongo.Cursor, error) {
 	findOptions := options.Find()
-	cur, err := p.collection.Find(context.TODO(), bson.M{"ownerId": ownerID, "album_id": albumID}, findOptions)
+	cur, err := p.collection.Find(context.TODO(), bson.M{"albumId": albumID}, findOptions)
 	if err != nil {
 		return nil, err
 	}
