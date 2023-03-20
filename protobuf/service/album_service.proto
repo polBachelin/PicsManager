@@ -7,6 +7,7 @@ service AlbumService {
   rpc UpdateAlbum(UpdateAlbumRequest) returns (UpdateAlbumResponse);
   rpc DeleteAlbum(DeleteAlbumRequest) returns (DeleteAlbumResponse);
 
+  rpc AddAccessToAlbum(AddAccessToAlbumRequest) returns (AddAccessToAlbumResponse);
   rpc ListAlbums(ListAlbumsRequest) returns (stream ListAlbumsResponse);
   rpc ListOwnedAlbums(ListOwnedAlbumsRequest) returns (stream ListOwnedAlbumsResponse);
   rpc ListSharedAlbums(ListSharedAlbumsRequest) returns (stream ListSharedAlbumsResponse);
@@ -43,6 +44,13 @@ message DeleteAlbumRequest {
 }
 
 message DeleteAlbumResponse {}
+
+message AddAccessToAlbumRequest {
+  string album_id = 1;
+  string access_id = 2;
+}
+
+message AddAccessToAlbumResponse {}
 
 message ListAlbumsRequest {}
 

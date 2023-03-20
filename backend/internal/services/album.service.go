@@ -2,7 +2,6 @@ package services
 
 import (
 	"context"
-	"log"
 	"picsManager/backend/internal/models"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -21,6 +20,22 @@ func (a Service) CreateAlbum(obj models.Album) (*mongo.InsertOneResult, error) {
 	}
 	res, err := a.collection.InsertOne(context.TODO(), obj)
 	return res, err
+}
+
+func (a Service) UpdateAlbum(obj models.Album) (*mongo.UpdateResult, error) {
+	update := bson.M{"$set": bson.M{"name": obj.Name, "ownerId": obj.OwnerID}}
+	return a.collection.UpdateOne(context.TODO(), bson.M{"_id": obj.ID}, update)
+
+}
+
+func (a Service) DeleteAlbum(id primitive.ObjectID) error {
+	_, err := a.collection.DeleteOne(context.TODO(), bson.M{"_id": id})
+	return err
+}
+
+func (a Service) AddAccessToAlbum(id primitive.ObjectID, accessID primitive.ObjectID) (*mongo.UpdateResult, error) {
+	update := bson.M{"$push": bson.M{"accessIds": accessID}}
+	return a.collection.UpdateOne(context.TODO(), bson.M{"_id": id}, update)
 }
 
 func (a Service) GetAlbum(id primitive.ObjectID) (models.Album, error) {
@@ -45,22 +60,25 @@ func (a Service) GetAlbumByName(name string) (models.Album, error) {
 	return res, nil
 }
 
-func (a Service) ListOwnedAlbums(ownerID primitive.ObjectID) ([]models.Album, error) {
-	var res []models.Album
-
+func (a Service) ListOwnedAlbums(ownerID primitive.ObjectID) (*mongo.Cursor, error) {
 	findOptions := options.Find()
-	cur, err := a.collection.Find(context.TODO(), bson.M{"_id": ownerID}, findOptions)
+	cur, err := a.collection.Find(context.TODO(), bson.M{"ownerID": ownerID}, findOptions)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
-	for cur.Next(context.TODO()) {
-		var elem models.Album
-		err := cur.Decode(&elem)
-		if err != nil {
-			log.Fatal(err)
-		}
-		res = append(res, elem)
-	}
-	cur.Close(context.TODO())
-	return res, err
+	return cur, err
+}
+
+func (a Service) ListSharedAlbums(ownerID primitive.ObjectID) (*mongo.Cursor, error) {
+	findOptions := options.Find()
+	filter := bson.M{"accessIds": bson.M{"$in": ownerID}}
+	cur, err := a.collection.Find(context.TODO(), filter, findOptions)
+	return cur, err
+}
+
+func (a Service) ListAlbums(ownerID primitive.ObjectID) (*mongo.Cursor, error) {
+	findOptions := options.Find()
+	filter := bson.M{"$or": []interface{}{bson.M{"ownerID": ownerID}, bson.M{"accessIds": bson.M{"$in": ownerID}}}}
+	cur, err := a.collection.Find(context.TODO(), filter, findOptions)
+	return cur, err
 }

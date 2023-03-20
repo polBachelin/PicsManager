@@ -25,6 +25,7 @@ type AlbumServiceClient interface {
 	CreateAlbum(ctx context.Context, in *CreateAlbumRequest, opts ...grpc.CallOption) (*CreateAlbumResponse, error)
 	UpdateAlbum(ctx context.Context, in *UpdateAlbumRequest, opts ...grpc.CallOption) (*UpdateAlbumResponse, error)
 	DeleteAlbum(ctx context.Context, in *DeleteAlbumRequest, opts ...grpc.CallOption) (*DeleteAlbumResponse, error)
+	AddAccessToAlbum(ctx context.Context, in *AddAccessToAlbumRequest, opts ...grpc.CallOption) (*AddAccessToAlbumResponse, error)
 	ListAlbums(ctx context.Context, in *ListAlbumsRequest, opts ...grpc.CallOption) (AlbumService_ListAlbumsClient, error)
 	ListOwnedAlbums(ctx context.Context, in *ListOwnedAlbumsRequest, opts ...grpc.CallOption) (AlbumService_ListOwnedAlbumsClient, error)
 	ListSharedAlbums(ctx context.Context, in *ListSharedAlbumsRequest, opts ...grpc.CallOption) (AlbumService_ListSharedAlbumsClient, error)
@@ -60,6 +61,15 @@ func (c *albumServiceClient) UpdateAlbum(ctx context.Context, in *UpdateAlbumReq
 func (c *albumServiceClient) DeleteAlbum(ctx context.Context, in *DeleteAlbumRequest, opts ...grpc.CallOption) (*DeleteAlbumResponse, error) {
 	out := new(DeleteAlbumResponse)
 	err := c.cc.Invoke(ctx, "/AlbumService/DeleteAlbum", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *albumServiceClient) AddAccessToAlbum(ctx context.Context, in *AddAccessToAlbumRequest, opts ...grpc.CallOption) (*AddAccessToAlbumResponse, error) {
+	out := new(AddAccessToAlbumResponse)
+	err := c.cc.Invoke(ctx, "/AlbumService/AddAccessToAlbum", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -178,6 +188,7 @@ type AlbumServiceServer interface {
 	CreateAlbum(context.Context, *CreateAlbumRequest) (*CreateAlbumResponse, error)
 	UpdateAlbum(context.Context, *UpdateAlbumRequest) (*UpdateAlbumResponse, error)
 	DeleteAlbum(context.Context, *DeleteAlbumRequest) (*DeleteAlbumResponse, error)
+	AddAccessToAlbum(context.Context, *AddAccessToAlbumRequest) (*AddAccessToAlbumResponse, error)
 	ListAlbums(*ListAlbumsRequest, AlbumService_ListAlbumsServer) error
 	ListOwnedAlbums(*ListOwnedAlbumsRequest, AlbumService_ListOwnedAlbumsServer) error
 	ListSharedAlbums(*ListSharedAlbumsRequest, AlbumService_ListSharedAlbumsServer) error
@@ -197,6 +208,9 @@ func (UnimplementedAlbumServiceServer) UpdateAlbum(context.Context, *UpdateAlbum
 }
 func (UnimplementedAlbumServiceServer) DeleteAlbum(context.Context, *DeleteAlbumRequest) (*DeleteAlbumResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAlbum not implemented")
+}
+func (UnimplementedAlbumServiceServer) AddAccessToAlbum(context.Context, *AddAccessToAlbumRequest) (*AddAccessToAlbumResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddAccessToAlbum not implemented")
 }
 func (UnimplementedAlbumServiceServer) ListAlbums(*ListAlbumsRequest, AlbumService_ListAlbumsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListAlbums not implemented")
@@ -273,6 +287,24 @@ func _AlbumService_DeleteAlbum_Handler(srv interface{}, ctx context.Context, dec
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AlbumServiceServer).DeleteAlbum(ctx, req.(*DeleteAlbumRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AlbumService_AddAccessToAlbum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddAccessToAlbumRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AlbumServiceServer).AddAccessToAlbum(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/AlbumService/AddAccessToAlbum",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AlbumServiceServer).AddAccessToAlbum(ctx, req.(*AddAccessToAlbumRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -376,6 +408,10 @@ var AlbumService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAlbum",
 			Handler:    _AlbumService_DeleteAlbum_Handler,
+		},
+		{
+			MethodName: "AddAccessToAlbum",
+			Handler:    _AlbumService_AddAccessToAlbum_Handler,
 		},
 		{
 			MethodName: "SearchAlbumsByName",
