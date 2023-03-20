@@ -67,7 +67,7 @@ class PictureRepositoryGrpc extends PictureRepository {
   }
 
   @override
-  Future<void> uploadPicture(Picture toCreate) async  {
+  Future<void> uploadPicture(List<int> image, String name) async  {
     // todo params chelou
     final request = CreatePictureRequest();
 
