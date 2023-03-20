@@ -44,8 +44,7 @@ Widget scrollAlbum(BuildContext context) {
             builder: (_, data, __){
               final children = data.map((e) => albumCards(
                   context: context,
-                  image: 'assets/images/paysage1.jpeg',
-                  imageName: e.name,
+                  source: e
                 )
               ).toList();
               children.insert(0, const SizedBox(height: 10));
@@ -61,15 +60,15 @@ Widget scrollAlbum(BuildContext context) {
   );
 }
 
-Widget albumCards({required BuildContext context, required String image, required String imageName}) {
+Widget albumCards({required BuildContext context, required Album source}) {
   return Container(
     width: MediaQuery.of(context).size.width * 0.49,
     child: Card(
       margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
       child: Column(
         children: <Widget>[
-          Image.asset(image),
-          Text(imageName),
+          source.image,
+          Text(source.name),
         ],
       ),
     ),
