@@ -8,8 +8,8 @@ import 'package:picsmanager_application/repositories/PictureRepositoryGrpc.dart'
 import 'package:picsmanager_application/repositories/UserRepositoryGrpc.dart';
 
 class NetworkConfig {
-  static const String host = '';
-  static const int port = 0;
+  static const String host = 'http://localhost';
+  static const int port = 50051;
 }
 
 class NetworkManager {
