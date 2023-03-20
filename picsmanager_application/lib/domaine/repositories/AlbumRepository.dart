@@ -1,5 +1,4 @@
 import 'package:picsmanager_application/models/core/Album.dart';
-import 'package:picsmanager_application/models/core/Picture.dart';
 
 abstract class AlbumRepository {
   Future<List<Album>> searchAlbumByName(String query);
