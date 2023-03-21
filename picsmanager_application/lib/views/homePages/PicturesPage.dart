@@ -28,8 +28,11 @@ Widget scrollPictures({required BuildContext context}) {
               decoration: InputDecoration(
                 icon: IconButton(
                   onPressed: () {
-                    final token = Provider.of<AuthenticationProvider>(context, listen: true).getToken;
-                    Provider.of<PicturePageProvider>(context, listen: false).startTrendingByName(token, controller.value.text);
+                    final token = Provider.of<AuthenticationProvider>(context,
+                            listen: true)
+                        .getToken;
+                    Provider.of<PicturePageProvider>(context, listen: false)
+                        .startTrendingByName(token, controller.value.text);
                   },
                   icon: const Icon(Icons.search),
                 ),
@@ -47,45 +50,39 @@ Widget scrollPictures({required BuildContext context}) {
       Expanded(
         child: SingleChildScrollView(
             child: Selector<PicturePageProvider, List<Picture>>(
-              selector: (_, provider) => provider.pictures,
-              builder: (_, data, __){
-
-                return Wrap(
-                  children: data.map((e) =>
-                      cardPicture(context: context, picture: e)
-                  ).toList()
-                );
-              },
-            )
-        ),
+          selector: (_, provider) => provider.pictures,
+          builder: (_, data, __) {
+            return Wrap(
+                children: data
+                    .map((e) => cardPicture(context: context, picture: e))
+                    .toList());
+          },
+        )),
       )
     ],
   );
 }
 
 Widget cardPicture({required BuildContext context, required Picture picture}) {
-  return SizedBox(
-    width: MediaQuery
-        .of(context)
-        .size
-        .width * 0.33,
-    child: picture.visualPicture,
-
+  return ElevatedButton(
+    onPressed: (){
+      // TODO Faire le widget image pleine écran
+    },
+    onLongPress: (){
+      // TODO Faire le dialog pour changer l'image d'album
+    },
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.33,
+      child: picture.visualPicture,
+    ),
   );
 }
 
-
 EdgeInsets paddingDimension({required BuildContext context}) {
   return EdgeInsets.fromLTRB(
-    MediaQuery
-        .of(context)
-        .size
-        .width * 0.02,
+    MediaQuery.of(context).size.width * 0.02,
     0,
-    MediaQuery
-        .of(context)
-        .size
-        .width * 0.02,
+    MediaQuery.of(context).size.width * 0.02,
     0,
   );
 }

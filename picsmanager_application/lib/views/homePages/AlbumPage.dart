@@ -27,8 +27,11 @@ Widget scrollAlbum(BuildContext context) {
               decoration: InputDecoration(
                 icon: IconButton(
                   onPressed: () {
-                    final token = Provider.of<AuthenticationProvider>(context, listen: true).getToken;
-                    Provider.of<AlbumProvider>(context, listen: false).startTrendingByName(token, controller.value.text);
+                    final token = Provider.of<AuthenticationProvider>(context,
+                            listen: true)
+                        .getToken;
+                    Provider.of<AlbumProvider>(context, listen: false)
+                        .startTrendingByName(token, controller.value.text);
                   },
                   icon: const Icon(Icons.search),
                 ),
@@ -45,37 +48,40 @@ Widget scrollAlbum(BuildContext context) {
       SizedBox(height: 10),
       Expanded(
         child: SingleChildScrollView(
-          child: Selector<AlbumProvider, List<Album>>(
-            selector: (_, provider) => provider.albums,
-            builder: (_, data, __){
-              final children = data.map((e) => albumCards(
-                  context: context,
-                  source: e
-                )
-              ).toList();
-              children.insert(0, const SizedBox(height: 10));
+            child: Selector<AlbumProvider, List<Album>>(
+          selector: (_, provider) => provider.albums,
+          builder: (_, data, __) {
+            final children = data
+                .map((e) => albumCards(context: context, source: e))
+                .toList();
+            children.insert(0, const SizedBox(height: 10));
 
-              return Wrap(
-                children: children
-              );
-            },
-          )
-        ),
+            return Wrap(children: children);
+          },
+        )),
       ),
     ],
   );
 }
 
 Widget albumCards({required BuildContext context, required Album source}) {
-  return Container(
-    width: MediaQuery.of(context).size.width * 0.49,
-    child: Card(
-      margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-      child: Column(
-        children: <Widget>[
-          source.image,
-          Text(source.name),
-        ],
+  return ElevatedButton(
+    onPressed: (){
+      // TODO rediriger vers PicturesPage en affichant uniquement les images de cette album
+    },
+    onLongPress: (){
+      // TODO possibilité de partagé l'album ou de le modifier
+    },
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.49,
+      child: Card(
+        margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+        child: Column(
+          children: <Widget>[
+            source.image,
+            Text(source.name),
+          ],
+        ),
       ),
     ),
   );
