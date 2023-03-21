@@ -1,12 +1,15 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:intl/intl.dart';
+import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/CameraProvider.dart';
 import 'package:picsmanager_application/ressources/Network.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 
 Widget cameraPage({required BuildContext context}) {
+  AuthenticationProvider token = Provider.of<AuthenticationProvider>(context, listen: true);
   CameraProvider camera = Provider.of<CameraProvider>(context, listen: true);
   var theSize = camera.controller.value;
   var scale = MediaQuery.of(context).size.aspectRatio * theSize.aspectRatio;
@@ -39,9 +42,9 @@ Widget cameraPage({required BuildContext context}) {
                 final path = file.path;
                 final bytes = await File(path).readAsBytes();
                 final compressed = await FlutterImageCompress.compressWithList(bytes, quality: 80);
+                final name = DateFormat("yyyyMMddhhmmss").format(DateTime.now());
 
-                // TODO FILL TOKEN AND NAME
-                await NetworkManager("TOKEN").pictureRepository.uploadPicture(compressed, "NAME");
+                await NetworkManager(token.getToken).pictureRepository.uploadPicture(compressed, "img-$name");
               },
               style: ButtonStyle(
                   side: MaterialStateProperty.all(

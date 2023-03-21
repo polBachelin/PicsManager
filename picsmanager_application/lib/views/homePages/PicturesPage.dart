@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/models/core/Picture.dart';
+import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/PicturePageProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,8 +15,6 @@ Widget picturesPage({required BuildContext context}) {
 }
 
 Widget scrollPictures({required BuildContext context}) {
-  PicturePageProvider picturePageProvider =
-  Provider.of<PicturePageProvider>(context, listen: false);
   return Column(
     children: [
       SizedBox(height: 10),

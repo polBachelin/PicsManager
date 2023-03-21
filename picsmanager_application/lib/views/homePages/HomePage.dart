@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:picsmanager_application/providers/AlbumProvider.dart';
 import 'package:picsmanager_application/providers/AppBarProvider.dart';
+import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
+import 'package:picsmanager_application/providers/PicturePageProvider.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
 import 'package:picsmanager_application/views/homePages/AlbumPage.dart';
 import 'package:picsmanager_application/views/homePages/CameraPage.dart';
@@ -16,6 +19,10 @@ class HomePage extends StatelessWidget {
         Provider.of<ViewProvider>(context, listen: false);
     AppBarProvider appBarProvider =
         Provider.of<AppBarProvider>(context, listen: false);
+
+    AuthenticationProvider token = Provider.of<AuthenticationProvider>(context, listen: true);
+    PicturePageProvider pictureProvider = Provider.of<PicturePageProvider>(context, listen: false);
+    AlbumProvider albumProvider = Provider.of<AlbumProvider>(context, listen: false);
 
     return Scaffold(
         appBar: MyAppBar(),
@@ -49,8 +56,10 @@ class HomePage extends StatelessWidget {
                 child: () {
                   switch (viewProvider.page) {
                     case 0:
+                      pictureProvider.startTrending(token.getToken);
                       return picturesPage(context: context);
                     case 1:
+                      albumProvider.startTrending(token.getToken);
                       return cameraPage(context: context);
                     case 2:
                       return albumPage(context: context);
