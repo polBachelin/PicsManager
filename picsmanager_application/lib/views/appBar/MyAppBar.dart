@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:picsmanager_application/providers/AppBarProvider.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
+import 'package:picsmanager_application/views/appBar/CreateFolderDialog.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
@@ -59,6 +60,17 @@ class _MyAppBar extends State<MyAppBar> {
                 : Container();
           },
         ),
+        Selector<ViewProvider, int>(
+            selector: (_, provider) => provider.page,
+          builder: (_,data,__) {
+              return data == 2
+                  ? IconButton(
+                  onPressed: (){
+                    CreateFolderDialog(context: context);
+                  },
+                  icon: Icon(Icons.create_new_folder))
+              : Container();
+        }, ),
         Selector2<ViewProvider, AppBarProvider, Tuple2<int, bool>>(
           selector: (_, provider1, provider2) =>
               Tuple2(provider1.page, provider2.shareUser),
