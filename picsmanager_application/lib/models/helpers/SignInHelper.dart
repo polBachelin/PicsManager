@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
+import 'package:picsmanager_application/ressources/Network.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/SignInProvider.dart';
@@ -19,7 +20,7 @@ class SignInHelper {
   }
 
   Future<void> login() async {
-    authenticationProvider.setToken = await LoginRepositoryGrpc()
+    authenticationProvider.setToken = await NetworkManager("").loginRepository
         .authentication(signInProvider.username, signInProvider.password);
   }
 }

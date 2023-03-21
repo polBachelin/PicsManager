@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:picsmanager_application/providers/AlbumProvider.dart';
 import 'package:picsmanager_application/providers/AppBarProvider.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
@@ -21,6 +23,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Intl.defaultLocale = 'fr_FR';
+    initializeDateFormatting('fr_FR');
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
