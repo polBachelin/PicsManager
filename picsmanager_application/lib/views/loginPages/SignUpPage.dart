@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:picsmanager_application/views/loginPages/SignInForm.dart';
-import 'package:picsmanager_application/views/loginPages/SignInPage.dart';
+import 'package:picsmanager_application/providers/AccountProvider.dart';
 import 'package:provider/provider.dart';
+
+import 'EmailAccountForm.dart';
+import 'IdentityAccountForm.dart';
+import 'PasswordAccountForm.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -11,7 +14,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  // late AccountProvider accountProvider;
+  late AccountProvider accountProvider;
   // late SignUpHelper signUpHelper;
 
   final GlobalKey<FormState> _signUpKey = GlobalKey<FormState>();
@@ -19,7 +22,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   void initState() {
     super.initState();
-    // accountProvider = Provider.of<AccountProvider>(context, listen: false);
+    accountProvider = Provider.of<AccountProvider>(context, listen: false);
     // signUpHelper = SignUpHelper(context: context);
   }
 
@@ -56,9 +59,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     key: _signUpKey,
                     child: Column(
                       children: [
-                        // identityAccountForm(accountProvider),
-                        // emailAccountForm(accountProvider),
-                        // passwordAccountForm(accountProvider),
+                        identityAccountForm(accountProvider),
+                        emailAccountForm(accountProvider),
+                        passwordAccountForm(accountProvider),
                       ],
                     ),
                   ),
