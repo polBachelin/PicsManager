@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:picsmanager_application/models/helpers/SignUpHelper.dart';
 import 'package:picsmanager_application/providers/AccountProvider.dart';
 import 'package:provider/provider.dart';
 
 import 'EmailAccountForm.dart';
 import 'IdentityAccountForm.dart';
 import 'PasswordAccountForm.dart';
+import 'SignUpButtons.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -15,7 +17,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   late AccountProvider accountProvider;
-  // late SignUpHelper signUpHelper;
+  late SignUpHelper signUpHelper;
 
   final GlobalKey<FormState> _signUpKey = GlobalKey<FormState>();
 
@@ -23,7 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
   void initState() {
     super.initState();
     accountProvider = Provider.of<AccountProvider>(context, listen: false);
-    // signUpHelper = SignUpHelper(context: context);
+    signUpHelper = SignUpHelper(context: context);
   }
 
   @override
@@ -45,29 +47,29 @@ class _SignUpPageState extends State<SignUpPage> {
         body: SingleChildScrollView(
           child: Center(
             child: SizedBox(
-              width: 400,
+              width: double.infinity,
               child: Column(
                 children: [
-                  SizedBox(height: 80),
+                  SizedBox(height: 20),
                   FlutterLogo(
-                    size: 200,
+                    size: 150,
                   ),
-                  SizedBox(height: 40),
-                  Text("File Flow"),
-                  SizedBox(height: 40),
+                  SizedBox(height: 20),
+                  Text("Pics Manager"),
+                  SizedBox(height: 20),
                   Form(
                     key: _signUpKey,
                     child: Column(
                       children: [
-                        identityAccountForm(accountProvider),
+                        identityAccountForm(accountProvider, context),
                         emailAccountForm(accountProvider),
                         passwordAccountForm(accountProvider),
                       ],
                     ),
                   ),
-                  SizedBox(height: 40),
-                  // signUpButtons(
-                  //     context, _signUpKey, accountProvider, signUpHelper),
+                  SizedBox(height: 20),
+                  signUpButtons(
+                      context, _signUpKey, accountProvider, signUpHelper),
                   SizedBox(height: 20)
                 ],
               ),
