@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:picsmanager_application/providers/AccountProvider.dart';
+import 'package:picsmanager_application/providers/SignUpProvider.dart';
 import 'package:picsmanager_application/views/loginPages/verifies/VerifyContentPassword.dart';
 import 'package:picsmanager_application/views/loginPages/verifies/VerifySecurityPassword.dart';
 import 'package:picsmanager_application/views/loginPages/verifies/verifyPass.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
-Widget passwordAccountForm(AccountProvider accountProvider) {
+Widget passwordAccountForm(SignUpProvider accountProvider) {
   return Column(
     children: [
-      Selector<AccountProvider, bool>(
+      Selector<SignUpProvider, bool>(
           selector: (_, provider) => provider.isObscure,
           shouldRebuild: (previous, next) => true,
           builder: (_, isObscure, __) {
@@ -47,7 +47,7 @@ Widget passwordAccountForm(AccountProvider accountProvider) {
       verifySecurityPassword(),
       SizedBox(height: 10),
       verifyContentPassword(),
-      Selector<AccountProvider, Tuple2<bool, bool>>(
+      Selector<SignUpProvider, Tuple2<bool, bool>>(
           selector: (_, provider) =>
               Tuple2(provider.isObscure, provider.isEqual),
           shouldRebuild: (previous, next) => true,

@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/models/helpers/SignUpHelper.dart';
-import 'package:picsmanager_application/providers/AccountProvider.dart';
+import 'package:picsmanager_application/providers/SignUpProvider.dart';
 
 Widget signUpButtons(BuildContext context, GlobalKey<FormState> signUpKey,
-    AccountProvider accountProvider, SignUpHelper signUpHelper) {
+    SignUpProvider accountProvider, SignUpHelper signUpHelper) {
   return Row(
     children: [
       SizedBox(width: 20),

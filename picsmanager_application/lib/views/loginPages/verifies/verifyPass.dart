@@ -1,7 +1,7 @@
 
-import 'package:picsmanager_application/providers/AccountProvider.dart';
+import 'package:picsmanager_application/providers/SignUpProvider.dart';
 
-void verifyHardPass(String value, AccountProvider accountProvider) {
+void verifyHardPass(String value, SignUpProvider accountProvider) {
   int hard = 0;
   if (value.contains(RegExp(r'[A-Z]'))) {
     hard++;

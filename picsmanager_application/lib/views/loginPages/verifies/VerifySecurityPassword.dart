@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:picsmanager_application/providers/AccountProvider.dart';
+import 'package:picsmanager_application/providers/SignUpProvider.dart';
 import 'package:provider/provider.dart';
 
 Widget verifySecurityPassword() {
-  return Selector<AccountProvider, int>(
+  return Selector<SignUpProvider, int>(
       selector: (_, provider) => provider.hard,
       builder: (_, value, __) {
         return Row(

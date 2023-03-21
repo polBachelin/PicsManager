@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:picsmanager_application/providers/AccountProvider.dart';
+import 'package:picsmanager_application/providers/SignUpProvider.dart';
 
-Widget emailAccountForm(AccountProvider accountProvider) {
+Widget emailAccountForm(SignUpProvider accountProvider) {
   return TextFormField(
     validator: (value) {
       if (value == null || value.isEmpty) return "Enter email";

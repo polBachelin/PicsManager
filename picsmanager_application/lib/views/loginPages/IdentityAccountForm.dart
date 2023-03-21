@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:picsmanager_application/providers/AccountProvider.dart';
+import 'package:picsmanager_application/providers/SignUpProvider.dart';
 
 Widget identityAccountForm(
-    AccountProvider accountProvider, BuildContext context) {
+    SignUpProvider accountProvider, BuildContext context) {
   return Row(
     children: [
       SizedBox(
