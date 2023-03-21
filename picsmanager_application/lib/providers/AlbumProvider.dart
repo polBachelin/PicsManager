@@ -33,4 +33,11 @@ class AlbumProvider extends ChangeNotifier {
       }
     );
   }
+
+  startTrendingByName(String token, String query) {
+    _albums.clear();
+    NetworkManager(token).albumRepository.searchAlbumByName(query).asStream().forEach((element) {
+      _albums.addAll(element);
+    });
+  }
 }

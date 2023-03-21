@@ -24,7 +24,11 @@ Widget scrollPictures({required BuildContext context}) {
             child: TextField(
               decoration: InputDecoration(
                 icon: IconButton(
-                  onPressed: null,
+                  onPressed: () {
+                    // TODO FILL WITH QUERY
+                    final token = Provider.of<AuthenticationProvider>(context, listen: true).getToken;
+                    Provider.of<PicturePageProvider>(context, listen: false).startTrendingByName(token, "");
+                  },
                   icon: const Icon(Icons.search),
                 ),
                 border: OutlineInputBorder(),
