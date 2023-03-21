@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:picsmanager_application/models/core/Album.dart';
 import 'package:picsmanager_application/providers/AlbumProvider.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
+import 'package:picsmanager_application/providers/PicturePageProvider.dart';
 import 'package:provider/provider.dart';
 
 Widget albumPage({required BuildContext context}) {
@@ -22,7 +23,11 @@ Widget scrollAlbum(BuildContext context) {
             child: TextField(
               decoration: InputDecoration(
                 icon: IconButton(
-                  onPressed: null,
+                  onPressed: () {
+                    // TODO FILL WITH QUERY
+                    final token = Provider.of<AuthenticationProvider>(context, listen: true).getToken;
+                    Provider.of<AlbumProvider>(context, listen: false).startTrendingByName(token, "");
+                  },
                   icon: const Icon(Icons.search),
                 ),
                 border: OutlineInputBorder(),
