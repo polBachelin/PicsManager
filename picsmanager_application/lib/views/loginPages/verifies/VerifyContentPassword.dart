@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:picsmanager_application/providers/AccountProvider.dart';
+import 'package:picsmanager_application/providers/SignUpProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
 Widget verifyContentPassword() {
-  return Selector<AccountProvider, Tuple5<bool, bool, bool, bool, bool>>(
+  return Selector<SignUpProvider, Tuple5<bool, bool, bool, bool, bool>>(
       selector: (_, provider) => Tuple5(provider.isCap, provider.isMin,
           provider.isNum, provider.isSpecial, provider.isLong),
       builder: (_, data, __) {

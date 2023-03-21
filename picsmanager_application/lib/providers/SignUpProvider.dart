@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class AccountProvider extends ChangeNotifier {
+class SignUpProvider extends ChangeNotifier {
   String lastName = "";
   String firstName = "";
   String userName = "";

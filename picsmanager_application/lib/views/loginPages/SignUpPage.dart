@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/models/helpers/SignUpHelper.dart';
-import 'package:picsmanager_application/providers/AccountProvider.dart';
+import 'package:picsmanager_application/providers/SignUpProvider.dart';
 import 'package:provider/provider.dart';
 
 import 'EmailAccountForm.dart';
@@ -16,7 +16,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  late AccountProvider accountProvider;
+  late SignUpProvider accountProvider;
   late SignUpHelper signUpHelper;
 
   final GlobalKey<FormState> _signUpKey = GlobalKey<FormState>();
@@ -24,7 +24,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   void initState() {
     super.initState();
-    accountProvider = Provider.of<AccountProvider>(context, listen: false);
+    accountProvider = Provider.of<SignUpProvider>(context, listen: false);
     signUpHelper = SignUpHelper(context: context);
   }
 
@@ -32,25 +32,13 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          leading: GestureDetector(
-            child: IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  size: 20,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-          ),
-        ),
         body: SingleChildScrollView(
           child: Center(
             child: SizedBox(
               width: double.infinity,
               child: Column(
                 children: [
-                  SizedBox(height: 20),
+                  SizedBox(height: 100),
                   FlutterLogo(
                     size: 150,
                   ),

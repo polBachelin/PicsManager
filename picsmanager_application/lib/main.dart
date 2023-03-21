@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:picsmanager_application/providers/AccountProvider.dart';
+import 'package:picsmanager_application/providers/SignUpProvider.dart';
 import 'package:picsmanager_application/providers/AlbumProvider.dart';
 import 'package:picsmanager_application/providers/AppBarProvider.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AppBarProvider()),
         ChangeNotifierProvider(create: (_) => PicturePageProvider()),
         ChangeNotifierProvider(create: (_) => AlbumProvider()),
-        ChangeNotifierProvider(create: (_) => AccountProvider()),
+        ChangeNotifierProvider(create: (_) => SignUpProvider()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
