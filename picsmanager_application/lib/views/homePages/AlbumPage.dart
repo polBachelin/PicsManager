@@ -14,6 +14,8 @@ Widget albumPage({required BuildContext context}) {
 }
 
 Widget scrollAlbum(BuildContext context) {
+  final controller = TextEditingController();
+
   return Column(
     children: [
       SizedBox(height: 10),
@@ -21,12 +23,12 @@ Widget scrollAlbum(BuildContext context) {
         children: [
           Expanded(
             child: TextField(
+              controller: controller,
               decoration: InputDecoration(
                 icon: IconButton(
                   onPressed: () {
-                    // TODO FILL WITH QUERY
                     final token = Provider.of<AuthenticationProvider>(context, listen: true).getToken;
-                    Provider.of<AlbumProvider>(context, listen: false).startTrendingByName(token, "");
+                    Provider.of<AlbumProvider>(context, listen: false).startTrendingByName(token, controller.value.text);
                   },
                   icon: const Icon(Icons.search),
                 ),

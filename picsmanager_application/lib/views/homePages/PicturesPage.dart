@@ -15,6 +15,8 @@ Widget picturesPage({required BuildContext context}) {
 }
 
 Widget scrollPictures({required BuildContext context}) {
+  final controller = TextEditingController();
+
   return Column(
     children: [
       SizedBox(height: 10),
@@ -22,12 +24,12 @@ Widget scrollPictures({required BuildContext context}) {
         children: [
           Expanded(
             child: TextField(
+              controller: controller,
               decoration: InputDecoration(
                 icon: IconButton(
                   onPressed: () {
-                    // TODO FILL WITH QUERY
                     final token = Provider.of<AuthenticationProvider>(context, listen: true).getToken;
-                    Provider.of<PicturePageProvider>(context, listen: false).startTrendingByName(token, "");
+                    Provider.of<PicturePageProvider>(context, listen: false).startTrendingByName(token, controller.value.text);
                   },
                   icon: const Icon(Icons.search),
                 ),
