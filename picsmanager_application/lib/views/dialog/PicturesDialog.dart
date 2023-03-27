@@ -4,5 +4,12 @@ import 'package:flutter/material.dart';
 void getPictures({required BuildContext context}) {
   showDialog(
       context: context,
-      builder: builder)
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          child: Container(),
+        );
+      });
 }
