@@ -41,35 +41,39 @@ class PictureRepositoryGrpc extends PictureRepository {
   }
 
   @override
-  Future<List<Picture>> searchPictureByName(String query) async {
+  Future<void> searchPictureByName(String query, Function(Picture) onFetch) async {
     final request = SearchPicturesByNameRequest(query: query);
-    final response = await _stub.searchPicturesByName(request);
+    final response = _stub.searchPicturesByName(request);
 
-    return response.pictures.map((e) =>
-        fromProtobuf(e as typed.PictureMessage)
-    ).toList();
+    await response.forEach((element) {
+      onFetch(fromProtobuf(element.pictures as typed.PictureMessage));
+    });
   }
 
   @override
-  Future<List<Picture>> searchPictureByTag(String query) async {
+  Future<void> searchPictureByTag(String query, Function(Picture) onFetch) async {
     final request = SearchPicturesByTagRequest(query: query);
-    final response = await _stub.searchPicturesByTag(request);
+    final response = _stub.searchPicturesByTag(request);
 
-    return response.pictures.map((e) =>
+    await response.forEach((e) =>
         fromProtobuf(e as typed.PictureMessage)
-    ).toList();
+    );
   }
 
   @override
-  Future<void> sharedPicture(Picture source, int user) async  {
-    // TODO
-    throw UnimplementedError();
+  Future<void> sharedPicture(String id, String userId) async  {
+    final request = AddAccessToPictureRequest(pictureId: id, accessId: userId);
+    await _stub.addAccessToPicture(request);
   }
 
   @override
   Future<void> uploadPicture(List<int> image, String name) async  {
-    // todo params chelou
-    final request = CreatePictureRequest();
+    final request = CreatePictureRequest(
+      albumId: null,
+      name: name,
+      tags: null,
+      data: image
+    );
 
     await _stub.createPicture(request);
   }
