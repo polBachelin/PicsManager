@@ -5,18 +5,19 @@ import 'package:picsmanager_application/providers/PicturePageProvider.dart';
 import 'package:provider/provider.dart';
 
 Widget picturesPage({required BuildContext context}) {
+  final token = Provider.of<AuthenticationProvider>(context, listen: true).getToken;
+
   return Container(
     alignment: Alignment.centerRight,
     width: double.infinity,
     height: double.infinity,
     color: Colors.white,
-    child: scrollPictures(context: context),
+    child: scrollPictures(context: context, token: token),
   );
 }
 
-Widget scrollPictures({required BuildContext context}) {
+Widget scrollPictures({required BuildContext context, required String token}) {
   final controller = TextEditingController();
-
   return Column(
     children: [
       SizedBox(height: 10),
@@ -28,7 +29,6 @@ Widget scrollPictures({required BuildContext context}) {
               decoration: InputDecoration(
                 icon: IconButton(
                   onPressed: () {
-                    final token = Provider.of<AuthenticationProvider>(context, listen: true).getToken;
                     Provider.of<PicturePageProvider>(context, listen: false).startTrendingByName(token, controller.value.text);
                   },
                   icon: const Icon(Icons.search),
