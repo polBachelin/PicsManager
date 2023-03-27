@@ -12,7 +12,7 @@ import 'dart:typed_data' as $typed_data;
 const CreatePictureRequest$json = const {
   '1': 'CreatePictureRequest',
   '2': const [
-    const {'1': 'album_id', '3': 1, '4': 1, '5': 5, '10': 'albumId'},
+    const {'1': 'album_id', '3': 1, '4': 1, '5': 9, '10': 'albumId'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'tags', '3': 3, '4': 3, '5': 9, '10': 'tags'},
     const {'1': 'data', '3': 4, '4': 1, '5': 12, '10': 'data'},
@@ -20,7 +20,7 @@ const CreatePictureRequest$json = const {
 };
 
 /// Descriptor for `CreatePictureRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List createPictureRequestDescriptor = $convert.base64Decode('ChRDcmVhdGVQaWN0dXJlUmVxdWVzdBIZCghhbGJ1bV9pZBgBIAEoBVIHYWxidW1JZBISCgRuYW1lGAIgASgJUgRuYW1lEhIKBHRhZ3MYAyADKAlSBHRhZ3MSEgoEZGF0YRgEIAEoDFIEZGF0YQ==');
+final $typed_data.Uint8List createPictureRequestDescriptor = $convert.base64Decode('ChRDcmVhdGVQaWN0dXJlUmVxdWVzdBIZCghhbGJ1bV9pZBgBIAEoCVIHYWxidW1JZBISCgRuYW1lGAIgASgJUgRuYW1lEhIKBHRhZ3MYAyADKAlSBHRhZ3MSEgoEZGF0YRgEIAEoDFIEZGF0YQ==');
 @$core.Deprecated('Use createPictureResponseDescriptor instead')
 const CreatePictureResponse$json = const {
   '1': 'CreatePictureResponse',
@@ -55,23 +55,37 @@ final $typed_data.Uint8List updatePictureResponseDescriptor = $convert.base64Dec
 const DeletePictureRequest$json = const {
   '1': 'DeletePictureRequest',
   '2': const [
-    const {'1': 'picture_id', '3': 1, '4': 1, '5': 5, '10': 'pictureId'},
+    const {'1': 'picture_id', '3': 1, '4': 1, '5': 9, '10': 'pictureId'},
   ],
 };
 
 /// Descriptor for `DeletePictureRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List deletePictureRequestDescriptor = $convert.base64Decode('ChREZWxldGVQaWN0dXJlUmVxdWVzdBIdCgpwaWN0dXJlX2lkGAEgASgFUglwaWN0dXJlSWQ=');
+final $typed_data.Uint8List deletePictureRequestDescriptor = $convert.base64Decode('ChREZWxldGVQaWN0dXJlUmVxdWVzdBIdCgpwaWN0dXJlX2lkGAEgASgJUglwaWN0dXJlSWQ=');
 @$core.Deprecated('Use deletePictureResponseDescriptor instead')
 const DeletePictureResponse$json = const {
   '1': 'DeletePictureResponse',
-  '2': const [
-    const {'1': 'index', '3': 1, '4': 1, '5': 5, '10': 'index'},
-    const {'1': 'pictures', '3': 2, '4': 1, '5': 11, '6': '.PictureMessage', '10': 'pictures'},
-  ],
 };
 
 /// Descriptor for `DeletePictureResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List deletePictureResponseDescriptor = $convert.base64Decode('ChVEZWxldGVQaWN0dXJlUmVzcG9uc2USFAoFaW5kZXgYASABKAVSBWluZGV4EisKCHBpY3R1cmVzGAIgASgLMg8uUGljdHVyZU1lc3NhZ2VSCHBpY3R1cmVz');
+final $typed_data.Uint8List deletePictureResponseDescriptor = $convert.base64Decode('ChVEZWxldGVQaWN0dXJlUmVzcG9uc2U=');
+@$core.Deprecated('Use addAccessToPictureRequestDescriptor instead')
+const AddAccessToPictureRequest$json = const {
+  '1': 'AddAccessToPictureRequest',
+  '2': const [
+    const {'1': 'picture_id', '3': 1, '4': 1, '5': 9, '10': 'pictureId'},
+    const {'1': 'access_id', '3': 2, '4': 1, '5': 9, '10': 'accessId'},
+  ],
+};
+
+/// Descriptor for `AddAccessToPictureRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addAccessToPictureRequestDescriptor = $convert.base64Decode('ChlBZGRBY2Nlc3NUb1BpY3R1cmVSZXF1ZXN0Eh0KCnBpY3R1cmVfaWQYASABKAlSCXBpY3R1cmVJZBIbCglhY2Nlc3NfaWQYAiABKAlSCGFjY2Vzc0lk');
+@$core.Deprecated('Use addAccessToPictureResponseDescriptor instead')
+const AddAccessToPictureResponse$json = const {
+  '1': 'AddAccessToPictureResponse',
+};
+
+/// Descriptor for `AddAccessToPictureResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addAccessToPictureResponseDescriptor = $convert.base64Decode('ChpBZGRBY2Nlc3NUb1BpY3R1cmVSZXNwb25zZQ==');
 @$core.Deprecated('Use listPicturesRequestDescriptor instead')
 const ListPicturesRequest$json = const {
   '1': 'ListPicturesRequest',
@@ -93,10 +107,13 @@ final $typed_data.Uint8List listPicturesResponseDescriptor = $convert.base64Deco
 @$core.Deprecated('Use listAlbumPicturesRequestDescriptor instead')
 const ListAlbumPicturesRequest$json = const {
   '1': 'ListAlbumPicturesRequest',
+  '2': const [
+    const {'1': 'album_id', '3': 1, '4': 1, '5': 9, '10': 'albumId'},
+  ],
 };
 
 /// Descriptor for `ListAlbumPicturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List listAlbumPicturesRequestDescriptor = $convert.base64Decode('ChhMaXN0QWxidW1QaWN0dXJlc1JlcXVlc3Q=');
+final $typed_data.Uint8List listAlbumPicturesRequestDescriptor = $convert.base64Decode('ChhMaXN0QWxidW1QaWN0dXJlc1JlcXVlc3QSGQoIYWxidW1faWQYASABKAlSB2FsYnVtSWQ=');
 @$core.Deprecated('Use listAlbumPicturesResponseDescriptor instead')
 const ListAlbumPicturesResponse$json = const {
   '1': 'ListAlbumPicturesResponse',
@@ -122,12 +139,12 @@ final $typed_data.Uint8List searchPicturesByTagRequestDescriptor = $convert.base
 const SearchPicturesByTagResponse$json = const {
   '1': 'SearchPicturesByTagResponse',
   '2': const [
-    const {'1': 'pictures', '3': 1, '4': 3, '5': 11, '6': '.PictureMessage', '10': 'pictures'},
+    const {'1': 'pictures', '3': 1, '4': 1, '5': 11, '6': '.PictureMessage', '10': 'pictures'},
   ],
 };
 
 /// Descriptor for `SearchPicturesByTagResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List searchPicturesByTagResponseDescriptor = $convert.base64Decode('ChtTZWFyY2hQaWN0dXJlc0J5VGFnUmVzcG9uc2USKwoIcGljdHVyZXMYASADKAsyDy5QaWN0dXJlTWVzc2FnZVIIcGljdHVyZXM=');
+final $typed_data.Uint8List searchPicturesByTagResponseDescriptor = $convert.base64Decode('ChtTZWFyY2hQaWN0dXJlc0J5VGFnUmVzcG9uc2USKwoIcGljdHVyZXMYASABKAsyDy5QaWN0dXJlTWVzc2FnZVIIcGljdHVyZXM=');
 @$core.Deprecated('Use searchPicturesByNameRequestDescriptor instead')
 const SearchPicturesByNameRequest$json = const {
   '1': 'SearchPicturesByNameRequest',
@@ -142,24 +159,24 @@ final $typed_data.Uint8List searchPicturesByNameRequestDescriptor = $convert.bas
 const SearchPicturesByNameResponse$json = const {
   '1': 'SearchPicturesByNameResponse',
   '2': const [
-    const {'1': 'pictures', '3': 1, '4': 3, '5': 11, '6': '.PictureMessage', '10': 'pictures'},
+    const {'1': 'pictures', '3': 1, '4': 1, '5': 11, '6': '.PictureMessage', '10': 'pictures'},
   ],
 };
 
 /// Descriptor for `SearchPicturesByNameResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List searchPicturesByNameResponseDescriptor = $convert.base64Decode('ChxTZWFyY2hQaWN0dXJlc0J5TmFtZVJlc3BvbnNlEisKCHBpY3R1cmVzGAEgAygLMg8uUGljdHVyZU1lc3NhZ2VSCHBpY3R1cmVz');
+final $typed_data.Uint8List searchPicturesByNameResponseDescriptor = $convert.base64Decode('ChxTZWFyY2hQaWN0dXJlc0J5TmFtZVJlc3BvbnNlEisKCHBpY3R1cmVzGAEgASgLMg8uUGljdHVyZU1lc3NhZ2VSCHBpY3R1cmVz');
 @$core.Deprecated('Use pictureMessageDescriptor instead')
 const PictureMessage$json = const {
   '1': 'PictureMessage',
   '2': const [
-    const {'1': 'image_id', '3': 1, '4': 1, '5': 5, '10': 'imageId'},
+    const {'1': 'image_id', '3': 1, '4': 1, '5': 9, '10': 'imageId'},
     const {'1': 'data', '3': 2, '4': 1, '5': 12, '10': 'data'},
     const {'1': 'tags', '3': 3, '4': 3, '5': 9, '10': 'tags'},
     const {'1': 'name', '3': 4, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'album_id', '3': 5, '4': 1, '5': 5, '10': 'albumId'},
+    const {'1': 'album_id', '3': 5, '4': 1, '5': 9, '10': 'albumId'},
     const {'1': 'owner_name', '3': 6, '4': 1, '5': 9, '10': 'ownerName'},
   ],
 };
 
 /// Descriptor for `PictureMessage`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List pictureMessageDescriptor = $convert.base64Decode('Cg5QaWN0dXJlTWVzc2FnZRIZCghpbWFnZV9pZBgBIAEoBVIHaW1hZ2VJZBISCgRkYXRhGAIgASgMUgRkYXRhEhIKBHRhZ3MYAyADKAlSBHRhZ3MSEgoEbmFtZRgEIAEoCVIEbmFtZRIZCghhbGJ1bV9pZBgFIAEoBVIHYWxidW1JZBIdCgpvd25lcl9uYW1lGAYgASgJUglvd25lck5hbWU=');
+final $typed_data.Uint8List pictureMessageDescriptor = $convert.base64Decode('Cg5QaWN0dXJlTWVzc2FnZRIZCghpbWFnZV9pZBgBIAEoCVIHaW1hZ2VJZBISCgRkYXRhGAIgASgMUgRkYXRhEhIKBHRhZ3MYAyADKAlSBHRhZ3MSEgoEbmFtZRgEIAEoCVIEbmFtZRIZCghhbGJ1bV9pZBgFIAEoCVIHYWxidW1JZBIdCgpvd25lcl9uYW1lGAYgASgJUglvd25lck5hbWU=');

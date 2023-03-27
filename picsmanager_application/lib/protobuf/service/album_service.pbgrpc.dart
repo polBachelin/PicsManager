@@ -32,6 +32,12 @@ class AlbumServiceClient extends $grpc.Client {
           ($0.DeleteAlbumRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.DeleteAlbumResponse.fromBuffer(value));
+  static final _$addAccessToAlbum = $grpc.ClientMethod<
+          $0.AddAccessToAlbumRequest, $0.AddAccessToAlbumResponse>(
+      '/AlbumService/AddAccessToAlbum',
+      ($0.AddAccessToAlbumRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $0.AddAccessToAlbumResponse.fromBuffer(value));
   static final _$listAlbums =
       $grpc.ClientMethod<$0.ListAlbumsRequest, $0.ListAlbumsResponse>(
           '/AlbumService/ListAlbums',
@@ -78,6 +84,12 @@ class AlbumServiceClient extends $grpc.Client {
       $0.DeleteAlbumRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$deleteAlbum, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.AddAccessToAlbumResponse> addAccessToAlbum(
+      $0.AddAccessToAlbumRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$addAccessToAlbum, request, options: options);
   }
 
   $grpc.ResponseStream<$0.ListAlbumsResponse> listAlbums(
@@ -142,6 +154,15 @@ abstract class AlbumServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $0.DeleteAlbumRequest.fromBuffer(value),
             ($0.DeleteAlbumResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.AddAccessToAlbumRequest,
+            $0.AddAccessToAlbumResponse>(
+        'AddAccessToAlbum',
+        addAccessToAlbum_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.AddAccessToAlbumRequest.fromBuffer(value),
+        ($0.AddAccessToAlbumResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.ListAlbumsRequest, $0.ListAlbumsResponse>(
         'ListAlbums',
         listAlbums_Pre,
@@ -193,6 +214,12 @@ abstract class AlbumServiceBase extends $grpc.Service {
     return deleteAlbum(call, await request);
   }
 
+  $async.Future<$0.AddAccessToAlbumResponse> addAccessToAlbum_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.AddAccessToAlbumRequest> request) async {
+    return addAccessToAlbum(call, await request);
+  }
+
   $async.Stream<$0.ListAlbumsResponse> listAlbums_Pre($grpc.ServiceCall call,
       $async.Future<$0.ListAlbumsRequest> request) async* {
     yield* listAlbums(call, await request);
@@ -222,6 +249,8 @@ abstract class AlbumServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.UpdateAlbumRequest request);
   $async.Future<$0.DeleteAlbumResponse> deleteAlbum(
       $grpc.ServiceCall call, $0.DeleteAlbumRequest request);
+  $async.Future<$0.AddAccessToAlbumResponse> addAccessToAlbum(
+      $grpc.ServiceCall call, $0.AddAccessToAlbumRequest request);
   $async.Stream<$0.ListAlbumsResponse> listAlbums(
       $grpc.ServiceCall call, $0.ListAlbumsRequest request);
   $async.Stream<$0.ListOwnedAlbumsResponse> listOwnedAlbums(

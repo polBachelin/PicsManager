@@ -11,7 +11,7 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 class AlbumMessage extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AlbumMessage', createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'albumId', $pb.PbFieldType.O3)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'albumId')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'thumbnailData', $pb.PbFieldType.OY)
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ownerName')
@@ -20,7 +20,7 @@ class AlbumMessage extends $pb.GeneratedMessage {
 
   AlbumMessage._() : super();
   factory AlbumMessage({
-    $core.int? albumId,
+    $core.String? albumId,
     $core.String? name,
     $core.List<$core.int>? thumbnailData,
     $core.String? ownerName,
@@ -62,9 +62,9 @@ class AlbumMessage extends $pb.GeneratedMessage {
   static AlbumMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get albumId => $_getIZ(0);
+  $core.String get albumId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set albumId($core.int v) { $_setSignedInt32(0, v); }
+  set albumId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasAlbumId() => $_has(0);
   @$pb.TagNumber(1)
@@ -294,14 +294,14 @@ class UpdateAlbumResponse extends $pb.GeneratedMessage {
 
 class DeleteAlbumRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteAlbumRequest', createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'albumId', $pb.PbFieldType.O3)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'albumId')
     ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'propagateDeletion')
     ..hasRequiredFields = false
   ;
 
   DeleteAlbumRequest._() : super();
   factory DeleteAlbumRequest({
-    $core.int? albumId,
+    $core.String? albumId,
     $core.bool? propagateDeletion,
   }) {
     final _result = create();
@@ -335,9 +335,9 @@ class DeleteAlbumRequest extends $pb.GeneratedMessage {
   static DeleteAlbumRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get albumId => $_getIZ(0);
+  $core.String get albumId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set albumId($core.int v) { $_setSignedInt32(0, v); }
+  set albumId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasAlbumId() => $_has(0);
   @$pb.TagNumber(1)
@@ -380,6 +380,96 @@ class DeleteAlbumResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DeleteAlbumResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeleteAlbumResponse>(create);
   static DeleteAlbumResponse? _defaultInstance;
+}
+
+class AddAccessToAlbumRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddAccessToAlbumRequest', createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'albumId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'accessId')
+    ..hasRequiredFields = false
+  ;
+
+  AddAccessToAlbumRequest._() : super();
+  factory AddAccessToAlbumRequest({
+    $core.String? albumId,
+    $core.String? accessId,
+  }) {
+    final _result = create();
+    if (albumId != null) {
+      _result.albumId = albumId;
+    }
+    if (accessId != null) {
+      _result.accessId = accessId;
+    }
+    return _result;
+  }
+  factory AddAccessToAlbumRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddAccessToAlbumRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddAccessToAlbumRequest clone() => AddAccessToAlbumRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddAccessToAlbumRequest copyWith(void Function(AddAccessToAlbumRequest) updates) => super.copyWith((message) => updates(message as AddAccessToAlbumRequest)) as AddAccessToAlbumRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddAccessToAlbumRequest create() => AddAccessToAlbumRequest._();
+  AddAccessToAlbumRequest createEmptyInstance() => create();
+  static $pb.PbList<AddAccessToAlbumRequest> createRepeated() => $pb.PbList<AddAccessToAlbumRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddAccessToAlbumRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddAccessToAlbumRequest>(create);
+  static AddAccessToAlbumRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get albumId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set albumId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasAlbumId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAlbumId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get accessId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set accessId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasAccessId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAccessId() => clearField(2);
+}
+
+class AddAccessToAlbumResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddAccessToAlbumResponse', createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  AddAccessToAlbumResponse._() : super();
+  factory AddAccessToAlbumResponse() => create();
+  factory AddAccessToAlbumResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddAccessToAlbumResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddAccessToAlbumResponse clone() => AddAccessToAlbumResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddAccessToAlbumResponse copyWith(void Function(AddAccessToAlbumResponse) updates) => super.copyWith((message) => updates(message as AddAccessToAlbumResponse)) as AddAccessToAlbumResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddAccessToAlbumResponse create() => AddAccessToAlbumResponse._();
+  AddAccessToAlbumResponse createEmptyInstance() => create();
+  static $pb.PbList<AddAccessToAlbumResponse> createRepeated() => $pb.PbList<AddAccessToAlbumResponse>();
+  @$core.pragma('dart2js:noInline')
+  static AddAccessToAlbumResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddAccessToAlbumResponse>(create);
+  static AddAccessToAlbumResponse? _defaultInstance;
 }
 
 class ListAlbumsRequest extends $pb.GeneratedMessage {

@@ -11,7 +11,7 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 class UserMessage extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserMessage', createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId', $pb.PbFieldType.O3)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'email')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'password')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
@@ -20,7 +20,7 @@ class UserMessage extends $pb.GeneratedMessage {
 
   UserMessage._() : super();
   factory UserMessage({
-    $core.int? userId,
+    $core.String? userId,
     $core.String? email,
     $core.String? password,
     $core.String? name,
@@ -62,9 +62,9 @@ class UserMessage extends $pb.GeneratedMessage {
   static UserMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get userId => $_getIZ(0);
+  $core.String get userId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set userId($core.int v) { $_setSignedInt32(0, v); }
+  set userId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasUserId() => $_has(0);
   @$pb.TagNumber(1)
@@ -322,14 +322,14 @@ class UpdateUserResponse extends $pb.GeneratedMessage {
 
 class DeleteUserRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteUserRequest', createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId', $pb.PbFieldType.O3)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId')
     ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'propagateDeletion')
     ..hasRequiredFields = false
   ;
 
   DeleteUserRequest._() : super();
   factory DeleteUserRequest({
-    $core.int? userId,
+    $core.String? userId,
     $core.bool? propagateDeletion,
   }) {
     final _result = create();
@@ -363,9 +363,9 @@ class DeleteUserRequest extends $pb.GeneratedMessage {
   static DeleteUserRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get userId => $_getIZ(0);
+  $core.String get userId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set userId($core.int v) { $_setSignedInt32(0, v); }
+  set userId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasUserId() => $_has(0);
   @$pb.TagNumber(1)
