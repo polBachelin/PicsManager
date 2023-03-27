@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:picsmanager_application/protobuf/message/album_message.pb.dart';
+import 'package:picsmanager_application/protobuf/service/album_service.pb.dart';
 
 class Album {
   Image image;
