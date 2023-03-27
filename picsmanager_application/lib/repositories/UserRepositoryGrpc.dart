@@ -16,7 +16,7 @@ class UserRepositoryGrpc extends UserRepository {
   UserRepositoryGrpc(String token) {
     _stub = UserServiceClient(
         _client,
-        options: CallOptions(metadata: {'id_token': token})
+        options: CallOptions(metadata: {'authorization': token})
     );
   }
 

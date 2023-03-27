@@ -16,7 +16,7 @@ class AlbumRepositoryGrpc extends AlbumRepository {
   AlbumRepositoryGrpc(String token) {
     _stub = AlbumServiceClient(
         _client,
-        options: CallOptions(metadata: {'id_token': token})
+        options: CallOptions(metadata: {'authorization': token})
     );
   }
 

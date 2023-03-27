@@ -16,7 +16,7 @@ class PictureRepositoryGrpc extends PictureRepository {
   PictureRepositoryGrpc(String token) {
     _stub = PictureServiceClient(
         _client,
-        options: CallOptions(metadata: {'id_token': token})
+        options: CallOptions(metadata: {'authorization': token})
     );
   }
 
