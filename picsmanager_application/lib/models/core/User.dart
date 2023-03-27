@@ -1,3 +1,5 @@
+import 'package:picsmanager_application/protobuf/message/user_message.pb.dart';
+
 class User {
   int id;
   String token;
@@ -33,4 +35,8 @@ class User {
           email: "");
     }
   }
+}
+
+User fromProtobuf(UserMessage source) {
+  return User(id: source.userId, token: "", firstname: source.name, lastName: "", email: source.email);
 }

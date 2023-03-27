@@ -1,95 +1,88 @@
 import 'package:flutter/material.dart';
+import 'package:picsmanager_application/models/core/Album.dart';
+import 'package:picsmanager_application/providers/AlbumProvider.dart';
+import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
+import 'package:picsmanager_application/providers/PicturePageProvider.dart';
+import 'package:provider/provider.dart';
 
 Widget albumPage({required BuildContext context}) {
-  return Container(
-    alignment: Alignment.centerRight,
-    width: MediaQuery.of(context).size.width,
-    height: MediaQuery.of(context).size.height,
-    color: Colors.white,
-    padding: paddingDimension(context: context),
-    child: Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: scrollAlbum(),
-    ),
+  return SizedBox(
+    width: double.infinity,
+    height: double.infinity,
+    child: scrollAlbum(context),
   );
 }
 
-Widget scrollAlbum() {
-  return SingleChildScrollView(
-    child: Column(
-      children: <Widget>[
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-      ],
-    ),
-  );
-}
+Widget scrollAlbum(BuildContext context) {
+  final controller = TextEditingController();
 
-Widget rowPictures() {
-  return Row(
-    children: <Widget>[
-      Expanded(child: albumCards(text: 'assets/images/paysage1.jpeg')),
-      SizedBox(
-        width: 10,
+  return Column(
+    children: [
+      SizedBox(height: 10),
+      Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                icon: IconButton(
+                  onPressed: () {
+                    final token = Provider.of<AuthenticationProvider>(context,
+                            listen: true)
+                        .getToken;
+                    Provider.of<AlbumProvider>(context, listen: false)
+                        .startTrendingByName(token, controller.value.text);
+                  },
+                  icon: const Icon(Icons.search),
+                ),
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          IconButton(
+            onPressed: null,
+            icon: const Icon(Icons.close),
+          ),
+        ],
       ),
+      SizedBox(height: 10),
       Expanded(
-        child: albumCards(text: 'assets/images/paysage1.jpeg'),
+        child: SingleChildScrollView(
+            child: Selector<AlbumProvider, List<Album>>(
+          selector: (_, provider) => provider.albums,
+          builder: (_, data, __) {
+            final children = data
+                .map((e) => albumCards(context: context, source: e))
+                .toList();
+            children.insert(0, const SizedBox(height: 10));
+
+            return Wrap(children: children);
+          },
+        )),
       ),
     ],
   );
 }
 
-Widget albumCards({required String text}) {
-  return Card(
-    child: Column(
-      children: <Widget>[
-        Image.asset(text),
-        Text("Nom de l'album"),
-      ],
+Widget albumCards({required BuildContext context, required Album source}) {
+  return ElevatedButton(
+    onPressed: (){
+      // TODO rediriger vers PicturesPage en affichant uniquement les images de cette album
+    },
+    onLongPress: (){
+      // TODO possibilité de partagé l'album ou de le modifier
+    },
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.49,
+      child: Card(
+        margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+        child: Column(
+          children: <Widget>[
+            source.image,
+            Text(source.name),
+          ],
+        ),
+      ),
     ),
   );
 }

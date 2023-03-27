@@ -1,96 +1,80 @@
 import 'package:flutter/material.dart';
+import 'package:picsmanager_application/models/core/Picture.dart';
+import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
+import 'package:picsmanager_application/providers/PicturePageProvider.dart';
+import 'package:provider/provider.dart';
 
 Widget picturesPage({required BuildContext context}) {
   return Container(
     alignment: Alignment.centerRight,
-    width: MediaQuery.of(context).size.width,
-    height: MediaQuery.of(context).size.height,
+    width: double.infinity,
+    height: double.infinity,
     color: Colors.white,
-    padding: paddingDimension(context: context),
-    child: Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: scrollPictures(),
-    ),
+    child: scrollPictures(context: context),
   );
 }
 
-Widget scrollPictures() {
-  return SingleChildScrollView(
-    child: Column(
-      children: <Widget>[
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-        SizedBox(
-          height: 10,
-        ),
-        rowPictures(),
-      ],
-    ),
-  );
-}
+Widget scrollPictures({required BuildContext context}) {
+  final controller = TextEditingController();
 
-Widget rowPictures() {
-  return Row(
-    children: <Widget>[
+  return Column(
+    children: [
+      SizedBox(height: 10),
+      Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                icon: IconButton(
+                  onPressed: () {
+                    final token = Provider.of<AuthenticationProvider>(context,
+                            listen: true)
+                        .getToken;
+                    Provider.of<PicturePageProvider>(context, listen: false)
+                        .startTrendingByName(token, controller.value.text);
+                  },
+                  icon: const Icon(Icons.search),
+                ),
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          IconButton(
+            onPressed: null,
+            icon: const Icon(Icons.close),
+          ),
+        ],
+      ),
+      SizedBox(height: 10),
       Expanded(
-        child: Image.asset('assets/images/paysage1.jpeg'),
-      ),
-      SizedBox(
-        width: 10,
-      ),
-      Expanded(
-        child: Image.asset('assets/images/paysage2.jpeg'),
-      ),
-      SizedBox(
-        width: 10,
-      ),
-      Expanded(
-        child: Image.asset('assets/images/paysage3.jpeg'),
-      ),
+        child: SingleChildScrollView(
+            child: Selector<PicturePageProvider, List<Picture>>(
+          selector: (_, provider) => provider.pictures,
+          builder: (_, data, __) {
+            return Wrap(
+                children: data
+                    .map((e) => cardPicture(context: context, picture: e))
+                    .toList());
+          },
+        )),
+      )
     ],
+  );
+}
+
+Widget cardPicture({required BuildContext context, required Picture picture}) {
+  return ElevatedButton(
+    onPressed: (){
+      // TODO Faire le widget image pleine écran
+    },
+    onLongPress: (){
+      // TODO Faire le dialog pour changer l'image d'album
+    },
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.33,
+      child: picture.visualPicture,
+    ),
   );
 }
 

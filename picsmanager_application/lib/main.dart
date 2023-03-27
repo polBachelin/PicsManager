@@ -1,10 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:picsmanager_application/Splashscreen.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:picsmanager_application/providers/SignUpProvider.dart';
+import 'package:picsmanager_application/providers/AlbumProvider.dart';
+import 'package:picsmanager_application/providers/AppBarProvider.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
+import 'package:picsmanager_application/providers/CameraProvider.dart';
+import 'package:picsmanager_application/providers/PicturePageProvider.dart';
 import 'package:picsmanager_application/providers/SignInProvider.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
+import 'package:picsmanager_application/views/launchPage/LaunchPage.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -17,11 +24,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Intl.defaultLocale = 'fr_FR';
+    initializeDateFormatting('fr_FR');
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
         ChangeNotifierProvider(create: (_) => SignInProvider()),
         ChangeNotifierProvider(create: (_) => ViewProvider()),
+        ChangeNotifierProvider(create: (_) => CameraProvider()),
+        ChangeNotifierProvider(create: (_) => AppBarProvider()),
+        ChangeNotifierProvider(create: (_) => PicturePageProvider()),
+        ChangeNotifierProvider(create: (_) => AlbumProvider()),
+        ChangeNotifierProvider(create: (_) => SignUpProvider()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -29,8 +44,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: Splashscreen()
-      ),
+          home: const LaunchPage()),
     );
   }
 }
