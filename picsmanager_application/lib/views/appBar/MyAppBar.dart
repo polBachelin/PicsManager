@@ -67,7 +67,7 @@ class _MyAppBar extends State<MyAppBar> {
               return data == 2
                   ? IconButton(
                   onPressed: (){
-                    CreateFolderDialog(context: context);
+                    createFolderDialog(context: context);
                   },
                   icon: Icon(Icons.create_new_folder))
               : Container();

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void CreateFolderDialog({required BuildContext context}) {
+void createFolderDialog({required BuildContext context}) {
   // CreateFolderProvider createFolderProvider =
   // Provider.of<CreateFolderProvider>(context, listen: false);
 
