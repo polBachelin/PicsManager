@@ -26,7 +26,7 @@ class AlbumRepositoryGrpc extends AlbumRepository {
     final response = _stub.listAlbums(request);
 
     await response.forEach((element) {
-      onFetch(fromProtobuf(element as typed.AlbumMessage));
+      onFetch(fromProtobuf(element.albums));
     });
   }
 
@@ -36,7 +36,7 @@ class AlbumRepositoryGrpc extends AlbumRepository {
     final response = _stub.listSharedAlbums(request);
 
     await response.forEach((element) {
-      onFetch(fromProtobuf(element as typed.AlbumMessage));
+      onFetch(fromProtobuf(element.albums));
     });
   }
 
@@ -46,7 +46,7 @@ class AlbumRepositoryGrpc extends AlbumRepository {
     final response = _stub.listOwnedAlbums(request);
 
     await response.forEach((element) {
-      onFetch(fromProtobuf(element as typed.AlbumMessage));
+      onFetch(fromProtobuf(element.albums));
     });
   }
 
@@ -56,7 +56,7 @@ class AlbumRepositoryGrpc extends AlbumRepository {
     final response = await _stub.searchAlbumsByName(request);
 
     return response.albums.map((e) =>
-        fromProtobuf(e as typed.AlbumMessage)
+        fromProtobuf(e)
     ).toList();
   }
 
