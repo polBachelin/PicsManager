@@ -3,6 +3,7 @@ import 'package:picsmanager_application/providers/AppBarProvider.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
 import 'package:picsmanager_application/views/appBar/CreateFolderDialog.dart';
+import 'package:picsmanager_application/views/dialog/CreateFolderDialog.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 

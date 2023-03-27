@@ -67,15 +67,23 @@ Widget scrollAlbum(BuildContext context) {
 }
 
 Widget albumCards({required BuildContext context, required Album source}) {
-  return Container(
-    width: MediaQuery.of(context).size.width * 0.49,
-    child: Card(
-      margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-      child: Column(
-        children: <Widget>[
-          source.image,
-          Text(source.name),
-        ],
+  return ElevatedButton(
+    onPressed: (){
+      // TODO rediriger vers PicturesPage en affichant uniquement les images de cette album
+    },
+    onLongPress: (){
+      // TODO possibilité de partagé l'album ou de le modifier
+    },
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.49,
+      child: Card(
+        margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+        child: Column(
+          children: <Widget>[
+            source.image,
+            Text(source.name),
+          ],
+        ),
       ),
     ),
   );

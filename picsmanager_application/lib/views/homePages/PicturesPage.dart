@@ -64,16 +64,19 @@ Widget scrollPictures({required BuildContext context}) {
 }
 
 Widget cardPicture({required BuildContext context, required Picture picture}) {
-  return SizedBox(
-    width: MediaQuery
-        .of(context)
-        .size
-        .width * 0.33,
-    child: picture.visualPicture,
-
+  return ElevatedButton(
+    onPressed: (){
+      // TODO Faire le widget image pleine écran
+    },
+    onLongPress: (){
+      // TODO Faire le dialog pour changer l'image d'album
+    },
+    child: SizedBox(
+      width: MediaQuery.of(context).size.width * 0.33,
+      child: picture.visualPicture,
+    ),
   );
 }
-
 
 EdgeInsets paddingDimension({required BuildContext context}) {
   return EdgeInsets.fromLTRB(
