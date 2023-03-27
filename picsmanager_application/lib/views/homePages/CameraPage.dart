@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 
 Widget cameraPage({required BuildContext context}) {
-  AuthenticationProvider token = Provider.of<AuthenticationProvider>(context, listen: true);
+  AuthenticationProvider token = Provider.of<AuthenticationProvider>(context, listen: false);
   CameraProvider camera = Provider.of<CameraProvider>(context, listen: true);
   var theSize = camera.controller.value;
   var scale = MediaQuery.of(context).size.aspectRatio * theSize.aspectRatio;
@@ -43,7 +43,7 @@ Widget cameraPage({required BuildContext context}) {
                 final bytes = await File(path).readAsBytes();
                 final compressed = await FlutterImageCompress.compressWithList(bytes, quality: 80);
                 final name = DateFormat("yyyyMMddhhmmss").format(DateTime.now());
-
+                print(token.getToken);
                 await NetworkManager(token.getToken).pictureRepository.uploadPicture(compressed, "img-$name");
               },
               style: ButtonStyle(

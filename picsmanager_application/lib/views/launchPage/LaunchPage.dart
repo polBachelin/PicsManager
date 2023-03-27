@@ -27,7 +27,7 @@ class _LaunchPageState extends State<LaunchPage> {
           final nav = Navigator.of(context);
 
           // TODO CALL INIT HERE
-          //await Provider.of<CameraProvider>(context, listen: false).init();
+          await Provider.of<CameraProvider>(context, listen: false).init();
 
           final startPage = Selector<AuthenticationProvider, String>(
               selector: (_, provider) => provider.getToken,
