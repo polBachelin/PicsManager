@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/models/core/Picture.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
@@ -49,7 +51,7 @@ Widget scrollPictures({required BuildContext context, required String token}) {
             child: Selector<PicturePageProvider, List<Picture>>(
               selector: (_, provider) => provider.pictures,
               builder: (_, data, __){
-
+                print("image selector");
                 return Wrap(
                   children: data.map((e) =>
                       cardPicture(context: context, picture: e)
@@ -64,17 +66,12 @@ Widget scrollPictures({required BuildContext context, required String token}) {
 }
 
 Widget cardPicture({required BuildContext context, required Picture picture}) {
-  return ElevatedButton(
-    onPressed: (){
-      // TODO Faire le widget image pleine écran
-    },
-    onLongPress: (){
-      // TODO Faire le dialog pour changer l'image d'album
-    },
-    child: SizedBox(
+  print("test image");
+  return Container(
+      color: Colors.red,
       width: MediaQuery.of(context).size.width * 0.33,
       child: picture.visualPicture,
-    ),
+  
   );
 }
 

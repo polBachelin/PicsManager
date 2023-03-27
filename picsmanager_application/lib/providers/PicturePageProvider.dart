@@ -9,6 +9,8 @@ class PicturePageProvider extends ChangeNotifier {
 
   startTrending(String token) {
     _pictures.clear();
+
+    notifyListeners();
     NetworkManager(token).pictureRepository.foreachPictures((source) {
       _pictures.add(source);
       notifyListeners();

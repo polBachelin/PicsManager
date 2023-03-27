@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/widgets.dart';
-import 'package:picsmanager_application/protobuf/message/picture_message.pb.dart';
+import 'package:picsmanager_application/protobuf/service/picture_service.pb.dart';
 
 class Picture {
   Image visualPicture;

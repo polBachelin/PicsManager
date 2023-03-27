@@ -26,7 +26,8 @@ class PictureRepositoryGrpc extends PictureRepository {
     final response = _stub.listPictures(request);
 
     await response.forEach((element) {
-      onFetch(fromProtobuf(element as typed.PictureMessage));
+      print(element.pictures.name);
+      onFetch(fromProtobuf(element.pictures));
     });
   }
 
@@ -36,7 +37,7 @@ class PictureRepositoryGrpc extends PictureRepository {
     final response = _stub.listAlbumPictures(request);
 
     await response.forEach((element) {
-      onFetch(fromProtobuf(element as typed.PictureMessage));
+      onFetch(fromProtobuf(element.pictures));
     });
   }
 
@@ -46,7 +47,7 @@ class PictureRepositoryGrpc extends PictureRepository {
     final response = _stub.searchPicturesByName(request);
 
     await response.forEach((element) {
-      onFetch(fromProtobuf(element.pictures as typed.PictureMessage));
+      onFetch(fromProtobuf(element.pictures));
     });
   }
 
@@ -56,7 +57,7 @@ class PictureRepositoryGrpc extends PictureRepository {
     final response = _stub.searchPicturesByTag(request);
 
     await response.forEach((e) =>
-        onFetch(fromProtobuf(e as typed.PictureMessage));
+        onFetch(fromProtobuf(e.pictures))
     );
   }
 
