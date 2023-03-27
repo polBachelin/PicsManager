@@ -9,7 +9,7 @@ class PictureRepositoryGrpc extends PictureRepository {
   final _client = ClientChannel(
     NetworkConfig.host,
     port: NetworkConfig.port,
-    options: const ChannelOptions(credentials: ChannelCredentials.secure()),
+    options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
   );
   late final PictureServiceClient _stub;
 

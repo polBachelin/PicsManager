@@ -21,6 +21,7 @@ class HomePage extends StatelessWidget {
         Provider.of<AppBarProvider>(context, listen: false);
 
     AuthenticationProvider token = Provider.of<AuthenticationProvider>(context, listen: true);
+    print(token.getToken);
     PicturePageProvider pictureProvider = Provider.of<PicturePageProvider>(context, listen: false);
     AlbumProvider albumProvider = Provider.of<AlbumProvider>(context, listen: false);
 
@@ -35,6 +36,7 @@ class HomePage extends StatelessWidget {
                 viewProvider.page = page;
                 appBarProvider.shareUser = true;
                 appBarProvider.shareFolder = true;
+                print(token.getToken);
               },
               selectedItemColor: Colors.grey[900],
               unselectedItemColor: Colors.grey[700],

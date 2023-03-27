@@ -13,14 +13,15 @@ class SignInHelper {
   late AuthenticationProvider authenticationProvider;
 
   SignInHelper({required this.context}) {
-    //   signInProvider = Provider.of<SignInProvider>(context, listen: false);
-    //   drawerProvider = Provider.of<DrawerProvider>(context, listen: false);
-    //   authentication =
-    //       Provider.of<AuthenticationProvider>(context, listen: false);
+    signInProvider = Provider.of<SignInProvider>(context, listen: false);
+    authenticationProvider =
+          Provider.of<AuthenticationProvider>(context, listen: false);
   }
 
   Future<void> login() async {
-    authenticationProvider.setToken = await NetworkManager("").loginRepository
+    String text = await NetworkManager("").loginRepository
         .authentication(signInProvider.username, signInProvider.password);
+    print(text);
+    authenticationProvider.setToken = text;
   }
 }

@@ -28,6 +28,7 @@ Widget scrollAlbum(BuildContext context) {
                 icon: IconButton(
                   onPressed: () {
                     final token = Provider.of<AuthenticationProvider>(context, listen: true).getToken;
+
                     Provider.of<AlbumProvider>(context, listen: false).startTrendingByName(token, controller.value.text);
                   },
                   icon: const Icon(Icons.search),

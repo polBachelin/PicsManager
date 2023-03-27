@@ -9,7 +9,7 @@ class UserRepositoryGrpc extends UserRepository {
   final _client = ClientChannel(
     NetworkConfig.host,
     port: NetworkConfig.port,
-    options: const ChannelOptions(credentials: ChannelCredentials.secure()),
+    options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
   );
   late final UserServiceClient _stub;
 

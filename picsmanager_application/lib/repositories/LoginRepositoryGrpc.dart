@@ -10,7 +10,7 @@ class LoginRepositoryGrpc extends LoginRepository {
   final _client = ClientChannel(
     NetworkConfig.host,
     port: NetworkConfig.port,
-    options: const ChannelOptions(credentials: ChannelCredentials.secure()),
+    options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
   );
   late final AuthenticationServiceClient _stubAuth =
       AuthenticationServiceClient(_client);
@@ -26,7 +26,7 @@ class LoginRepositoryGrpc extends LoginRepository {
 
   @override
   Future<void> createAccount(String login, String password) async {
-    final request = CreateUserRequest();
+    final request = CreateUserRequest(email: login, password: password, name: login);
 
     await _stubUser.createUser(request);
   }
