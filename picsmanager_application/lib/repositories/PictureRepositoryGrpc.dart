@@ -25,7 +25,7 @@ class PictureRepositoryGrpc extends PictureRepository {
     final response = _stub.listPictures(request);
 
     await response.forEach((element) {
-      print(element.pictures.name);
+      print(element.pictures.albumId);
       onFetch(fromProtobuf(element.pictures));
     });
   }

@@ -66,6 +66,7 @@ Widget insertInAlbum(BuildContext context, String token, String id) {
               ),
               ElevatedButton(
                   onPressed: () async {
+                    print("idAlbum: ${insertAlbumProvider.valueId} photoId: $id et token: $token");
                     await NetworkManager(token).albumRepository.fillAlbum(id, insertAlbumProvider.valueId);
                   },
                   child: Text("OK"))

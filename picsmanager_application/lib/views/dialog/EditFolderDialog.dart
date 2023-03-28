@@ -27,6 +27,7 @@ void EditFolderDialog({required BuildContext context, required Album album}) {
                 children: [
                   Text("Album ${album.name}"),
                   TextFormField(controller: controller),
+                  //TODO Boris refaire le dropDown en recherche avec selector
                   DropdownButton<Picture>(
                     icon: const Icon(Icons.arrow_downward),
                     elevation: 16,
