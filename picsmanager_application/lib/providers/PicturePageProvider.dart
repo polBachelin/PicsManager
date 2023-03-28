@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:picsmanager_application/models/core/Album.dart';
 import 'package:picsmanager_application/models/core/Picture.dart';
 import 'package:picsmanager_application/ressources/Network.dart';
 
@@ -46,6 +47,16 @@ class PicturePageProvider extends ChangeNotifier {
     _pictures.clear();
     await NetworkManager(token).pictureRepository.foreachPictures((source) {
       _pictures.add(source);
+      notifyListeners();
+    });
+    _safeCallStop();
+  }
+
+  startTrendingByAlbum(String token, Album album) async {
+    _safeCallStart();
+    _pictures.clear();
+    await NetworkManager(token).pictureRepository.foreachPictures((source) {
+      if (source.albumId == album.id) { _pictures.add(source); }
       notifyListeners();
     });
     _safeCallStop();

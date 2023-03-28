@@ -4,6 +4,7 @@ import 'package:picsmanager_application/models/core/Album.dart';
 import 'package:picsmanager_application/providers/AlbumProvider.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/PicturePageProvider.dart';
+import 'package:picsmanager_application/providers/ViewProvider.dart';
 import 'package:provider/provider.dart';
 
 Widget albumPage({required BuildContext context}) {
@@ -50,7 +51,6 @@ Widget scrollAlbum(BuildContext context) {
             selector: (_, provider) => provider.albums,
             shouldRebuild: (previous, next) => true,
             builder: (_, data, __){
-              print("album selector ${data.length}");
               final children = data.map((e) => albumCards(
                   context: context,
                   source: e
@@ -72,7 +72,10 @@ Widget scrollAlbum(BuildContext context) {
 Widget albumCards({required BuildContext context, required Album source}) {
   return ElevatedButton(
     onPressed: (){
-      // TODO rediriger vers PicturesPage en affichant uniquement les images de cette album
+      final token = Provider.of<AuthenticationProvider>(context, listen: false).getToken;
+
+      Provider.of<PicturePageProvider>(context, listen: false).startTrendingByAlbum(token, source);
+      Provider.of<ViewProvider>(context, listen: false).page = 0;
     },
     onLongPress: (){
       // TODO possibilité de partagé l'album ou de le modifier
