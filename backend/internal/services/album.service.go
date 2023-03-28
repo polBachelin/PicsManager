@@ -71,14 +71,16 @@ func (a Service) ListOwnedAlbums(ownerID primitive.ObjectID) (*mongo.Cursor, err
 
 func (a Service) ListSharedAlbums(ownerID primitive.ObjectID) (*mongo.Cursor, error) {
 	findOptions := options.Find()
-	filter := bson.M{"accessIds": bson.M{"$in": ownerID}}
+	ownerIDArr := []primitive.ObjectID{ownerID}
+	filter := bson.M{"accessIds": bson.M{"$in": ownerIDArr}}
 	cur, err := a.collection.Find(context.TODO(), filter, findOptions)
 	return cur, err
 }
 
 func (a Service) ListAlbums(ownerID primitive.ObjectID) (*mongo.Cursor, error) {
 	findOptions := options.Find()
-	filter := bson.M{"$or": []interface{}{bson.M{"ownerID": ownerID}, bson.M{"accessIds": bson.M{"$in": ownerID}}}}
+	ownerIDArr := []primitive.ObjectID{ownerID}
+	filter := bson.M{"$or": []interface{}{bson.M{"ownerID": ownerID}, bson.M{"accessIds": bson.M{"$in": ownerIDArr}}}}
 	cur, err := a.collection.Find(context.TODO(), filter, findOptions)
 	return cur, err
 }
