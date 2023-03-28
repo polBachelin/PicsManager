@@ -151,5 +151,16 @@ func (s *AlbumServiceController) ListSharedAlbums(req *pbAlbum.ListSharedAlbumsR
 }
 
 func (s *AlbumServiceController) SearchAlbumsByName(ctx context.Context, req *pbAlbum.SearchAlbumsByNameRequest) (*pbAlbum.SearchAlbumsByNameResponse, error) {
-	return nil, nil
+	svc := services.NewAlbumService()
+
+	albums, err := svc.FindAlbumsByName(req.GetQuery())
+	if err != nil {
+		return nil, err
+	}
+	var res []*pbAlbum.AlbumMessage
+
+	for _, album := range albums {
+		res = append(res, buildAlbumMessage(*album))
+	}
+	return &pbAlbum.SearchAlbumsByNameResponse{Albums: res}, nil
 }
