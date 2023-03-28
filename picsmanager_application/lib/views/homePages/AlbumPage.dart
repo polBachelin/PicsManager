@@ -18,7 +18,8 @@ Widget albumPage({required BuildContext context}) {
 
 Widget scrollAlbum(BuildContext context) {
   final controller = TextEditingController();
-  final token = Provider.of<AuthenticationProvider>(context, listen: true).getToken;
+  final token =
+      Provider.of<AuthenticationProvider>(context, listen: true).getToken;
 
   return Column(
     children: [
@@ -31,7 +32,8 @@ Widget scrollAlbum(BuildContext context) {
               decoration: InputDecoration(
                 icon: IconButton(
                   onPressed: () {
-                    Provider.of<AlbumProvider>(context, listen: false).startTrendingByName(token, controller.value.text);
+                    Provider.of<AlbumProvider>(context, listen: false)
+                        .startTrendingByName(token, controller.value.text);
                   },
                   icon: const Icon(Icons.search),
                 ),
@@ -40,7 +42,9 @@ Widget scrollAlbum(BuildContext context) {
             ),
           ),
           IconButton(
-            onPressed: () { controller.clear(); },
+            onPressed: () {
+              controller.clear();
+            },
             icon: const Icon(Icons.close),
           ),
         ],
@@ -48,23 +52,18 @@ Widget scrollAlbum(BuildContext context) {
       SizedBox(height: 10),
       Expanded(
         child: SingleChildScrollView(
-          child: Selector<AlbumProvider, List<Album>>(
-            selector: (_, provider) => provider.albums,
-            shouldRebuild: (previous, next) => true,
-            builder: (_, data, __){
-              final children = data.map((e) => albumCards(
-                  context: context,
-                  source: e
-                )
-              ).toList();
-              children.insert(0, const SizedBox(height: 10));
+            child: Selector<AlbumProvider, List<Album>>(
+          selector: (_, provider) => provider.albums,
+          shouldRebuild: (previous, next) => true,
+          builder: (_, data, __) {
+            final children = data
+                .map((e) => albumCards(context: context, source: e))
+                .toList();
+            children.insert(0, const SizedBox(height: 10));
 
-              return Wrap(
-                children: children
-              );
-            },
-          )
-        ),
+            return Wrap(children: children);
+          },
+        )),
       ),
     ],
   );
@@ -72,14 +71,21 @@ Widget scrollAlbum(BuildContext context) {
 
 Widget albumCards({required BuildContext context, required Album source}) {
   return ElevatedButton(
-    onPressed: (){
-      final token = Provider.of<AuthenticationProvider>(context, listen: false).getToken;
+    onPressed: () {
+      final token =
+          Provider.of<AuthenticationProvider>(context, listen: false).getToken;
 
-      Provider.of<PicturePageProvider>(context, listen: false).startTrendingByAlbum(token, source);
+      Provider.of<PicturePageProvider>(context, listen: false)
+          .startTrendingByAlbum(token, source);
       Provider.of<ViewProvider>(context, listen: false).page = 0;
     },
+<<<<<<< Updated upstream
     onLongPress: (){
       EditFolderDialog(context: context, album: source);
+=======
+    onLongPress: () {
+      // TODO possibilité de partagé l'album ou de le modifier
+>>>>>>> Stashed changes
     },
     child: SizedBox(
       width: MediaQuery.of(context).size.width * 0.39,
