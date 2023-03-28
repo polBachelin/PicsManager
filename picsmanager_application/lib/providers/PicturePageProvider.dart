@@ -22,6 +22,16 @@ class PicturePageProvider extends ChangeNotifier {
     _pending = false;
   }
 
+  startTrendingCustoms(String token, bool onAlbum) async {
+    _safeCallStart();
+    _pictures.clear();
+    await NetworkManager(token).pictureRepository.foreachPictures((source) {
+      if (source.albumId.isEmpty == !onAlbum) { _pictures.add(source); }
+      notifyListeners();
+    });
+    _safeCallStop();
+  }
+
   startTrending(String token) async {
     _safeCallStart();
     _pictures.clear();
