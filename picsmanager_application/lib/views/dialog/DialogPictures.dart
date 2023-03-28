@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../../models/core/Album.dart';
 
 void dialogPicturesInAlbum(
-    {required BuildContext context, required String token}) {
+    {required BuildContext context, required String token, required String pictureId}) {
   showDialog(
       context: context,
       builder: (context) {
@@ -17,12 +17,12 @@ void dialogPicturesInAlbum(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          child: insertInAlbum(context, token),
+          child: insertInAlbum(context, token, pictureId),
         );
       });
 }
 
-Widget insertInAlbum(BuildContext context, String token) {
+Widget insertInAlbum(BuildContext context, String token, String id) {
   AlbumProvider albumProvider =
       Provider.of<AlbumProvider>(context, listen: false);
   InsertAlbumProvider insertAlbumProvider =
