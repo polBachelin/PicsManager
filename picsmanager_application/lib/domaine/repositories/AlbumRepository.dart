@@ -8,6 +8,7 @@ abstract class AlbumRepository {
   Future<void> foreachAlbumsNotOwned(Function(Album) onFetch);
 
   Future<void> uploadAlbum(String name);
+  Future<void> updateAlbum(String id, String name, List<int> img);
   Future<void> sharedAlbum(Album source, int user);
   Future<void> fillAlbum(Album source, int picture);
 }

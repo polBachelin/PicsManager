@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:picsmanager_application/protobuf/service/picture_service.pb.dart';
 
 class Picture {
-  Image visualPicture;
+  List<int> visualPicture;
   MetaData metaPicture;
   String name;
   String albumId;
@@ -17,11 +17,15 @@ class Picture {
         required this.albumId,
       }
    );
+
+  Image getImage() {
+    final imageSource = Uint8List.fromList(visualPicture);
+    return Image.memory(imageSource);
+  }
 }
 
 Picture fromProtobuf(PictureMessage source) {
-  final imageSource = Uint8List.fromList(source.data);
   final metaData = MetaData();
 
-  return Picture(visualPicture: Image.memory(imageSource), metaPicture: metaData, name: source.name, albumId: source.albumId);
+  return Picture(visualPicture: source.data, metaPicture: metaData, name: source.name, albumId: source.albumId);
 }

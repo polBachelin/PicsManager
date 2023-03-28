@@ -81,9 +81,8 @@ Widget cardPicture({required BuildContext context, required Picture picture, req
         },
         style: ButtonStyle(
         ),
-        child: picture.visualPicture,
+        child: picture.getImage(),
       ),
-  
   );
 }
 

@@ -5,6 +5,7 @@ import 'package:picsmanager_application/providers/AlbumProvider.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/PicturePageProvider.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
+import 'package:picsmanager_application/views/dialog/EditFolderDialog.dart';
 import 'package:provider/provider.dart';
 
 Widget albumPage({required BuildContext context}) {
@@ -78,7 +79,7 @@ Widget albumCards({required BuildContext context, required Album source}) {
       Provider.of<ViewProvider>(context, listen: false).page = 0;
     },
     onLongPress: (){
-      // TODO possibilité de partagé l'album ou de le modifier
+      EditFolderDialog(context: context, album: source);
     },
     child: SizedBox(
       width: MediaQuery.of(context).size.width * 0.39,

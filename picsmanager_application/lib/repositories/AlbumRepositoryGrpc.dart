@@ -77,4 +77,11 @@ class AlbumRepositoryGrpc extends AlbumRepository {
     final response = await _stub.createAlbum(request);
     print("OUI: $response");
   }
+
+  @override
+  Future<void> updateAlbum(String id, String name, List<int> img) async {
+    final album = AlbumMessage(albumId: id, name: name, thumbnailData: img);
+    final request = UpdateAlbumRequest();
+    await _stub.updateAlbum(request);
+  }
 }
