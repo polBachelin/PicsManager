@@ -81,7 +81,7 @@ Widget albumCards({required BuildContext context, required Album source}) {
       // TODO possibilité de partagé l'album ou de le modifier
     },
     child: SizedBox(
-      width: MediaQuery.of(context).size.width * 0.49,
+      width: MediaQuery.of(context).size.width * 0.39,
       child: Card(
         margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
         child: Column(

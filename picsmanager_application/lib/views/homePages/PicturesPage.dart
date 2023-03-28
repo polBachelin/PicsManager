@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:picsmanager_application/models/core/Picture.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/PicturePageProvider.dart';
+import 'package:picsmanager_application/views/dialog/DialogPictures.dart';
 import 'package:provider/provider.dart';
 
 Widget picturesPage({required BuildContext context}) {
@@ -56,7 +57,7 @@ Widget scrollPictures({required BuildContext context, required String token}) {
                 print("image selector ${data.length}");
                 return Wrap(
                   children: data.map((e) =>
-                      cardPicture(context: context, picture: e)
+                      cardPicture(context: context, picture: e, token: token)
                   ).toList()
                 );
               },
@@ -67,11 +68,21 @@ Widget scrollPictures({required BuildContext context, required String token}) {
   );
 }
 
-Widget cardPicture({required BuildContext context, required Picture picture}) {
+Widget cardPicture({required BuildContext context, required Picture picture, required String token}) {
   return Container(
       color: Colors.red,
       width: MediaQuery.of(context).size.width * 0.33,
-      child: picture.visualPicture,
+      child: ElevatedButton(
+        onPressed: (){
+
+        },
+        onLongPress: (){
+          dialogPicturesInAlbum(context: context, token: token);
+        },
+        style: ButtonStyle(
+        ),
+        child: picture.visualPicture,
+      ),
   
   );
 }
