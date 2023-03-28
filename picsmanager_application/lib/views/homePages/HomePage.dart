@@ -35,7 +35,6 @@ class HomePage extends StatelessWidget {
                 viewProvider.page = page;
                 appBarProvider.shareUser = true;
                 appBarProvider.shareFolder = true;
-                print(token.getToken);
               },
               selectedItemColor: Colors.grey[900],
               unselectedItemColor: Colors.grey[700],

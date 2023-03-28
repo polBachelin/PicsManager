@@ -38,8 +38,8 @@ Widget insertInAlbum(BuildContext context, String token) {
             height: 20,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(width: 50),
               Selector<InsertAlbumProvider, String>(
                 selector: (_, provider) => provider.valueId,
                 builder: (_, data, __) {
