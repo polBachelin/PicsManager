@@ -88,6 +88,7 @@ func (s *AlbumServiceController) ListAlbums(req *pbAlbum.ListAlbumsRequest, stre
 	svc := services.NewAlbumService()
 	cur, err := svc.ListAlbums(userID)
 	if err != nil {
+		log.Printf("Could not get all pictures from cursor: %s", err)
 		return status.Errorf(codes.Internal, "Could not get all pictures cursor from DB")
 	}
 	var i int32 = 0

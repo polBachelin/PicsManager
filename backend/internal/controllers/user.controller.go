@@ -53,6 +53,10 @@ func generateName(name string) string {
 	return name + suffixName
 }
 
+func BuildUserMessage(obj models.User) *pbUser.UserMessage {
+	return &pbUser.UserMessage{UserId: obj.ID.Hex(), Name: obj.Name, Email: obj.Email}
+}
+
 func (s *UserServiceController) CreateUser(ctx context.Context, req *pbUser.CreateUserRequest) (*pbUser.CreateUserResponse, error) {
 	var user models.User
 
@@ -73,13 +77,41 @@ func (s *UserServiceController) CreateUser(ctx context.Context, req *pbUser.Crea
 }
 
 func (s *UserServiceController) UpdateUser(ctx context.Context, req *pbUser.UpdateUserRequest) (*pbUser.UpdateUserResponse, error) {
-	return nil, nil
+	svc := services.NewUserService()
+
+	id, err := primitive.ObjectIDFromHex(req.GetSource().UserId)
+	if err != nil {
+		return nil, err
+	}
+	user, err := svc.GetUser(id)
+	user.Name = req.Source.GetName()
+	user.Email = req.Source.GetEmail()
+	_, err = svc.UpdateUser(user)
+	return &pbUser.UpdateUserResponse{User: BuildUserMessage(user)}, nil
 }
 
 func (s *UserServiceController) DeleteUser(ctx context.Context, req *pbUser.DeleteUserRequest) (*pbUser.DeleteUserResponse, error) {
-	return nil, nil
+	svc := services.NewUserService()
+
+	id, err := primitive.ObjectIDFromHex(req.GetUserId())
+	if err != nil {
+		return nil, err
+	}
+	svc.DeleteUser(id)
+	return &pbUser.DeleteUserResponse{}, nil
 }
 
 func (s *UserServiceController) SearchUsersByName(ctx context.Context, req *pbUser.SearchUsersByNameRequest) (*pbUser.SearchUsersByNameResponse, error) {
-	return nil, nil
+	svc := services.NewUserService()
+
+	users, err := svc.FindUserByQuery(req.GetQuery())
+	if err != nil {
+		return nil, err
+	}
+	var res []*pbUser.UserMessage
+
+	for _, user := range users {
+		res = append(res, BuildUserMessage(*user))
+	}
+	return &pbUser.SearchUsersByNameResponse{Users: res}, nil
 }

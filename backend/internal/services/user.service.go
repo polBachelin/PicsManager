@@ -58,3 +58,26 @@ func (u Service) DeleteUser(id primitive.ObjectID) (interface{}, error) {
 	res, err := u.collection.DeleteOne(context.TODO(), bson.M{"_id": id})
 	return res.DeletedCount, err
 }
+
+func (u Service) UpdateUser(obj models.User) (*mongo.UpdateResult, error) {
+	update := bson.M{"$set": bson.M{"name": obj.Name, "email": obj.Email}}
+	return u.collection.UpdateOne(context.TODO(), bson.M{"_id": obj.ID}, update)
+}
+
+func (u Service) FindUserByQuery(query string) ([]*models.User, error) {
+	model := mongo.IndexModel{Keys: bson.D{{"name", "text"}}}
+	_, err := u.collection.Indexes().CreateOne(context.TODO(), model)
+	if err != nil {
+		return nil, err
+	}
+	filter := bson.D{{"$text", bson.D{{"$search", query}}}}
+	cursor, err := u.collection.Find(context.TODO(), filter)
+	if err != nil {
+		return nil, err
+	}
+	var res []*models.User
+	if err = cursor.All(context.TODO(), &res); err != nil {
+		return nil, err
+	}
+	return res, nil
+}
