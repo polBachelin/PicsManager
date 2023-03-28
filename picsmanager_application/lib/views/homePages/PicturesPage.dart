@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/models/core/Picture.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
@@ -48,7 +49,7 @@ Widget scrollPictures({required BuildContext context, required String token}) {
       SizedBox(height: 10),
       Expanded(
         child: SingleChildScrollView(
-            child: Selector<PicturePageProvider, List<Picture>>(
+            child: Selector<PicturePageProvider, ObserverList<Picture>>(
               selector: (_, provider) => provider.pictures,
               builder: (_, data, __){
                 print("image selector");

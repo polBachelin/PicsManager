@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/models/core/Album.dart';
 import 'package:picsmanager_application/providers/AlbumProvider.dart';
@@ -45,7 +46,7 @@ Widget scrollAlbum(BuildContext context) {
       SizedBox(height: 10),
       Expanded(
         child: SingleChildScrollView(
-          child: Selector<AlbumProvider, List<Album>>(
+          child: Selector<AlbumProvider, ObserverList<Album>>(
             selector: (_, provider) => provider.albums,
             builder: (_, data, __){
               final children = data.map((e) => albumCards(
