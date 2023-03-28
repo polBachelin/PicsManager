@@ -79,13 +79,8 @@ Widget albumCards({required BuildContext context, required Album source}) {
           .startTrendingByAlbum(token, source);
       Provider.of<ViewProvider>(context, listen: false).page = 0;
     },
-<<<<<<< Updated upstream
     onLongPress: (){
       EditFolderDialog(context: context, album: source);
-=======
-    onLongPress: () {
-      // TODO possibilité de partagé l'album ou de le modifier
->>>>>>> Stashed changes
     },
     child: SizedBox(
       width: MediaQuery.of(context).size.width * 0.39,
