@@ -28,9 +28,15 @@ func (s *PictureServiceController) CreatePicture(ctx context.Context, req *pbPic
 		log.Println("Error: ", err)
 		return nil, err
 	}
+	albumSvc := services.NewAlbumService()
+	albumID, err := primitive.ObjectIDFromHex(req.AlbumId)
+	hasAccess, err := albumSvc.UserHasAccessToAlbum(userID, albumID)
+	if hasAccess == false || err != nil {
+		return nil, status.Errorf(codes.InvalidArgument, "User does not have access to album or albumID is wrong")
+	}
 	svc := services.NewPictureService()
 	var picture models.Picture
-	picture.AlbumID, err = primitive.ObjectIDFromHex(req.AlbumId)
+	picture.AlbumID = albumID
 	picture.OwnerID = userID
 	picture.Data = req.GetData()
 	picture.Tags = req.GetTags()
@@ -96,6 +102,11 @@ func (s *PictureServiceController) ListAlbumPictures(req *pbPicture.ListAlbumPic
 		return contextIDError
 	}
 	svc := services.NewPictureService()
+	albumSvc := services.NewAlbumService()
+	hasAccess, err := albumSvc.UserHasAccessToAlbum(userID, albumID)
+	if hasAccess == false || err != nil {
+		return status.Errorf(codes.InvalidArgument, "User does not have access to album or album ID does not exist")
+	}
 	cur, err := svc.GetAllPicturesAlbumCursor(userID, albumID)
 	if err != nil {
 		return status.Errorf(codes.Internal, "Could not get all pictures cursor from DB")

@@ -60,6 +60,19 @@ func (a Service) GetAlbumByName(name string) (models.Album, error) {
 	return res, nil
 }
 
+func (a Service) UserHasAccessToAlbum(userID primitive.ObjectID, albumID primitive.ObjectID) (bool, error) {
+	album, err := a.GetAlbum(albumID)
+	if err != nil {
+		return false, err
+	}
+	for _, a := range album.AccessIDs {
+		if userID == a {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
 func (a Service) ListOwnedAlbums(ownerID primitive.ObjectID) (*mongo.Cursor, error) {
 	findOptions := options.Find()
 	cur, err := a.collection.Find(context.TODO(), bson.M{"ownerID": ownerID}, findOptions)
