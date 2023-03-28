@@ -1,7 +1,7 @@
-import 'package:picsmanager_application/protobuf/message/user_message.pb.dart';
+import 'package:picsmanager_application/protobuf/service/user_service.pb.dart';
 
 class User {
-  int id;
+  String id;
   String token;
   String firstname;
   String lastName;

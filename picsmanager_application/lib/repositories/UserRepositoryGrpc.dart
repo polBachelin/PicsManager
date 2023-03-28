@@ -26,7 +26,7 @@ class UserRepositoryGrpc extends UserRepository {
     final response = await _stub.searchUsersByName(request);
 
     return response.users.map((e) =>
-        fromProtobuf(e as typed.UserMessage)
+        fromProtobuf(e)
     ).toList();
   }
 }
