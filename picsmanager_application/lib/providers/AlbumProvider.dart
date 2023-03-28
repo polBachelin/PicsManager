@@ -24,6 +24,7 @@ class AlbumProvider extends ChangeNotifier {
     _safeCallStart();
     _albums.clear();
     NetworkManager(token).albumRepository.foreachAlbums((source) {
+        print(source.name);
         _albums.add(source);
         notifyListeners();
       }

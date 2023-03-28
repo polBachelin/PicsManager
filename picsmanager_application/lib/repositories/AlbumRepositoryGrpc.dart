@@ -1,7 +1,6 @@
 import 'package:grpc/grpc.dart';
 import 'package:picsmanager_application/domaine/repositories/AlbumRepository.dart';
 import 'package:picsmanager_application/models/core/Album.dart';
-import 'package:picsmanager_application/protobuf/message/album_message.pb.dart' as typed;
 import 'package:picsmanager_application/protobuf/service/album_service.pbgrpc.dart';
 import 'package:picsmanager_application/ressources/Network.dart';
 
@@ -75,7 +74,7 @@ class AlbumRepositoryGrpc extends AlbumRepository {
   @override
   Future<void> uploadAlbum(String name) async {
     final request = CreateAlbumRequest(name: name);
-
-    await _stub.createAlbum(request);
+    final response = await _stub.createAlbum(request);
+    print("OUI: $response");
   }
 }

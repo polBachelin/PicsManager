@@ -41,7 +41,7 @@ Widget scrollPictures({required BuildContext context, required String token}) {
             ),
           ),
           IconButton(
-            onPressed: null,
+            onPressed: () { controller.clear(); },
             icon: const Icon(Icons.close),
           ),
         ],
@@ -68,7 +68,6 @@ Widget scrollPictures({required BuildContext context, required String token}) {
 }
 
 Widget cardPicture({required BuildContext context, required Picture picture}) {
-  print("test image");
   return Container(
       color: Colors.red,
       width: MediaQuery.of(context).size.width * 0.33,

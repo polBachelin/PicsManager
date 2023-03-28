@@ -38,7 +38,7 @@ Widget scrollAlbum(BuildContext context) {
             ),
           ),
           IconButton(
-            onPressed: null,
+            onPressed: () { controller.clear(); },
             icon: const Icon(Icons.close),
           ),
         ],
@@ -50,6 +50,7 @@ Widget scrollAlbum(BuildContext context) {
             selector: (_, provider) => provider.albums,
             shouldRebuild: (previous, next) => true,
             builder: (_, data, __){
+              print("album selector ${data.length}");
               final children = data.map((e) => albumCards(
                   context: context,
                   source: e
