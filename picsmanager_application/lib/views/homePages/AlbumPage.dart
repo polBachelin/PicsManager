@@ -46,8 +46,9 @@ Widget scrollAlbum(BuildContext context) {
       SizedBox(height: 10),
       Expanded(
         child: SingleChildScrollView(
-          child: Selector<AlbumProvider, ObserverList<Album>>(
+          child: Selector<AlbumProvider, List<Album>>(
             selector: (_, provider) => provider.albums,
+            shouldRebuild: (previous, next) => true,
             builder: (_, data, __){
               final children = data.map((e) => albumCards(
                   context: context,

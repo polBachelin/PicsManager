@@ -20,10 +20,9 @@ class HomePage extends StatelessWidget {
     AppBarProvider appBarProvider =
         Provider.of<AppBarProvider>(context, listen: false);
 
-    AuthenticationProvider token = Provider.of<AuthenticationProvider>(context, listen: true);
-    print(token.getToken);
-    PicturePageProvider pictureProvider = Provider.of<PicturePageProvider>(context, listen: true);
-    AlbumProvider albumProvider = Provider.of<AlbumProvider>(context, listen: true);
+    AuthenticationProvider token = Provider.of<AuthenticationProvider>(context, listen: false);
+    PicturePageProvider pictureProvider = Provider.of<PicturePageProvider>(context, listen: false);
+    AlbumProvider albumProvider = Provider.of<AlbumProvider>(context, listen: false);
 
     return Scaffold(
         appBar: MyAppBar(),

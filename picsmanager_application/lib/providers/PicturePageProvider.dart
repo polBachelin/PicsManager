@@ -4,37 +4,50 @@ import 'package:picsmanager_application/models/core/Picture.dart';
 import 'package:picsmanager_application/ressources/Network.dart';
 
 class PicturePageProvider extends ChangeNotifier {
-  final ObserverList<Picture> _pictures = ObserverList();
+  bool _pending = false;
+  final List<Picture> _pictures = List.empty(growable: true);
 
-  ObserverList<Picture> get pictures => _pictures;
+  List<Picture> get pictures => _pictures;
 
-  startTrending(String token) {
-    _pictures.clear();
-    notifyListeners();
-    NetworkManager(token).pictureRepository.foreachPictures((source) {
-      _pictures.add(source);
-      notifyListeners();
-    });
-    notifyListeners();
+  _safeCallStart() {
+    if (_pending) {
+      throw Exception("Archi de merde, on utilisera ma techno la prochaine fois");
+    }
+    _pending = true;
   }
 
-  startTrendingByName(String token, String name) {
-    _pictures.clear();
+  _safeCallStop() {
     notifyListeners();
-    NetworkManager(token).pictureRepository.foreachPictures((source) {
-      _pictures.add(source);
-      notifyListeners();
-    });
-    notifyListeners();
+    _pending = false;
   }
 
-  startTrendingByTag(String token, String tag) {
+  startTrending(String token) async {
+    _safeCallStart();
     _pictures.clear();
-    notifyListeners();
-    NetworkManager(token).pictureRepository.foreachPictures((source) {
+    await NetworkManager(token).pictureRepository.foreachPictures((source) {
       _pictures.add(source);
       notifyListeners();
     });
-    notifyListeners();
+    _safeCallStop();
+  }
+
+  startTrendingByName(String token, String name) async {
+    _safeCallStart();
+    _pictures.clear();
+    await NetworkManager(token).pictureRepository.foreachPictures((source) {
+      _pictures.add(source);
+      notifyListeners();
+    });
+    _safeCallStop();
+  }
+
+  startTrendingByTag(String token, String tag) async {
+    _safeCallStart();
+    _pictures.clear();
+    await NetworkManager(token).pictureRepository.foreachPictures((source) {
+      _pictures.add(source);
+      notifyListeners();
+    });
+    _safeCallStop();
   }
 }

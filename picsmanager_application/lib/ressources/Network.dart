@@ -8,7 +8,7 @@ import 'package:picsmanager_application/repositories/PictureRepositoryGrpc.dart'
 import 'package:picsmanager_application/repositories/UserRepositoryGrpc.dart';
 
 class NetworkConfig {
-  static const String host = '10.19.248.164';
+  static const String host = '10.19.247.41';
   static const int port = 50051;
 }
 

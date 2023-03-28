@@ -31,8 +31,8 @@ Widget scrollPictures({required BuildContext context, required String token}) {
               controller: controller,
               decoration: InputDecoration(
                 icon: IconButton(
-                  onPressed: () {
-                    Provider.of<PicturePageProvider>(context, listen: false).startTrendingByName(token, controller.value.text);
+                  onPressed: () async {
+                    await Provider.of<PicturePageProvider>(context, listen: false).startTrendingByName(token, controller.value.text);
                   },
                   icon: const Icon(Icons.search),
                 ),
@@ -49,10 +49,11 @@ Widget scrollPictures({required BuildContext context, required String token}) {
       SizedBox(height: 10),
       Expanded(
         child: SingleChildScrollView(
-            child: Selector<PicturePageProvider, ObserverList<Picture>>(
+            child: Selector<PicturePageProvider, List<Picture>>(
               selector: (_, provider) => provider.pictures,
+              shouldRebuild: (previous, next) => true,
               builder: (_, data, __){
-                print("image selector");
+                print("image selector ${data.length}");
                 return Wrap(
                   children: data.map((e) =>
                       cardPicture(context: context, picture: e)
