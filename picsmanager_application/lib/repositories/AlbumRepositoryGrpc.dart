@@ -60,13 +60,13 @@ class AlbumRepositoryGrpc extends AlbumRepository {
   }
 
   @override
-  Future<void> fillAlbum(Album source, int picture) async {
-    // TODO: implement fillAlbum
-    throw UnimplementedError();
+  Future<void> fillAlbum(String source, String picture) async {
+    final request = AddAccessToAlbumRequest(albumId: source, accessId: picture);
+    await _stub.addAccessToAlbum(request);
   }
 
   @override
-  Future<void> sharedAlbum(Album source, int user) async {
+  Future<void> sharedAlbum(String source, int user) async {
     // TODO: implement sharedAlbum
     throw UnimplementedError();
   }

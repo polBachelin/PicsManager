@@ -1,7 +1,6 @@
 import 'package:grpc/grpc.dart';
 import 'package:picsmanager_application/domaine/repositories/PictureRepository.dart';
 import 'package:picsmanager_application/models/core/Picture.dart';
-import 'package:picsmanager_application/protobuf/message/picture_message.pb.dart' as typed;
 import 'package:picsmanager_application/protobuf/service/picture_service.pbgrpc.dart';
 import 'package:picsmanager_application/ressources/Network.dart';
 
@@ -77,5 +76,11 @@ class PictureRepositoryGrpc extends PictureRepository {
     );
 
     await _stub.createPicture(request);
+  }
+
+  @override
+  Future<void> deletePicture(String id) async {
+    final request = DeletePictureRequest(pictureId: id);
+    await _stub.deletePicture(request);
   }
 }

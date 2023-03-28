@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/providers/AlbumProvider.dart';
 import 'package:picsmanager_application/providers/InsertAlbumProvider.dart';
-import 'package:picsmanager_application/providers/PicturePageProvider.dart';
 import 'package:picsmanager_application/ressources/Network.dart';
 import 'package:provider/provider.dart';
 
@@ -66,13 +65,15 @@ Widget insertInAlbum(BuildContext context, String token, String id) {
                 },
               ),
               ElevatedButton(
-                  onPressed: () {
-                    Provider.of<PicturePageProvider>(context, listen: false);
+                  onPressed: () async {
+                    await NetworkManager(token).albumRepository.fillAlbum(id, insertAlbumProvider.valueId);
                   },
                   child: Text("OK"))
             ],
           ),
-          ElevatedButton(onPressed: () {}, child: Text("Delete Pictures"))
+          ElevatedButton(onPressed: () async {
+            await NetworkManager(token).pictureRepository.deletePicture(id);
+          }, child: Text("Delete Pictures"))
         ],
       ));
 }

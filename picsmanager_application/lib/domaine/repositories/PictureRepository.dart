@@ -9,4 +9,6 @@ abstract class PictureRepository {
 
   Future<void> uploadPicture(List<int> image, String name);
   Future<void> sharedPicture(String id, String userId);
+
+  Future<void> deletePicture(String id);
 }
