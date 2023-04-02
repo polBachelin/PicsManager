@@ -28,7 +28,7 @@ class User {
     } catch (e) {
       print("catch user $e");
       return User(
-          id: 0,
+          id: "",
           token: "",
           firstname: "",
           lastName: "",

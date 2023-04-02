@@ -3,13 +3,21 @@ import 'package:flutter/widgets.dart';
 import 'package:picsmanager_application/models/core/Album.dart';
 import 'package:picsmanager_application/models/core/Picture.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
+import 'package:picsmanager_application/providers/InsertNewPictureForAlbum.dart';
 import 'package:picsmanager_application/providers/PicturePageProvider.dart';
 import 'package:picsmanager_application/ressources/Network.dart';
+import 'package:picsmanager_application/views/dialog/editFolderWidget/renameFolderWidget.dart';
 import 'package:provider/provider.dart';
 
 void EditFolderDialog({required BuildContext context, required Album album}) {
-  AuthenticationProvider token = Provider.of<AuthenticationProvider>(context, listen: false);
+  AuthenticationProvider token =
+      Provider.of<AuthenticationProvider>(context, listen: false);
+  // PicturePageProvider picturePageProvider = Provider.of<PicturePageProvider>(context, listen: false);
+  // picturePageProvider.startTrendingByAlbum(token.getToken, album);
+  // InsertNewPictureForAlbum insertNewPictureForAlbum = Provider.of<InsertNewPictureForAlbum>(context);
+  // insertNewPictureForAlbum.picture = picturePageProvider.pictures.first;
   final controller = TextEditingController(text: album.name);
+  final controllerUser = TextEditingController(text: "");
   List<int> selected = List.empty();
 
   showDialog(
@@ -18,45 +26,86 @@ void EditFolderDialog({required BuildContext context, required Album album}) {
         return Selector<PicturePageProvider, List<Picture>>(
           selector: (_, provider) => provider.pictures,
           shouldRebuild: (previous, next) => true,
-          builder: (_, data, __){
+          builder: (_, data, __) {
             return Dialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
               ),
               child: Column(
                 children: [
+                  // Titre du dialog
+                  SizedBox(height: 10),
                   Text("Album ${album.name}"),
-                  TextFormField(controller: controller),
-                  //TODO Boris refaire le dropDown en recherche avec selector
-                  DropdownButton<Picture>(
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.deepPurple),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
+                  //Premier widget pour renommer le dossier
+                  Container(
+                    width: 300,
+                    height: 100,
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        Text("renommer le dossier :"),
+                        TextFormField(
+                          controller: controller,
+                        )
+                      ],
                     ),
-                    onChanged: (Picture? value) {
-                      selected = value?.visualPicture ?? List.empty();
-                    },
-                    items: data.map<DropdownMenuItem<Picture>>((Picture value) {
-                      return DropdownMenuItem<Picture>(
-                        value: value,
-                        child: Text(value.name),
-                      );
-                    }).toList(),
+                  ),
+                  // Changer l'image du dossier
+                  // Row(
+                  //   children: [
+                  //     Selector<InsertNewPictureForAlbum, Picture>(
+                  //       selector: (_, provider,) => provider.picture,
+                  //       builder: (_, data, __) {
+                  //         return DropdownButton<String>(
+                  //           value: data.id,
+                  //             items: picturePageProvider.pictures
+                  //             .map<DropdownMenuItem<String>>((Picture picture) {
+                  //               return DropdownMenuItem<String>(
+                  //                 value: picture.id,
+                  //                   child: Text(picture.name),
+                  //               );
+                  //             }).toList(),
+                  //             onChanged: (String? value) {
+                  //               insertNewPictureForAlbum.picture.name = value!;
+                  //             },);
+                  //       },
+                  //     )
+                  //   ],
+                  // ),
+                  Container(
+                    width: 300,
+                    height: 100,
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        Text("Partager avec : "),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: controllerUser,
+                              ),
+                            ),
+                            ElevatedButton(
+                                onPressed: () {}, child: Icon(Icons.search))
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                   OutlinedButton(
                       onPressed: () async {
-                        await NetworkManager(token.getToken).albumRepository.updateAlbum(album.id, controller.text, selected);
+                        await NetworkManager(token.getToken)
+                            .albumRepository
+                            .updateAlbum(album.id, controller.text, selected);
                       },
-                      child: Text("save")
-                  )
+                      child: Text("save"))
                 ],
               ),
             );
           },
         );
-      }
-  );
+      });
 }
