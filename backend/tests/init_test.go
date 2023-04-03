@@ -91,22 +91,20 @@ func TestUser(t *testing.T) {
 			out *pbUser.UpdateUserResponse
 			err error
 		}
+		resp, _ := client.CreateUser(ctx, &pbUser.CreateUserRequest{Name: "hello", Email: "bernad.bachelin@gmail.com", Password: "1234567890"})
+		userID := resp.User.UserId
 		var tests = map[string]struct {
 			in       *pbUser.UpdateUserRequest
 			expected expectation
 		}{
 			"ID does not exist": {
-				in:       &pbUser.UpdateUserRequest{Source: &pbUser.UserMessage{Name: "hello", Email: "pol.bachelin@gmail.com"}},
+				in:       &pbUser.UpdateUserRequest{Source: &pbUser.UserMessage{UserId: "00000", Name: "hello", Email: "pol.bachelin@gmail.com"}},
+				expected: expectation{out: nil, err: errors.New("rpc error: code = Unknown desc = the provided hex string is not a valid ObjectID")},
+			},
+			"Change name": {
+				in:       &pbUser.UpdateUserRequest{Source: &pbUser.UserMessage{UserId: userID, Name: "nezName", Email: "pol.bachelin@gmail.com"}},
 				expected: expectation{out: &pbUser.UpdateUserResponse{User: &pbUser.UserMessage{Email: "pol.bachelin@gmail.com"}}, err: nil},
 			},
-			// "Wrong email": {
-			// 	in:       &pbUser.UpdateUserRequest{Name: "hello", Email: "pol.bachil.com", Password: "1234567890"},
-			// 	expected: expectation{out: nil, err: errors.New("rpc error: code = Unknown desc = Error email must be an email -> pol.bachil.com")},
-			// },
-			// "Wrong password": {
-			// 	in:       &pbUser.UpdateUserRequest{Name: "hello", Email: "bernard.cool@gmail.com", Password: "1234"},
-			// 	expected: expectation{out: nil, err: errors.New("rpc error: code = Unknown desc = Error password length 10 -> 64")},
-			// },
 		}
 		for scenario, tt := range tests {
 			t.Run(scenario, func(t *testing.T) {
