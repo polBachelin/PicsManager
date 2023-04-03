@@ -13,4 +13,5 @@ abstract class PictureRepository {
   Future<void> setAlbum(PictureMessage source, String album);
 
   Future<void> deletePicture(String id);
+  Future<void> setName(PictureMessage source, String name);
 }

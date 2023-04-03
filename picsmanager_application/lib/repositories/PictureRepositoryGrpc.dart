@@ -91,4 +91,12 @@ class PictureRepositoryGrpc extends PictureRepository {
 
     await _stub.updatePicture(request);
   }
+
+  @override
+  Future<void> setName(PictureMessage source, String name) async {
+    source.name = name;
+    final request = UpdatePictureRequest(pictures: source);
+
+    await _stub.updatePicture(request);
+  }
 }

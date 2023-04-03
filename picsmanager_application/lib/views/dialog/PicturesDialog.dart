@@ -117,9 +117,9 @@ void getPictures({required BuildContext context, required Picture picture}) {
                         ),
                         OutlinedButton(
                             onPressed: () async {
-                              // await NetworkManager(token.getToken)
-                              //     .pictureRepository
-                              //     .upd(image, name)
+                              await NetworkManager(token.getToken)
+                                  .pictureRepository
+                                  .setName(picture.raw, controller.value.text);
                             },
                             child: Text("save"))
                       ],
