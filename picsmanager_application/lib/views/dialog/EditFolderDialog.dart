@@ -92,9 +92,7 @@ void EditFolderDialog({required BuildContext context, required Album album}) {
                             Text("Partager avec : "),
                             TextFormField(
                               onChanged: (String value) {
-                                print(value);
-                                listUserProvider.startTrendingByName(
-                                    token.getToken, value);
+                                listUserProvider.startTrendingByName(token.getToken, value);
                               },
                             ),
                           ],
@@ -109,7 +107,7 @@ void EditFolderDialog({required BuildContext context, required Album album}) {
                           child: Selector<ListUserProvider, List<User>>(
                               selector: (_, provider) => provider.users,
                               builder: (_, data, __) {
-                                return ListView(
+                                return (data.isEmpty) ? Text("No result") : ListView(
                                     scrollDirection: Axis.vertical,
                                     shrinkWrap: true,
                                     children: data
@@ -122,7 +120,7 @@ void EditFolderDialog({required BuildContext context, required Album album}) {
                           onPressed: () async {
                             await NetworkManager(token.getToken)
                                 .albumRepository
-                                .updateAlbum(album.id as AlbumMessage, controller.text, selected);
+                                .updateAlbum(album.raw, controller.text, selected);
                           },
                           child: Text("save"))
                     ],

@@ -29,6 +29,7 @@ class ListUserProvider extends ChangeNotifier {
     _safeCallStart();
     _users.clear();
     _users = await NetworkManager(token).userRepository.searchUserByName(name);
+    print("USER ${_users.length}");
     _safeCallStop();
   }
 }
