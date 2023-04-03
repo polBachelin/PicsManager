@@ -60,6 +60,22 @@ func (a Service) GetAlbumByName(name string) (models.Album, error) {
 	return res, nil
 }
 
+func (a Service) UserHasAccessToAlbum(userID primitive.ObjectID, albumID primitive.ObjectID) (bool, error) {
+	album, err := a.GetAlbum(albumID)
+	if err != nil {
+		return false, err
+	}
+	if album.OwnerID == userID {
+		return true, nil
+	}
+	for _, a := range album.AccessIDs {
+		if userID == a {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
 func (a Service) ListOwnedAlbums(ownerID primitive.ObjectID) (*mongo.Cursor, error) {
 	findOptions := options.Find()
 	cur, err := a.collection.Find(context.TODO(), bson.M{"ownerID": ownerID}, findOptions)
@@ -83,4 +99,22 @@ func (a Service) ListAlbums(ownerID primitive.ObjectID) (*mongo.Cursor, error) {
 	filter := bson.M{"$or": []interface{}{bson.M{"ownerID": ownerID}, bson.M{"accessIds": bson.M{"$in": ownerIDArr}}}}
 	cur, err := a.collection.Find(context.TODO(), filter, findOptions)
 	return cur, err
+}
+
+func (a Service) FindAlbumsByName(name string) ([]*models.Album, error) {
+	model := mongo.IndexModel{Keys: bson.D{{"name", "text"}}}
+	_, err := a.collection.Indexes().CreateOne(context.TODO(), model)
+	if err != nil {
+		return nil, err
+	}
+	filter := bson.D{{"$text", bson.D{{"$search", name}}}}
+	cursor, err := a.collection.Find(context.TODO(), filter)
+	if err != nil {
+		return nil, err
+	}
+	var res []*models.Album
+	if err = cursor.All(context.TODO(), &res); err != nil {
+		return nil, err
+	}
+	return res, nil
 }
