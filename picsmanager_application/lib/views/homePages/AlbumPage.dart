@@ -43,6 +43,7 @@ Widget scrollAlbum(BuildContext context) {
           ),
           IconButton(
             onPressed: () {
+              Provider.of<AlbumProvider>(context, listen: false).startTrending(token);
               controller.clear();
             },
             icon: const Icon(Icons.close),

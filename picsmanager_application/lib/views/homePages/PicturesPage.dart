@@ -42,7 +42,10 @@ Widget scrollPictures({required BuildContext context, required String token}) {
             ),
           ),
           IconButton(
-            onPressed: () { controller.clear(); },
+            onPressed: () async {
+              await Provider.of<PicturePageProvider>(context, listen: false).startTrending(token);
+              controller.clear();
+            },
             icon: const Icon(Icons.close),
           ),
         ],
