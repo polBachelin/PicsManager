@@ -97,6 +97,9 @@ func (s *PictureServiceController) AddAccessToPicture(ctx context.Context, req *
 
 func (s *PictureServiceController) ListAlbumPictures(req *pbPicture.ListAlbumPicturesRequest, stream pbPicture.PictureService_ListAlbumPicturesServer) error {
 	userID, err := GetIdFromContext(stream.Context())
+	if err != nil {
+		return contextIDError
+	}
 	albumID, err := primitive.ObjectIDFromHex(req.GetAlbumId())
 	if err != nil {
 		return contextIDError
