@@ -79,3 +79,16 @@ func (p Service) FindPicturesByName(name string, ownerID primitive.ObjectID) (*m
 	}
 	return cursor, nil
 }
+
+func (p Service) FindPicturesByTag(tag string, ownerID primitive.ObjectID) (*mongo.Cursor, error) {
+	tmp := []primitive.ObjectID{ownerID}
+	tagTmp := []string{tag}
+	findOptions := options.Find()
+	filter := bson.M{"tags": bson.M{"$in": tagTmp}, "$or": []interface{}{bson.M{"ownerId": ownerID}, bson.M{"accessIds": bson.M{"$in": tmp}}}}
+	cursor, err := p.collection.Find(context.TODO(), filter, findOptions)
+	if err != nil {
+		return nil, err
+	}
+	return cursor, nil
+
+}
