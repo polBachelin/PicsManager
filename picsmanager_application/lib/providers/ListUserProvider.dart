@@ -28,6 +28,7 @@ class ListUserProvider extends ChangeNotifier {
   startTrendingByName(String token, String name) async {
     _safeCallStart();
     _users.clear();
+    notifyListeners();
     _users = await NetworkManager(token).userRepository.searchUserByName(name);
     print("USER ${_users.length}");
     _safeCallStop();

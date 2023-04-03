@@ -106,6 +106,7 @@ void EditFolderDialog({required BuildContext context, required Album album}) {
 
                           child: Selector<ListUserProvider, List<User>>(
                               selector: (_, provider) => provider.users,
+                              shouldRebuild: (previous, next) => true,
                               builder: (_, data, __) {
                                 return (data.isEmpty) ? Text("No result") : ListView(
                                     scrollDirection: Axis.vertical,
