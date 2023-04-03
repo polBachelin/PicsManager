@@ -23,6 +23,7 @@ void EditFolderDialog({required BuildContext context, required Album album}) {
   // insertNewPictureForAlbum.picture = picturePageProvider.pictures.first;
   var controller = TextEditingController(text: album.name);
   var userController = TextEditingController();
+  String? selectedId = null;
   List<int> selected = List.empty();
 
   showDialog(
@@ -121,6 +122,7 @@ void EditFolderDialog({required BuildContext context, required Album album}) {
                                                   title: Text(e.email),
                                                   onTap: () {
                                                     userController.text = e.email;
+                                                    selectedId = e.id;
                                                   },
                                                 ),
                                               )
@@ -130,10 +132,11 @@ void EditFolderDialog({required BuildContext context, required Album album}) {
                         ),
                         OutlinedButton(
                             onPressed: () async {
-                              await NetworkManager(token.getToken)
-                                  .albumRepository
-                                  .updateAlbum(
-                                      album.raw, controller.text, selected);
+                              final obj = NetworkManager(token.getToken);
+                              await obj.albumRepository.updateAlbum(album.raw, controller.text, selected);
+                              if (selectedId != null) {
+                                await obj.albumRepository.sharedAlbum(album.id, selectedId ?? "");
+                              }
                             },
                             child: Text("save"))
                       ],

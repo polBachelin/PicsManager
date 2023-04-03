@@ -40,6 +40,7 @@ Widget insertInAlbum(
       Provider.of<PicturePageProvider>(context, listen: false);
   final controller = TextEditingController(text: source.name);
   var userController = TextEditingController();
+  String? selectedId = null;
 
   return Container(
     width: double.infinity,
@@ -161,6 +162,7 @@ Widget insertInAlbum(
                                             title: Text(e.email),
                                             onTap: () {
                                               userController.text = e.email;
+                                              selectedId = e.id;
                                             },
                                           ),
                                         )
@@ -170,9 +172,11 @@ Widget insertInAlbum(
                   ),
                   OutlinedButton(
                       onPressed: () async {
-                        await NetworkManager(token)
-                            .pictureRepository
-                            .setName(source, controller.value.text);
+                        final obj = NetworkManager(token);
+                        await obj.pictureRepository.setName(source, controller.value.text);
+                        if (selectedId != null) {
+                          await obj.pictureRepository.sharedPicture(source.imageId, selectedId ?? "");
+                        }
                       },
                       child: Text("save"))
                 ],
