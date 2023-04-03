@@ -154,6 +154,24 @@ func (s *PictureServiceController) ListPictures(req *pbPicture.ListPicturesReque
 }
 
 func (s *PictureServiceController) SearchPicturesByName(req *pbPicture.SearchPicturesByNameRequest, stream pbPicture.PictureService_SearchPicturesByNameServer) error {
+	userID, err := GetIdFromContext(stream.Context())
+	if err != nil {
+		return contextIDError
+	}
+	svc := services.NewPictureService()
+	cur, err := svc.FindPicturesByName(req.GetQuery(), userID)
+	if err != nil {
+		return status.Errorf(codes.Internal, "Could not get pictures: %v", err)
+	}
+	for cur.Next(context.TODO()) {
+		var elem models.Picture
+		err := cur.Decode(&elem)
+		if err != nil {
+			log.Println(err)
+		}
+		stream.Send(&pbPicture.SearchPicturesByNameResponse{Pictures: buildPictureMessage(elem)})
+	}
+	defer cur.Close(context.TODO())
 	return nil
 }
 
