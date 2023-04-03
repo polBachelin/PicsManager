@@ -65,6 +65,9 @@ func (a Service) UserHasAccessToAlbum(userID primitive.ObjectID, albumID primiti
 	if err != nil {
 		return false, err
 	}
+	if album.OwnerID == userID {
+		return true, nil
+	}
 	for _, a := range album.AccessIDs {
 		if userID == a {
 			return true, nil
