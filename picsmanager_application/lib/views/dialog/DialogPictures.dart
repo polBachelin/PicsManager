@@ -39,140 +39,148 @@ Widget insertInAlbum(
   PicturePageProvider provider =
       Provider.of<PicturePageProvider>(context, listen: false);
   final controller = TextEditingController(text: source.name);
+  var userController = TextEditingController();
 
   return Container(
-      width: double.infinity,
-      height: double.infinity,
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Selector<InsertAlbumProvider, String>(
-                  selector: (_, provider) => provider.valueId,
-                  builder: (_, data, __) {
-                    return DropdownButton<String>(
-                      value: data,
-                      icon: const Icon(Icons.arrow_downward),
-                      elevation: 16,
-                      style: const TextStyle(color: Colors.deepPurple),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
-                      ),
-                      onChanged: (String? value) {
-                        insertAlbumProvider.valueId = value!;
-                      },
-                      items: albumProvider.albums
-                          .map<DropdownMenuItem<String>>((Album value) {
-                        return DropdownMenuItem<String>(
-                          value: value.id,
-                          child: Text(value.name),
-                        );
-                      }).toList(),
-                    );
-                  },
-                ),
-                ElevatedButton(
-                    onPressed: () async {
-                      await NetworkManager(token)
-                          .pictureRepository
-                          .setAlbum(source, insertAlbumProvider.valueId);
-                      Navigator.pop(context, true);
+    width: double.infinity,
+    height: double.infinity,
+    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+    child: SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Selector<InsertAlbumProvider, String>(
+                selector: (_, provider) => provider.valueId,
+                builder: (_, data, __) {
+                  return DropdownButton<String>(
+                    value: data,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (String? value) {
+                      insertAlbumProvider.valueId = value!;
                     },
-                    child: Text("OK"))
-              ],
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await NetworkManager(token)
-                    .pictureRepository
-                    .deletePicture(source.imageId);
-                provider.deleteImageFromList(source.imageId);
-                Navigator.pop(context, true);
-              },
-              child: Text("Delete Pictures"),
-            ),
-            Container(
-              width: 300,
-              height: 500,
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    // Titre du dialog
-                    SizedBox(height: 10),
-                    Text("Picture ${source.name}"),
-                    //Premier widget pour renommer le dossier
-                    Container(
-                      width: 300,
-                      height: 100,
-                      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                      alignment: Alignment.center,
-                      child: Column(
-                        children: [
-                          Text("renommer la photo :"),
-                          TextFormField(
-                            controller: controller,
-                          )
-                        ],
-                      ),
+                    items: albumProvider.albums
+                        .map<DropdownMenuItem<String>>((Album value) {
+                      return DropdownMenuItem<String>(
+                        value: value.id,
+                        child: Text(value.name),
+                      );
+                    }).toList(),
+                  );
+                },
+              ),
+              ElevatedButton(
+                  onPressed: () async {
+                    await NetworkManager(token)
+                        .pictureRepository
+                        .setAlbum(source, insertAlbumProvider.valueId);
+                    Navigator.pop(context, true);
+                  },
+                  child: Text("OK"))
+            ],
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              await NetworkManager(token)
+                  .pictureRepository
+                  .deletePicture(source.imageId);
+              provider.deleteImageFromList(source.imageId);
+              Navigator.pop(context, true);
+            },
+            child: Text("Delete Pictures"),
+          ),
+          Container(
+            width: 300,
+            height: 500,
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // Titre du dialog
+                  SizedBox(height: 10),
+                  Text("Picture ${source.name}"),
+                  //Premier widget pour renommer le dossier
+                  Container(
+                    width: 300,
+                    height: 100,
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        Text("renommer la photo :"),
+                        TextFormField(
+                          controller: controller,
+                        )
+                      ],
                     ),
-                    Container(
-                      width: 300,
-                      height: 100,
-                      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                      alignment: Alignment.center,
-                      child: Column(
-                        children: [
-                          Text("Partager avec : "),
-                          TextFormField(
-                            onChanged: (String value) {
-                              listUserProvider.startTrendingByName(token, value);
-                            },
-                          ),
-                        ],
-                      ),
+                  ),
+                  Container(
+                    width: 300,
+                    height: 100,
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        Text("Partager avec : "),
+                        TextFormField(
+                          controller: userController,
+                          onChanged: (String value) {
+                            listUserProvider.startTrendingByName(token, value);
+                          },
+                        ),
+                      ],
                     ),
-                    Container(
-                      height: 200,
-                      width: 300,
-                      alignment: Alignment.center,
-                      child: SingleChildScrollView(
-                        child: Selector<ListUserProvider, List<User>>(
-                            selector: (_, provider) => provider.users,
-                            shouldRebuild: (previous, next) => true,
-                            builder: (_, data, __) {
-                              return (data.isEmpty)
-                                  ? Text("No result")
-                                  : ListView(
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  children: data
-                                      .map(
-                                          (e) => ListTile(title: Text(e.email)))
-                                      .toList());
-                            }),
-                      ),
+                  ),
+                  Container(
+                    height: 200,
+                    width: 300,
+                    alignment: Alignment.center,
+                    child: SingleChildScrollView(
+                      child: Selector<ListUserProvider, List<User>>(
+                          selector: (_, provider) => provider.users,
+                          shouldRebuild: (previous, next) => true,
+                          builder: (_, data, __) {
+                            return (data.isEmpty)
+                                ? Text("No result")
+                                : ListView(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    children: data
+                                        .map(
+                                          (e) => ListTile(
+                                            title: Text(e.email),
+                                            onTap: () {
+                                              userController.text = e.email;
+                                            },
+                                          ),
+                                        )
+                                        .toList());
+                          }),
                     ),
-                    OutlinedButton(
-                        onPressed: () async {
-                          await NetworkManager(token)
-                              .pictureRepository
-                              .setName(source, controller.value.text);
-                        },
-                        child: Text("save"))
-                  ],
-                ),
+                  ),
+                  OutlinedButton(
+                      onPressed: () async {
+                        await NetworkManager(token)
+                            .pictureRepository
+                            .setName(source, controller.value.text);
+                      },
+                      child: Text("save"))
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
+    ),
   );
 }
