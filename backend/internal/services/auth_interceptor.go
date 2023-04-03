@@ -29,11 +29,14 @@ func accessiblePaths() map[string]struct{} {
 		apiServicePath + "AlbumService/ListSharedAlbums":   {},
 		apiServicePath + "AlbumService/SearchAlbumsByName": {},
 
-		apiServicePath + "PictureService/AddAccessToPicture": {},
-		apiServicePath + "PictureService/CreatePicture":      {},
-		apiServicePath + "PictureService/UpdatePicture":      {},
-		apiServicePath + "PictureService/DeletePicture":      {},
-		apiServicePath + "PictureService/ListPictures":       {},
+		apiServicePath + "PictureService/AddAccessToPicture":   {},
+		apiServicePath + "PictureService/CreatePicture":        {},
+		apiServicePath + "PictureService/UpdatePicture":        {},
+		apiServicePath + "PictureService/DeletePicture":        {},
+		apiServicePath + "PictureService/ListPictures":         {},
+		apiServicePath + "PictureService/ListAlbumPictures":    {},
+		apiServicePath + "PictureService/SearchPicturesByTag":  {},
+		apiServicePath + "PictureService/SearchPicturesByName": {},
 	}
 }
 

@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+    mongodb:
+        image: mongo:latest
+        volumes:
+            - data:/data/db
+        ports:
+            - "27017:27017"
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=pass12345
+        networks:
+            - mongonet
+        restart: always
+
+    backend:
+        build: ../
+        image: grpcconsul/server
+        env_file:
+            - .env
+        restart: "no"
+        ports:
+            - "50051:50051"
+        depends_on:
+            - mongodb
+        links:
+            - "mongodb:db"
+        networks:
+            - mongonet
+
+networks:
+    mongonet:
+volumes:
+    data:

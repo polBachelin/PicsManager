@@ -65,13 +65,13 @@ func (u Service) UpdateUser(obj models.User) (*mongo.UpdateResult, error) {
 }
 
 func (u Service) FindUserByQuery(query string) ([]*models.User, error) {
-	model := mongo.IndexModel{Keys: bson.D{{"name", "text"}}}
-	_, err := u.collection.Indexes().CreateOne(context.TODO(), model)
-	if err != nil {
-		return nil, err
-	}
-	filter := bson.D{{"$text", bson.D{{"$search", query}}}}
-	cursor, err := u.collection.Find(context.TODO(), filter)
+	// model := mongo.IndexModel{Keys: bson.D{{"name", "text"}}}
+	// _, err := u.collection.Indexes().CreateOne(context.TODO(), model)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// filter := bson.D{{"$text", bson.D{{"$search", query}}}}
+	cursor, err := u.collection.Find(context.TODO(), bson.M{"name": bson.M{"$regex": query}})
 	if err != nil {
 		return nil, err
 	}
