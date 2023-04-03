@@ -174,7 +174,7 @@ Widget insertInAlbum(BuildContext context, String token, PictureMessage source) 
                   onPressed: () async {
                     await NetworkManager(token)
                         .pictureRepository
-                        .setName(source.raw, controller.value.text);
+                        .setName(source, controller.value.text);
                   },
                   child: Text("save"))
             ],
