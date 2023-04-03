@@ -72,4 +72,9 @@ class PicturePageProvider extends ChangeNotifier {
     });
     _safeCallStop();
   }
+
+  deleteImageFromList(String id) {
+    _pictures.removeWhere((element) => element.id == id);
+    notifyListeners();
+  }
 }

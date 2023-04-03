@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:picsmanager_application/protobuf/service/picture_service.pb.dart';
 import 'package:picsmanager_application/providers/AlbumProvider.dart';
 import 'package:picsmanager_application/providers/InsertAlbumProvider.dart';
+import 'package:picsmanager_application/providers/PicturePageProvider.dart';
 import 'package:picsmanager_application/ressources/Network.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,7 @@ Widget insertInAlbum(BuildContext context, String token, PictureMessage source) 
   InsertAlbumProvider insertAlbumProvider =
       Provider.of<InsertAlbumProvider>(context, listen: false);
   insertAlbumProvider.valueId = albumProvider.albums.first.id;
+  PicturePageProvider provider = Provider.of<PicturePageProvider>(context, listen: false);
 
   return SizedBox(
       height: MediaQuery.of(context).size.height * 0.5,
@@ -68,12 +70,15 @@ Widget insertInAlbum(BuildContext context, String token, PictureMessage source) 
               ElevatedButton(
                   onPressed: () async {
                     await NetworkManager(token).pictureRepository.setAlbum(source, insertAlbumProvider.valueId);
+                    Navigator.pop(context, true);
                   },
                   child: Text("OK"))
             ],
           ),
           ElevatedButton(onPressed: () async {
             await NetworkManager(token).pictureRepository.deletePicture(source.imageId);
+            provider.deleteImageFromList(source.imageId);
+            Navigator.pop(context, true);
           }, child: Text("Delete Pictures"))
         ],
       ));
