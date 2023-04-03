@@ -26,7 +26,8 @@ class PicturePageProvider extends ChangeNotifier {
     _safeCallStart();
     _pictures.clear();
     await NetworkManager(token).pictureRepository.foreachPictures((source) {
-      if (source.albumId.isEmpty == !onAlbum) { _pictures.add(source); }
+      final compare = source.albumId == "000000000000000000000000";
+      if (compare == !onAlbum) { _pictures.add(source); }
       notifyListeners();
     });
     _safeCallStop();
