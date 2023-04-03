@@ -10,5 +10,4 @@ abstract class AlbumRepository {
   Future<void> uploadAlbum(String name);
   Future<void> updateAlbum(String id, String name, List<int> img);
   Future<void> sharedAlbum(String source, int user);
-  Future<void> fillAlbum(String source, String picture);
 }

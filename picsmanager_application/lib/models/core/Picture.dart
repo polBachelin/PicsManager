@@ -9,6 +9,7 @@ class Picture {
   String name;
   String albumId;
   String id;
+  PictureMessage raw;
 
   Picture(
       {
@@ -16,7 +17,8 @@ class Picture {
         required this.metaPicture,
         required this.name,
         required this.albumId,
-        required this.id
+        required this.id,
+        required this.raw
       }
    );
 
@@ -29,5 +31,5 @@ class Picture {
 Picture fromProtobuf(PictureMessage source) {
   final metaData = MetaData();
 
-  return Picture(visualPicture: source.data, metaPicture: metaData, name: source.name, albumId: source.albumId, id: source.imageId);
+  return Picture(visualPicture: source.data, metaPicture: metaData, name: source.name, albumId: source.albumId, id: source.imageId, raw: source);
 }

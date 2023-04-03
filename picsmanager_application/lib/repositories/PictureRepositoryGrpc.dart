@@ -32,7 +32,6 @@ class PictureRepositoryGrpc extends PictureRepository {
 
   @override
   Future<void> foreachPicturesFromAlbum(String album, Function(Picture p1) onFetch) async  {
-
     final request = ListAlbumPicturesRequest(albumId: album);
     final response = _stub.listAlbumPictures(request);
 
@@ -83,5 +82,13 @@ class PictureRepositoryGrpc extends PictureRepository {
   Future<void> deletePicture(String id) async {
     final request = DeletePictureRequest(pictureId: id);
     await _stub.deletePicture(request);
+  }
+
+  @override
+  Future<void> setAlbum(PictureMessage source, String album) async {
+    source.albumId = album;
+    final request = UpdatePictureRequest(pictures: source);
+
+    await _stub.updatePicture(request);
   }
 }

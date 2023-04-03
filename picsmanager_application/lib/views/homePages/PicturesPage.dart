@@ -77,7 +77,7 @@ Widget cardPicture({required BuildContext context, required Picture picture, req
 
         },
         onLongPress: (){
-          dialogPicturesInAlbum(context: context, token: token, pictureId: picture.id);
+          dialogPicturesInAlbum(context: context, token: token, picture: picture.raw);
         },
         style: ButtonStyle(
         ),

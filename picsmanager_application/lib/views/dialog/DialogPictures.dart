@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:picsmanager_application/protobuf/service/picture_service.pb.dart';
 import 'package:picsmanager_application/providers/AlbumProvider.dart';
 import 'package:picsmanager_application/providers/InsertAlbumProvider.dart';
 import 'package:picsmanager_application/ressources/Network.dart';
@@ -8,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../../models/core/Album.dart';
 
 void dialogPicturesInAlbum(
-    {required BuildContext context, required String token, required String pictureId}) {
+    {required BuildContext context, required String token, required PictureMessage picture}) {
   showDialog(
       context: context,
       builder: (context) {
@@ -16,12 +17,12 @@ void dialogPicturesInAlbum(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          child: insertInAlbum(context, token, pictureId),
+          child: insertInAlbum(context, token, picture),
         );
       });
 }
 
-Widget insertInAlbum(BuildContext context, String token, String id) {
+Widget insertInAlbum(BuildContext context, String token, PictureMessage source) {
   AlbumProvider albumProvider =
       Provider.of<AlbumProvider>(context, listen: false);
   InsertAlbumProvider insertAlbumProvider =
@@ -66,14 +67,13 @@ Widget insertInAlbum(BuildContext context, String token, String id) {
               ),
               ElevatedButton(
                   onPressed: () async {
-                    print("idAlbum: ${insertAlbumProvider.valueId} photoId: $id et token: $token");
-                    await NetworkManager(token).albumRepository.fillAlbum(id, insertAlbumProvider.valueId);
+                    await NetworkManager(token).pictureRepository.setAlbum(source, insertAlbumProvider.valueId);
                   },
                   child: Text("OK"))
             ],
           ),
           ElevatedButton(onPressed: () async {
-            await NetworkManager(token).pictureRepository.deletePicture(id);
+            await NetworkManager(token).pictureRepository.deletePicture(source.imageId);
           }, child: Text("Delete Pictures"))
         ],
       ));

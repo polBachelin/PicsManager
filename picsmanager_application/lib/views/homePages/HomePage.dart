@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
                 child: () {
                   switch (viewProvider.page) {
                     case 0:
-                      // albumProvider.startTrending(token.getToken);
+                      albumProvider.startTrending(token.getToken);
                       pictureProvider.startTrending(token.getToken);
                       return picturesPage(context: context);
                     case 1:
