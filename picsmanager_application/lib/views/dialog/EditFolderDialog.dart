@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:picsmanager_application/models/core/Album.dart';
 import 'package:picsmanager_application/models/core/Picture.dart';
+import 'package:picsmanager_application/models/core/User.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/InsertNewPictureForAlbum.dart';
+import 'package:picsmanager_application/providers/ListUserProvider.dart';
 import 'package:picsmanager_application/providers/PicturePageProvider.dart';
 import 'package:picsmanager_application/ressources/Network.dart';
 import 'package:picsmanager_application/views/dialog/editFolderWidget/renameFolderWidget.dart';
@@ -17,7 +19,6 @@ void EditFolderDialog({required BuildContext context, required Album album}) {
   // InsertNewPictureForAlbum insertNewPictureForAlbum = Provider.of<InsertNewPictureForAlbum>(context);
   // insertNewPictureForAlbum.picture = picturePageProvider.pictures.first;
   final controller = TextEditingController(text: album.name);
-  final controllerUser = TextEditingController(text: "");
   List<int> selected = List.empty();
 
   showDialog(
@@ -75,23 +76,30 @@ void EditFolderDialog({required BuildContext context, required Album album}) {
                   // ),
                   Container(
                     width: 300,
-                    height: 100,
+                    height: 200,
                     padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                     alignment: Alignment.center,
                     child: Column(
                       children: [
                         Text("Partager avec : "),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                controller: controllerUser,
-                              ),
-                            ),
-                            ElevatedButton(
-                                onPressed: () {}, child: Icon(Icons.search))
-                          ],
-                        )
+                        TextFormField(
+                          onChanged: (String value) {
+                            // Provider.of<ListUserProvider>(context)
+                            //     .startTrendingByName(
+                            //         token.getToken, value);
+                          },
+                        ),
+                         SingleChildScrollView(
+                            child: Selector<ListUserProvider, List<User>>(
+                                selector: (_, provider) => provider.users,
+                                builder: (_, data, __) {
+                                  return ListView(
+                                      children: data
+                                          .map((e) =>
+                                              ListTile(title: Text(e.email)))
+                                          .toList());
+                                }),
+                          ),
                       ],
                     ),
                   ),
