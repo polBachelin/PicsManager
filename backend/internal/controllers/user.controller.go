@@ -14,6 +14,8 @@ import (
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type UserServiceController struct {
@@ -84,8 +86,15 @@ func (s *UserServiceController) UpdateUser(ctx context.Context, req *pbUser.Upda
 		return nil, err
 	}
 	user, err := svc.GetUser(id)
-	user.Name = req.Source.GetName()
-	user.Email = req.Source.GetEmail()
+	if err != nil {
+		return nil, status.Errorf(codes.InvalidArgument, "Wrong id for user")
+	}
+	if req.Source.GetName() != "" {
+		user.Name = generateName(req.Source.GetName())
+	}
+	if req.Source.GetEmail() != "" {
+		user.Email = req.Source.GetEmail()
+	}
 	_, err = svc.UpdateUser(user)
 	return &pbUser.UpdateUserResponse{User: BuildUserMessage(user)}, nil
 }

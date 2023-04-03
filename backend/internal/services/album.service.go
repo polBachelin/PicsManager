@@ -102,13 +102,7 @@ func (a Service) ListAlbums(ownerID primitive.ObjectID) (*mongo.Cursor, error) {
 }
 
 func (a Service) FindAlbumsByName(name string) ([]*models.Album, error) {
-	model := mongo.IndexModel{Keys: bson.D{{"name", "text"}}}
-	_, err := a.collection.Indexes().CreateOne(context.TODO(), model)
-	if err != nil {
-		return nil, err
-	}
-	filter := bson.D{{"$text", bson.D{{"$search", name}}}}
-	cursor, err := a.collection.Find(context.TODO(), filter)
+	cursor, err := a.collection.Find(context.TODO(), bson.M{"name": bson.M{"$regex": name}})
 	if err != nil {
 		return nil, err
 	}
