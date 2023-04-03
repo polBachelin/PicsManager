@@ -99,7 +99,8 @@ void EditFolderDialog({required BuildContext context, required Album album}) {
                       onPressed: () async {
                         await NetworkManager(token.getToken)
                             .albumRepository
-                            .updateAlbum(album.id, controller.text, selected);
+                            .updateAlbum(album.raw, controller.text, selected);
+                        Navigator.pop(context, true);
                       },
                       child: Text("save"))
                 ],

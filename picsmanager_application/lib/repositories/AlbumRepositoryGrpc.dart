@@ -73,9 +73,10 @@ class AlbumRepositoryGrpc extends AlbumRepository {
   }
 
   @override
-  Future<void> updateAlbum(String id, String name, List<int> img) async {
-    final album = AlbumMessage(albumId: id, name: name, thumbnailData: img);
-    final request = UpdateAlbumRequest();
+  Future<void> updateAlbum(AlbumMessage source, String name, List<int> img) async {
+    source.name = name;
+    source.thumbnailData = img;
+    final request = UpdateAlbumRequest(source: source);
     await _stub.updateAlbum(request);
   }
 }
