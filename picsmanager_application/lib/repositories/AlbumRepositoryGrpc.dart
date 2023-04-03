@@ -62,7 +62,8 @@ class AlbumRepositoryGrpc extends AlbumRepository {
   @override
   Future<void> fillAlbum(String source, String picture) async {
     final request = AddAccessToAlbumRequest(albumId: source, accessId: picture);
-    await _stub.addAccessToAlbum(request);
+    final response = await _stub.addAccessToAlbum(request);
+    print("ici $response");
   }
 
   @override

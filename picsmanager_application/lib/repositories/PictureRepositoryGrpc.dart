@@ -31,8 +31,9 @@ class PictureRepositoryGrpc extends PictureRepository {
   }
 
   @override
-  Future<void> foreachPicturesFromAlbum(int album, Function(Picture p1) onFetch) async  {
-    final request = ListAlbumPicturesRequest();
+  Future<void> foreachPicturesFromAlbum(String album, Function(Picture p1) onFetch) async  {
+
+    final request = ListAlbumPicturesRequest(albumId: album);
     final response = _stub.listAlbumPictures(request);
 
     await response.forEach((element) {

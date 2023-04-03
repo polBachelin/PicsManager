@@ -63,10 +63,11 @@ class PicturePageProvider extends ChangeNotifier {
   }
 
   startTrendingByAlbum(String token, Album album) async {
+    print("click ${album.name} ${album.id}");
     _safeCallStart();
     _pictures.clear();
-    await NetworkManager(token).pictureRepository.foreachPictures((source) {
-      if (source.albumId == album.id) { _pictures.add(source); }
+    await NetworkManager(token).pictureRepository.foreachPicturesFromAlbum(album.id, (source) {
+      _pictures.add(source);
       notifyListeners();
     });
     _safeCallStop();
