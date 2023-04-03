@@ -30,18 +30,6 @@ void showSettingOverlay(BuildContext context) {
               child: Column(
                 children: [
                   ListTile(
-                    title: Text("Account"),
-                    onTap: () {
-                      overlayEntry.remove();
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Organization"),
-                    onTap: () {
-                      overlayEntry.remove();
-                    },
-                  ),
-                  ListTile(
                     title: Text("Disconnect"),
                     onTap: () {
                       authentication.setToken = "";
