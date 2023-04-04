@@ -4,7 +4,7 @@ import '../models/core/User.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
 
-  String _token = "ghkgkhgkgkg";
+  String _token = "";
 
   String get getToken => _token;
 

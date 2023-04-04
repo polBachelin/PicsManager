@@ -9,14 +9,14 @@ class UserRepositoryGrpc extends UserRepository {
   final _client = ClientChannel(
     NetworkConfig.host,
     port: NetworkConfig.port,
-    options: const ChannelOptions(credentials: ChannelCredentials.secure()),
+    options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
   );
   late final UserServiceClient _stub;
 
   UserRepositoryGrpc(String token) {
     _stub = UserServiceClient(
         _client,
-        options: CallOptions(metadata: {'id_token': token})
+        options: CallOptions(metadata: {'authorization': token})
     );
   }
 
@@ -26,7 +26,7 @@ class UserRepositoryGrpc extends UserRepository {
     final response = await _stub.searchUsersByName(request);
 
     return response.users.map((e) =>
-        fromProtobuf(e as typed.UserMessage)
+        fromProtobuf(e)
     ).toList();
   }
 }

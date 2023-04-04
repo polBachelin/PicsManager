@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
+import 'package:picsmanager_application/ressources/Network.dart';
+import 'package:provider/provider.dart';
 
-void CreateFolderDialog({required BuildContext context}) {
+void createFolderDialog({required BuildContext context}) {
   // CreateFolderProvider createFolderProvider =
   // Provider.of<CreateFolderProvider>(context, listen: false);
 
@@ -21,20 +24,24 @@ void CreateFolderDialog({required BuildContext context}) {
 }
 
 Widget Createfolder({ required BuildContext context}) {
+  AuthenticationProvider token = Provider.of<AuthenticationProvider>(context, listen: false);
+  final controller = TextEditingController();
+
   return Container(
     height: MediaQuery.of(context).size.height * 0.5 ,
     width: MediaQuery.of(context).size.width * 0.75 ,
     child: Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.fromLTRB(10, 150, 10, 50),
+      padding: EdgeInsets.fromLTRB(10, 50, 10, 50),
       child: Column(
         children: <Widget>[
           Text("Name for your new Album : "),
-          TextField(),
+          TextField(controller: controller),
           SizedBox(height: 50),
           ElevatedButton(
-              onPressed: (){
-
+              onPressed: () async {
+                await NetworkManager(token.getToken).albumRepository.uploadAlbum(controller.text);
+                Navigator.pop(context, true);
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll<Color>(Colors.black),

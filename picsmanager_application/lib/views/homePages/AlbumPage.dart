@@ -1,8 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/models/core/Album.dart';
 import 'package:picsmanager_application/providers/AlbumProvider.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/PicturePageProvider.dart';
+import 'package:picsmanager_application/providers/ViewProvider.dart';
+import 'package:picsmanager_application/views/dialog/EditFolderDialog.dart';
 import 'package:provider/provider.dart';
 
 Widget albumPage({required BuildContext context}) {
@@ -15,6 +18,8 @@ Widget albumPage({required BuildContext context}) {
 
 Widget scrollAlbum(BuildContext context) {
   final controller = TextEditingController();
+  final token =
+      Provider.of<AuthenticationProvider>(context, listen: true).getToken;
 
   return Column(
     children: [
@@ -27,9 +32,6 @@ Widget scrollAlbum(BuildContext context) {
               decoration: InputDecoration(
                 icon: IconButton(
                   onPressed: () {
-                    final token = Provider.of<AuthenticationProvider>(context,
-                            listen: true)
-                        .getToken;
                     Provider.of<AlbumProvider>(context, listen: false)
                         .startTrendingByName(token, controller.value.text);
                   },
@@ -40,7 +42,10 @@ Widget scrollAlbum(BuildContext context) {
             ),
           ),
           IconButton(
-            onPressed: null,
+            onPressed: () {
+              Provider.of<AlbumProvider>(context, listen: false).startTrending(token);
+              controller.clear();
+            },
             icon: const Icon(Icons.close),
           ),
         ],
@@ -50,6 +55,7 @@ Widget scrollAlbum(BuildContext context) {
         child: SingleChildScrollView(
             child: Selector<AlbumProvider, List<Album>>(
           selector: (_, provider) => provider.albums,
+          shouldRebuild: (previous, next) => true,
           builder: (_, data, __) {
             final children = data
                 .map((e) => albumCards(context: context, source: e))
@@ -66,14 +72,19 @@ Widget scrollAlbum(BuildContext context) {
 
 Widget albumCards({required BuildContext context, required Album source}) {
   return ElevatedButton(
-    onPressed: (){
-      // TODO rediriger vers PicturesPage en affichant uniquement les images de cette album
+    onPressed: () {
+      final token =
+          Provider.of<AuthenticationProvider>(context, listen: false).getToken;
+
+      Provider.of<PicturePageProvider>(context, listen: false)
+          .startTrendingByAlbum(token, source);
+      Provider.of<ViewProvider>(context, listen: false).page = 0;
     },
     onLongPress: (){
-      // TODO possibilité de partagé l'album ou de le modifier
+      EditFolderDialog(context: context, album: source);
     },
     child: SizedBox(
-      width: MediaQuery.of(context).size.width * 0.49,
+      width: MediaQuery.of(context).size.width * 0.39,
       child: Card(
         margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
         child: Column(

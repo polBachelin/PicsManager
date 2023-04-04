@@ -24,9 +24,9 @@ Widget signUpButtons(BuildContext context, GlobalKey<FormState> signUpKey,
       ElevatedButton(
         onPressed: () async {
           if (signUpKey.currentState!.validate()) {
-            // if (await signUpHelper.signUp() == HttpStatus.ok) {
-            //   Navigator.of(context).pop();
-            // }
+            if (await signUpHelper.signUp() == HttpStatus.ok) {
+              Navigator.of(context).pop();
+            }
           }
         },
         child: Container(

@@ -1,22 +1,27 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:picsmanager_application/models/core/Picture.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
 import 'package:picsmanager_application/providers/PicturePageProvider.dart';
+import 'package:picsmanager_application/views/dialog/DialogPictures.dart';
 import 'package:provider/provider.dart';
 
 Widget picturesPage({required BuildContext context}) {
+  final token = Provider.of<AuthenticationProvider>(context, listen: true).getToken;
+
   return Container(
     alignment: Alignment.centerRight,
     width: double.infinity,
     height: double.infinity,
     color: Colors.white,
-    child: scrollPictures(context: context),
+    child: scrollPictures(context: context, token: token),
   );
 }
 
-Widget scrollPictures({required BuildContext context}) {
+Widget scrollPictures({required BuildContext context, required String token}) {
   final controller = TextEditingController();
-
   return Column(
     children: [
       SizedBox(height: 10),
@@ -27,12 +32,8 @@ Widget scrollPictures({required BuildContext context}) {
               controller: controller,
               decoration: InputDecoration(
                 icon: IconButton(
-                  onPressed: () {
-                    final token = Provider.of<AuthenticationProvider>(context,
-                            listen: true)
-                        .getToken;
-                    Provider.of<PicturePageProvider>(context, listen: false)
-                        .startTrendingByName(token, controller.value.text);
+                  onPressed: () async {
+                    await Provider.of<PicturePageProvider>(context, listen: false).startTrendingByName(token, controller.value.text);
                   },
                   icon: const Icon(Icons.search),
                 ),
@@ -41,7 +42,10 @@ Widget scrollPictures({required BuildContext context}) {
             ),
           ),
           IconButton(
-            onPressed: null,
+            onPressed: () async {
+              await Provider.of<PicturePageProvider>(context, listen: false).startTrending(token);
+              controller.clear();
+            },
             icon: const Icon(Icons.close),
           ),
         ],
@@ -50,39 +54,52 @@ Widget scrollPictures({required BuildContext context}) {
       Expanded(
         child: SingleChildScrollView(
             child: Selector<PicturePageProvider, List<Picture>>(
-          selector: (_, provider) => provider.pictures,
-          builder: (_, data, __) {
-            return Wrap(
-                children: data
-                    .map((e) => cardPicture(context: context, picture: e))
-                    .toList());
-          },
-        )),
+              selector: (_, provider) => provider.pictures,
+              shouldRebuild: (previous, next) => true,
+              builder: (_, data, __){
+                print("image selector ${data.length}");
+                return Wrap(
+                  children: data.map((e) =>
+                      cardPicture(context: context, picture: e, token: token)
+                  ).toList()
+                );
+              },
+            )
+        ),
       )
     ],
   );
 }
 
-Widget cardPicture({required BuildContext context, required Picture picture}) {
-  return ElevatedButton(
-    onPressed: (){
-      // TODO Faire le widget image pleine écran
-    },
-    onLongPress: (){
-      // TODO Faire le dialog pour changer l'image d'album
-    },
-    child: SizedBox(
+Widget cardPicture({required BuildContext context, required Picture picture, required String token}) {
+  return Container(
+      color: Colors.red,
       width: MediaQuery.of(context).size.width * 0.33,
-      child: picture.visualPicture,
-    ),
+      child: ElevatedButton(
+        onPressed: (){
+
+        },
+        onLongPress: (){
+          dialogPicturesInAlbum(context: context, token: token, picture: picture.raw);
+        },
+        style: ButtonStyle(
+        ),
+        child: picture.getImage(),
+      ),
   );
 }
 
 EdgeInsets paddingDimension({required BuildContext context}) {
   return EdgeInsets.fromLTRB(
-    MediaQuery.of(context).size.width * 0.02,
+    MediaQuery
+        .of(context)
+        .size
+        .width * 0.02,
     0,
-    MediaQuery.of(context).size.width * 0.02,
+    MediaQuery
+        .of(context)
+        .size
+        .width * 0.02,
     0,
   );
 }

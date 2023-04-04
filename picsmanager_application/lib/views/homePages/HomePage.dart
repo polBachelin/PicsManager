@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
     AppBarProvider appBarProvider =
         Provider.of<AppBarProvider>(context, listen: false);
 
-    AuthenticationProvider token = Provider.of<AuthenticationProvider>(context, listen: true);
+    AuthenticationProvider token = Provider.of<AuthenticationProvider>(context, listen: false);
     PicturePageProvider pictureProvider = Provider.of<PicturePageProvider>(context, listen: false);
     AlbumProvider albumProvider = Provider.of<AlbumProvider>(context, listen: false);
 
@@ -56,12 +56,13 @@ class HomePage extends StatelessWidget {
                 child: () {
                   switch (viewProvider.page) {
                     case 0:
+                      albumProvider.startTrending(token.getToken);
                       pictureProvider.startTrending(token.getToken);
                       return picturesPage(context: context);
                     case 1:
-                      albumProvider.startTrending(token.getToken);
                       return cameraPage(context: context);
                     case 2:
+                      albumProvider.startTrending(token.getToken);
                       return albumPage(context: context);
                   }
                 }(),

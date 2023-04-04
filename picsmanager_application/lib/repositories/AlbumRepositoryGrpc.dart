@@ -1,7 +1,6 @@
 import 'package:grpc/grpc.dart';
 import 'package:picsmanager_application/domaine/repositories/AlbumRepository.dart';
 import 'package:picsmanager_application/models/core/Album.dart';
-import 'package:picsmanager_application/protobuf/message/album_message.pb.dart' as typed;
 import 'package:picsmanager_application/protobuf/service/album_service.pbgrpc.dart';
 import 'package:picsmanager_application/ressources/Network.dart';
 
@@ -9,14 +8,14 @@ class AlbumRepositoryGrpc extends AlbumRepository {
   final _client = ClientChannel(
     NetworkConfig.host,
     port: NetworkConfig.port,
-    options: const ChannelOptions(credentials: ChannelCredentials.secure()),
+    options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
   );
   late final AlbumServiceClient _stub;
 
   AlbumRepositoryGrpc(String token) {
     _stub = AlbumServiceClient(
         _client,
-        options: CallOptions(metadata: {'id_token': token})
+        options: CallOptions(metadata: {'authorization': token})
     );
   }
 
@@ -26,7 +25,7 @@ class AlbumRepositoryGrpc extends AlbumRepository {
     final response = _stub.listAlbums(request);
 
     await response.forEach((element) {
-      fromProtobuf(element as typed.AlbumMessage);
+      onFetch(fromProtobuf(element.albums));
     });
   }
 
@@ -36,7 +35,7 @@ class AlbumRepositoryGrpc extends AlbumRepository {
     final response = _stub.listSharedAlbums(request);
 
     await response.forEach((element) {
-      fromProtobuf(element as typed.AlbumMessage);
+      onFetch(fromProtobuf(element.albums));
     });
   }
 
@@ -46,7 +45,7 @@ class AlbumRepositoryGrpc extends AlbumRepository {
     final response = _stub.listOwnedAlbums(request);
 
     await response.forEach((element) {
-      fromProtobuf(element as typed.AlbumMessage);
+      onFetch(fromProtobuf(element.albums));
     });
   }
 
@@ -56,26 +55,27 @@ class AlbumRepositoryGrpc extends AlbumRepository {
     final response = await _stub.searchAlbumsByName(request);
 
     return response.albums.map((e) =>
-        fromProtobuf(e as typed.AlbumMessage)
+        fromProtobuf(e)
     ).toList();
   }
 
   @override
-  Future<void> fillAlbum(Album source, int picture) async {
-    // TODO: implement fillAlbum
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> sharedAlbum(Album source, int user) async {
-    // TODO: implement sharedAlbum
-    throw UnimplementedError();
+  Future<void> sharedAlbum(String source, String user) async {
+    final request = AddAccessToAlbumRequest(albumId: source, accessId: user);
+    await _stub.addAccessToAlbum(request);
   }
 
   @override
   Future<void> uploadAlbum(String name) async {
     final request = CreateAlbumRequest(name: name);
+    final response = await _stub.createAlbum(request);
+  }
 
-    await _stub.createAlbum(request);
+  @override
+  Future<void> updateAlbum(AlbumMessage source, String name, List<int> img) async {
+    source.name = name;
+    source.thumbnailData = img;
+    final request = UpdateAlbumRequest(source: source);
+    await _stub.updateAlbum(request);
   }
 }

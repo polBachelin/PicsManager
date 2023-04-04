@@ -9,6 +9,7 @@ Widget signInForm(
     child: Column(
       children: [
         TextFormField(
+          initialValue: "d.d@d.d",
           validator: ((value) {
             if (value == null || value.isEmpty) return "Login required";
             signInProvider.username = value;
@@ -25,6 +26,7 @@ Widget signInForm(
             shouldRebuild: (previous, next) => true,
             builder: (_, isObscure, __) {
               return TextFormField(
+                initialValue: "qw12QW//()",
                 validator: ((value) {
                   if (value == null || value.isEmpty) {
                     return "Password required";

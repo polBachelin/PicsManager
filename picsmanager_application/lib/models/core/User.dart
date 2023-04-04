@@ -1,7 +1,7 @@
-import 'package:picsmanager_application/protobuf/message/user_message.pb.dart';
+import 'package:picsmanager_application/protobuf/service/user_service.pb.dart';
 
 class User {
-  int id;
+  String id;
   String token;
   String firstname;
   String lastName;
@@ -28,7 +28,7 @@ class User {
     } catch (e) {
       print("catch user $e");
       return User(
-          id: 0,
+          id: "",
           token: "",
           firstname: "",
           lastName: "",

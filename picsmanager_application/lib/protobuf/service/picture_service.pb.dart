@@ -11,7 +11,7 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 class CreatePictureRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CreatePictureRequest', createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'albumId', $pb.PbFieldType.O3)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'albumId')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tags')
     ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'data', $pb.PbFieldType.OY)
@@ -20,7 +20,7 @@ class CreatePictureRequest extends $pb.GeneratedMessage {
 
   CreatePictureRequest._() : super();
   factory CreatePictureRequest({
-    $core.int? albumId,
+    $core.String? albumId,
     $core.String? name,
     $core.Iterable<$core.String>? tags,
     $core.List<$core.int>? data,
@@ -62,9 +62,9 @@ class CreatePictureRequest extends $pb.GeneratedMessage {
   static CreatePictureRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get albumId => $_getIZ(0);
+  $core.String get albumId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set albumId($core.int v) { $_setSignedInt32(0, v); }
+  set albumId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasAlbumId() => $_has(0);
   @$pb.TagNumber(1)
@@ -241,13 +241,13 @@ class UpdatePictureResponse extends $pb.GeneratedMessage {
 
 class DeletePictureRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeletePictureRequest', createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pictureId', $pb.PbFieldType.O3)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pictureId')
     ..hasRequiredFields = false
   ;
 
   DeletePictureRequest._() : super();
   factory DeletePictureRequest({
-    $core.int? pictureId,
+    $core.String? pictureId,
   }) {
     final _result = create();
     if (pictureId != null) {
@@ -277,9 +277,9 @@ class DeletePictureRequest extends $pb.GeneratedMessage {
   static DeletePictureRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get pictureId => $_getIZ(0);
+  $core.String get pictureId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set pictureId($core.int v) { $_setSignedInt32(0, v); }
+  set pictureId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasPictureId() => $_has(0);
   @$pb.TagNumber(1)
@@ -288,25 +288,11 @@ class DeletePictureRequest extends $pb.GeneratedMessage {
 
 class DeletePictureResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeletePictureResponse', createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'index', $pb.PbFieldType.O3)
-    ..aOM<PictureMessage>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pictures', subBuilder: PictureMessage.create)
     ..hasRequiredFields = false
   ;
 
   DeletePictureResponse._() : super();
-  factory DeletePictureResponse({
-    $core.int? index,
-    PictureMessage? pictures,
-  }) {
-    final _result = create();
-    if (index != null) {
-      _result.index = index;
-    }
-    if (pictures != null) {
-      _result.pictures = pictures;
-    }
-    return _result;
-  }
+  factory DeletePictureResponse() => create();
   factory DeletePictureResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory DeletePictureResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -327,26 +313,96 @@ class DeletePictureResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DeletePictureResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeletePictureResponse>(create);
   static DeletePictureResponse? _defaultInstance;
+}
+
+class AddAccessToPictureRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddAccessToPictureRequest', createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pictureId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'accessId')
+    ..hasRequiredFields = false
+  ;
+
+  AddAccessToPictureRequest._() : super();
+  factory AddAccessToPictureRequest({
+    $core.String? pictureId,
+    $core.String? accessId,
+  }) {
+    final _result = create();
+    if (pictureId != null) {
+      _result.pictureId = pictureId;
+    }
+    if (accessId != null) {
+      _result.accessId = accessId;
+    }
+    return _result;
+  }
+  factory AddAccessToPictureRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddAccessToPictureRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddAccessToPictureRequest clone() => AddAccessToPictureRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddAccessToPictureRequest copyWith(void Function(AddAccessToPictureRequest) updates) => super.copyWith((message) => updates(message as AddAccessToPictureRequest)) as AddAccessToPictureRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddAccessToPictureRequest create() => AddAccessToPictureRequest._();
+  AddAccessToPictureRequest createEmptyInstance() => create();
+  static $pb.PbList<AddAccessToPictureRequest> createRepeated() => $pb.PbList<AddAccessToPictureRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddAccessToPictureRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddAccessToPictureRequest>(create);
+  static AddAccessToPictureRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get index => $_getIZ(0);
+  $core.String get pictureId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set index($core.int v) { $_setSignedInt32(0, v); }
+  set pictureId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasIndex() => $_has(0);
+  $core.bool hasPictureId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearIndex() => clearField(1);
+  void clearPictureId() => clearField(1);
 
   @$pb.TagNumber(2)
-  PictureMessage get pictures => $_getN(1);
+  $core.String get accessId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set pictures(PictureMessage v) { setField(2, v); }
+  set accessId($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasPictures() => $_has(1);
+  $core.bool hasAccessId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPictures() => clearField(2);
-  @$pb.TagNumber(2)
-  PictureMessage ensurePictures() => $_ensure(1);
+  void clearAccessId() => clearField(2);
+}
+
+class AddAccessToPictureResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddAccessToPictureResponse', createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  AddAccessToPictureResponse._() : super();
+  factory AddAccessToPictureResponse() => create();
+  factory AddAccessToPictureResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddAccessToPictureResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddAccessToPictureResponse clone() => AddAccessToPictureResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddAccessToPictureResponse copyWith(void Function(AddAccessToPictureResponse) updates) => super.copyWith((message) => updates(message as AddAccessToPictureResponse)) as AddAccessToPictureResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddAccessToPictureResponse create() => AddAccessToPictureResponse._();
+  AddAccessToPictureResponse createEmptyInstance() => create();
+  static $pb.PbList<AddAccessToPictureResponse> createRepeated() => $pb.PbList<AddAccessToPictureResponse>();
+  @$core.pragma('dart2js:noInline')
+  static AddAccessToPictureResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddAccessToPictureResponse>(create);
+  static AddAccessToPictureResponse? _defaultInstance;
 }
 
 class ListPicturesRequest extends $pb.GeneratedMessage {
@@ -443,11 +499,20 @@ class ListPicturesResponse extends $pb.GeneratedMessage {
 
 class ListAlbumPicturesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ListAlbumPicturesRequest', createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'albumId')
     ..hasRequiredFields = false
   ;
 
   ListAlbumPicturesRequest._() : super();
-  factory ListAlbumPicturesRequest() => create();
+  factory ListAlbumPicturesRequest({
+    $core.String? albumId,
+  }) {
+    final _result = create();
+    if (albumId != null) {
+      _result.albumId = albumId;
+    }
+    return _result;
+  }
   factory ListAlbumPicturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ListAlbumPicturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -468,6 +533,15 @@ class ListAlbumPicturesRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ListAlbumPicturesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListAlbumPicturesRequest>(create);
   static ListAlbumPicturesRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get albumId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set albumId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasAlbumId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAlbumId() => clearField(1);
 }
 
 class ListAlbumPicturesResponse extends $pb.GeneratedMessage {
@@ -582,17 +656,17 @@ class SearchPicturesByTagRequest extends $pb.GeneratedMessage {
 
 class SearchPicturesByTagResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SearchPicturesByTagResponse', createEmptyInstance: create)
-    ..pc<PictureMessage>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pictures', $pb.PbFieldType.PM, subBuilder: PictureMessage.create)
+    ..aOM<PictureMessage>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pictures', subBuilder: PictureMessage.create)
     ..hasRequiredFields = false
   ;
 
   SearchPicturesByTagResponse._() : super();
   factory SearchPicturesByTagResponse({
-    $core.Iterable<PictureMessage>? pictures,
+    PictureMessage? pictures,
   }) {
     final _result = create();
     if (pictures != null) {
-      _result.pictures.addAll(pictures);
+      _result.pictures = pictures;
     }
     return _result;
   }
@@ -618,7 +692,15 @@ class SearchPicturesByTagResponse extends $pb.GeneratedMessage {
   static SearchPicturesByTagResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<PictureMessage> get pictures => $_getList(0);
+  PictureMessage get pictures => $_getN(0);
+  @$pb.TagNumber(1)
+  set pictures(PictureMessage v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPictures() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPictures() => clearField(1);
+  @$pb.TagNumber(1)
+  PictureMessage ensurePictures() => $_ensure(0);
 }
 
 class SearchPicturesByNameRequest extends $pb.GeneratedMessage {
@@ -670,17 +752,17 @@ class SearchPicturesByNameRequest extends $pb.GeneratedMessage {
 
 class SearchPicturesByNameResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SearchPicturesByNameResponse', createEmptyInstance: create)
-    ..pc<PictureMessage>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pictures', $pb.PbFieldType.PM, subBuilder: PictureMessage.create)
+    ..aOM<PictureMessage>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pictures', subBuilder: PictureMessage.create)
     ..hasRequiredFields = false
   ;
 
   SearchPicturesByNameResponse._() : super();
   factory SearchPicturesByNameResponse({
-    $core.Iterable<PictureMessage>? pictures,
+    PictureMessage? pictures,
   }) {
     final _result = create();
     if (pictures != null) {
-      _result.pictures.addAll(pictures);
+      _result.pictures = pictures;
     }
     return _result;
   }
@@ -706,27 +788,35 @@ class SearchPicturesByNameResponse extends $pb.GeneratedMessage {
   static SearchPicturesByNameResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<PictureMessage> get pictures => $_getList(0);
+  PictureMessage get pictures => $_getN(0);
+  @$pb.TagNumber(1)
+  set pictures(PictureMessage v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPictures() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPictures() => clearField(1);
+  @$pb.TagNumber(1)
+  PictureMessage ensurePictures() => $_ensure(0);
 }
 
 class PictureMessage extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PictureMessage', createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'imageId', $pb.PbFieldType.O3)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'imageId')
     ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'data', $pb.PbFieldType.OY)
     ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tags')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'albumId', $pb.PbFieldType.O3)
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'albumId')
     ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ownerName')
     ..hasRequiredFields = false
   ;
 
   PictureMessage._() : super();
   factory PictureMessage({
-    $core.int? imageId,
+    $core.String? imageId,
     $core.List<$core.int>? data,
     $core.Iterable<$core.String>? tags,
     $core.String? name,
-    $core.int? albumId,
+    $core.String? albumId,
     $core.String? ownerName,
   }) {
     final _result = create();
@@ -772,9 +862,9 @@ class PictureMessage extends $pb.GeneratedMessage {
   static PictureMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get imageId => $_getIZ(0);
+  $core.String get imageId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set imageId($core.int v) { $_setSignedInt32(0, v); }
+  set imageId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasImageId() => $_has(0);
   @$pb.TagNumber(1)
@@ -802,9 +892,9 @@ class PictureMessage extends $pb.GeneratedMessage {
   void clearName() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.int get albumId => $_getIZ(4);
+  $core.String get albumId => $_getSZ(4);
   @$pb.TagNumber(5)
-  set albumId($core.int v) { $_setSignedInt32(4, v); }
+  set albumId($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(5)
   $core.bool hasAlbumId() => $_has(4);
   @$pb.TagNumber(5)

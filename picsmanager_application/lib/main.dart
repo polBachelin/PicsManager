@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:picsmanager_application/providers/InsertAlbumProvider.dart';
+import 'package:picsmanager_application/providers/InsertNewPictureForAlbum.dart';
+import 'package:picsmanager_application/providers/ListUserProvider.dart';
 import 'package:picsmanager_application/providers/SignUpProvider.dart';
 import 'package:picsmanager_application/providers/AlbumProvider.dart';
 import 'package:picsmanager_application/providers/AppBarProvider.dart';
@@ -37,6 +40,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PicturePageProvider()),
         ChangeNotifierProvider(create: (_) => AlbumProvider()),
         ChangeNotifierProvider(create: (_) => SignUpProvider()),
+        ChangeNotifierProvider(create: (_) => InsertAlbumProvider()),
+        ChangeNotifierProvider(create: (_) => InsertNewPictureForAlbum()),
+        ChangeNotifierProvider(create: (_) => ListUserProvider()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

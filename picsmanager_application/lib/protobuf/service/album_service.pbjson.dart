@@ -12,7 +12,7 @@ import 'dart:typed_data' as $typed_data;
 const AlbumMessage$json = const {
   '1': 'AlbumMessage',
   '2': const [
-    const {'1': 'album_id', '3': 1, '4': 1, '5': 5, '10': 'albumId'},
+    const {'1': 'album_id', '3': 1, '4': 1, '5': 9, '10': 'albumId'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'thumbnail_data', '3': 3, '4': 1, '5': 12, '10': 'thumbnailData'},
     const {'1': 'owner_name', '3': 4, '4': 1, '5': 9, '10': 'ownerName'},
@@ -20,7 +20,7 @@ const AlbumMessage$json = const {
 };
 
 /// Descriptor for `AlbumMessage`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List albumMessageDescriptor = $convert.base64Decode('CgxBbGJ1bU1lc3NhZ2USGQoIYWxidW1faWQYASABKAVSB2FsYnVtSWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIlCg50aHVtYm5haWxfZGF0YRgDIAEoDFINdGh1bWJuYWlsRGF0YRIdCgpvd25lcl9uYW1lGAQgASgJUglvd25lck5hbWU=');
+final $typed_data.Uint8List albumMessageDescriptor = $convert.base64Decode('CgxBbGJ1bU1lc3NhZ2USGQoIYWxidW1faWQYASABKAlSB2FsYnVtSWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIlCg50aHVtYm5haWxfZGF0YRgDIAEoDFINdGh1bWJuYWlsRGF0YRIdCgpvd25lcl9uYW1lGAQgASgJUglvd25lck5hbWU=');
 @$core.Deprecated('Use createAlbumRequestDescriptor instead')
 const CreateAlbumRequest$json = const {
   '1': 'CreateAlbumRequest',
@@ -65,7 +65,7 @@ final $typed_data.Uint8List updateAlbumResponseDescriptor = $convert.base64Decod
 const DeleteAlbumRequest$json = const {
   '1': 'DeleteAlbumRequest',
   '2': const [
-    const {'1': 'album_id', '3': 1, '4': 1, '5': 5, '10': 'albumId'},
+    const {'1': 'album_id', '3': 1, '4': 1, '5': 9, '10': 'albumId'},
     const {'1': 'propagate_deletion', '3': 2, '4': 1, '5': 8, '9': 0, '10': 'propagateDeletion', '17': true},
   ],
   '8': const [
@@ -74,7 +74,7 @@ const DeleteAlbumRequest$json = const {
 };
 
 /// Descriptor for `DeleteAlbumRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List deleteAlbumRequestDescriptor = $convert.base64Decode('ChJEZWxldGVBbGJ1bVJlcXVlc3QSGQoIYWxidW1faWQYASABKAVSB2FsYnVtSWQSMgoScHJvcGFnYXRlX2RlbGV0aW9uGAIgASgISABSEXByb3BhZ2F0ZURlbGV0aW9uiAEBQhUKE19wcm9wYWdhdGVfZGVsZXRpb24=');
+final $typed_data.Uint8List deleteAlbumRequestDescriptor = $convert.base64Decode('ChJEZWxldGVBbGJ1bVJlcXVlc3QSGQoIYWxidW1faWQYASABKAlSB2FsYnVtSWQSMgoScHJvcGFnYXRlX2RlbGV0aW9uGAIgASgISABSEXByb3BhZ2F0ZURlbGV0aW9uiAEBQhUKE19wcm9wYWdhdGVfZGVsZXRpb24=');
 @$core.Deprecated('Use deleteAlbumResponseDescriptor instead')
 const DeleteAlbumResponse$json = const {
   '1': 'DeleteAlbumResponse',
@@ -82,6 +82,24 @@ const DeleteAlbumResponse$json = const {
 
 /// Descriptor for `DeleteAlbumResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deleteAlbumResponseDescriptor = $convert.base64Decode('ChNEZWxldGVBbGJ1bVJlc3BvbnNl');
+@$core.Deprecated('Use addAccessToAlbumRequestDescriptor instead')
+const AddAccessToAlbumRequest$json = const {
+  '1': 'AddAccessToAlbumRequest',
+  '2': const [
+    const {'1': 'album_id', '3': 1, '4': 1, '5': 9, '10': 'albumId'},
+    const {'1': 'access_id', '3': 2, '4': 1, '5': 9, '10': 'accessId'},
+  ],
+};
+
+/// Descriptor for `AddAccessToAlbumRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addAccessToAlbumRequestDescriptor = $convert.base64Decode('ChdBZGRBY2Nlc3NUb0FsYnVtUmVxdWVzdBIZCghhbGJ1bV9pZBgBIAEoCVIHYWxidW1JZBIbCglhY2Nlc3NfaWQYAiABKAlSCGFjY2Vzc0lk');
+@$core.Deprecated('Use addAccessToAlbumResponseDescriptor instead')
+const AddAccessToAlbumResponse$json = const {
+  '1': 'AddAccessToAlbumResponse',
+};
+
+/// Descriptor for `AddAccessToAlbumResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addAccessToAlbumResponseDescriptor = $convert.base64Decode('ChhBZGRBY2Nlc3NUb0FsYnVtUmVzcG9uc2U=');
 @$core.Deprecated('Use listAlbumsRequestDescriptor instead')
 const ListAlbumsRequest$json = const {
   '1': 'ListAlbumsRequest',

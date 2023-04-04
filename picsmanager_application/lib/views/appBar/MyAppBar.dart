@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:picsmanager_application/providers/AlbumProvider.dart';
 import 'package:picsmanager_application/providers/AppBarProvider.dart';
 import 'package:picsmanager_application/providers/AuthenticationProvider.dart';
+import 'package:picsmanager_application/providers/PicturePageProvider.dart';
 import 'package:picsmanager_application/providers/ViewProvider.dart';
-import 'package:picsmanager_application/views/appBar/CreateFolderDialog.dart';
+import 'package:picsmanager_application/views/dialog/CreateFolderDialog.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
@@ -51,6 +53,13 @@ class _MyAppBar extends State<MyAppBar> {
                 ? IconButton(
                     onPressed: () {
                       appBarProvider.shareFolder = !data.item2;
+                      final token = Provider.of<AuthenticationProvider>(context, listen: false).getToken;
+
+                      if (appBarProvider.shareFolder) {
+                        Provider.of<AlbumProvider>(context, listen: false).startTrendingShared(token);
+                      } else {
+                        Provider.of<AlbumProvider>(context, listen: false).startTrendingOwned(token);
+                      }
                     },
                     icon: Icon(
                       data.item2 ? Icons.people : Icons.people_alt_outlined,
@@ -66,7 +75,7 @@ class _MyAppBar extends State<MyAppBar> {
               return data == 2
                   ? IconButton(
                   onPressed: (){
-                    CreateFolderDialog(context: context);
+                    createFolderDialog(context: context);
                   },
                   icon: Icon(Icons.create_new_folder))
               : Container();
@@ -80,6 +89,9 @@ class _MyAppBar extends State<MyAppBar> {
                 ? IconButton(
                     onPressed: () {
                       appBarProvider.shareUser = !data.item2;
+                      final token = Provider.of<AuthenticationProvider>(context, listen: false).getToken;
+
+                      Provider.of<PicturePageProvider>(context, listen: false).startTrendingCustoms(token, appBarProvider.shareUser);
                     },
                     icon: Icon(
                       data.item2

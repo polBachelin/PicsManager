@@ -32,6 +32,12 @@ class PictureServiceClient extends $grpc.Client {
           ($0.DeletePictureRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.DeletePictureResponse.fromBuffer(value));
+  static final _$addAccessToPicture = $grpc.ClientMethod<
+          $0.AddAccessToPictureRequest, $0.AddAccessToPictureResponse>(
+      '/PictureService/AddAccessToPicture',
+      ($0.AddAccessToPictureRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $0.AddAccessToPictureResponse.fromBuffer(value));
   static final _$listPictures =
       $grpc.ClientMethod<$0.ListPicturesRequest, $0.ListPicturesResponse>(
           '/PictureService/ListPictures',
@@ -80,6 +86,12 @@ class PictureServiceClient extends $grpc.Client {
     return $createUnaryCall(_$deletePicture, request, options: options);
   }
 
+  $grpc.ResponseFuture<$0.AddAccessToPictureResponse> addAccessToPicture(
+      $0.AddAccessToPictureRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$addAccessToPicture, request, options: options);
+  }
+
   $grpc.ResponseStream<$0.ListPicturesResponse> listPictures(
       $0.ListPicturesRequest request,
       {$grpc.CallOptions? options}) {
@@ -96,16 +108,20 @@ class PictureServiceClient extends $grpc.Client {
         options: options);
   }
 
-  $grpc.ResponseFuture<$0.SearchPicturesByTagResponse> searchPicturesByTag(
+  $grpc.ResponseStream<$0.SearchPicturesByTagResponse> searchPicturesByTag(
       $0.SearchPicturesByTagRequest request,
       {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$searchPicturesByTag, request, options: options);
+    return $createStreamingCall(
+        _$searchPicturesByTag, $async.Stream.fromIterable([request]),
+        options: options);
   }
 
-  $grpc.ResponseFuture<$0.SearchPicturesByNameResponse> searchPicturesByName(
+  $grpc.ResponseStream<$0.SearchPicturesByNameResponse> searchPicturesByName(
       $0.SearchPicturesByNameRequest request,
       {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$searchPicturesByName, request, options: options);
+    return $createStreamingCall(
+        _$searchPicturesByName, $async.Stream.fromIterable([request]),
+        options: options);
   }
 }
 
@@ -140,6 +156,15 @@ abstract class PictureServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $0.DeletePictureRequest.fromBuffer(value),
             ($0.DeletePictureResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.AddAccessToPictureRequest,
+            $0.AddAccessToPictureResponse>(
+        'AddAccessToPicture',
+        addAccessToPicture_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.AddAccessToPictureRequest.fromBuffer(value),
+        ($0.AddAccessToPictureResponse value) => value.writeToBuffer()));
     $addMethod(
         $grpc.ServiceMethod<$0.ListPicturesRequest, $0.ListPicturesResponse>(
             'ListPictures',
@@ -163,7 +188,7 @@ abstract class PictureServiceBase extends $grpc.Service {
         'SearchPicturesByTag',
         searchPicturesByTag_Pre,
         false,
-        false,
+        true,
         ($core.List<$core.int> value) =>
             $0.SearchPicturesByTagRequest.fromBuffer(value),
         ($0.SearchPicturesByTagResponse value) => value.writeToBuffer()));
@@ -172,7 +197,7 @@ abstract class PictureServiceBase extends $grpc.Service {
         'SearchPicturesByName',
         searchPicturesByName_Pre,
         false,
-        false,
+        true,
         ($core.List<$core.int> value) =>
             $0.SearchPicturesByNameRequest.fromBuffer(value),
         ($0.SearchPicturesByNameResponse value) => value.writeToBuffer()));
@@ -196,6 +221,12 @@ abstract class PictureServiceBase extends $grpc.Service {
     return deletePicture(call, await request);
   }
 
+  $async.Future<$0.AddAccessToPictureResponse> addAccessToPicture_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.AddAccessToPictureRequest> request) async {
+    return addAccessToPicture(call, await request);
+  }
+
   $async.Stream<$0.ListPicturesResponse> listPictures_Pre(
       $grpc.ServiceCall call,
       $async.Future<$0.ListPicturesRequest> request) async* {
@@ -208,16 +239,16 @@ abstract class PictureServiceBase extends $grpc.Service {
     yield* listAlbumPictures(call, await request);
   }
 
-  $async.Future<$0.SearchPicturesByTagResponse> searchPicturesByTag_Pre(
+  $async.Stream<$0.SearchPicturesByTagResponse> searchPicturesByTag_Pre(
       $grpc.ServiceCall call,
-      $async.Future<$0.SearchPicturesByTagRequest> request) async {
-    return searchPicturesByTag(call, await request);
+      $async.Future<$0.SearchPicturesByTagRequest> request) async* {
+    yield* searchPicturesByTag(call, await request);
   }
 
-  $async.Future<$0.SearchPicturesByNameResponse> searchPicturesByName_Pre(
+  $async.Stream<$0.SearchPicturesByNameResponse> searchPicturesByName_Pre(
       $grpc.ServiceCall call,
-      $async.Future<$0.SearchPicturesByNameRequest> request) async {
-    return searchPicturesByName(call, await request);
+      $async.Future<$0.SearchPicturesByNameRequest> request) async* {
+    yield* searchPicturesByName(call, await request);
   }
 
   $async.Future<$0.CreatePictureResponse> createPicture(
@@ -226,12 +257,14 @@ abstract class PictureServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.UpdatePictureRequest request);
   $async.Future<$0.DeletePictureResponse> deletePicture(
       $grpc.ServiceCall call, $0.DeletePictureRequest request);
+  $async.Future<$0.AddAccessToPictureResponse> addAccessToPicture(
+      $grpc.ServiceCall call, $0.AddAccessToPictureRequest request);
   $async.Stream<$0.ListPicturesResponse> listPictures(
       $grpc.ServiceCall call, $0.ListPicturesRequest request);
   $async.Stream<$0.ListAlbumPicturesResponse> listAlbumPictures(
       $grpc.ServiceCall call, $0.ListAlbumPicturesRequest request);
-  $async.Future<$0.SearchPicturesByTagResponse> searchPicturesByTag(
+  $async.Stream<$0.SearchPicturesByTagResponse> searchPicturesByTag(
       $grpc.ServiceCall call, $0.SearchPicturesByTagRequest request);
-  $async.Future<$0.SearchPicturesByNameResponse> searchPicturesByName(
+  $async.Stream<$0.SearchPicturesByNameResponse> searchPicturesByName(
       $grpc.ServiceCall call, $0.SearchPicturesByNameRequest request);
 }

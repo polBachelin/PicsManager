@@ -12,7 +12,7 @@ import 'dart:typed_data' as $typed_data;
 const UserMessage$json = const {
   '1': 'UserMessage',
   '2': const [
-    const {'1': 'user_id', '3': 1, '4': 1, '5': 5, '10': 'userId'},
+    const {'1': 'user_id', '3': 1, '4': 1, '5': 9, '10': 'userId'},
     const {'1': 'email', '3': 2, '4': 1, '5': 9, '10': 'email'},
     const {'1': 'password', '3': 3, '4': 1, '5': 9, '9': 0, '10': 'password', '17': true},
     const {'1': 'name', '3': 4, '4': 1, '5': 9, '10': 'name'},
@@ -23,7 +23,7 @@ const UserMessage$json = const {
 };
 
 /// Descriptor for `UserMessage`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List userMessageDescriptor = $convert.base64Decode('CgtVc2VyTWVzc2FnZRIXCgd1c2VyX2lkGAEgASgFUgZ1c2VySWQSFAoFZW1haWwYAiABKAlSBWVtYWlsEh8KCHBhc3N3b3JkGAMgASgJSABSCHBhc3N3b3JkiAEBEhIKBG5hbWUYBCABKAlSBG5hbWVCCwoJX3Bhc3N3b3Jk');
+final $typed_data.Uint8List userMessageDescriptor = $convert.base64Decode('CgtVc2VyTWVzc2FnZRIXCgd1c2VyX2lkGAEgASgJUgZ1c2VySWQSFAoFZW1haWwYAiABKAlSBWVtYWlsEh8KCHBhc3N3b3JkGAMgASgJSABSCHBhc3N3b3JkiAEBEhIKBG5hbWUYBCABKAlSBG5hbWVCCwoJX3Bhc3N3b3Jk');
 @$core.Deprecated('Use createUserRequestDescriptor instead')
 const CreateUserRequest$json = const {
   '1': 'CreateUserRequest',
@@ -70,7 +70,7 @@ final $typed_data.Uint8List updateUserResponseDescriptor = $convert.base64Decode
 const DeleteUserRequest$json = const {
   '1': 'DeleteUserRequest',
   '2': const [
-    const {'1': 'user_id', '3': 1, '4': 1, '5': 5, '10': 'userId'},
+    const {'1': 'user_id', '3': 1, '4': 1, '5': 9, '10': 'userId'},
     const {'1': 'propagate_deletion', '3': 2, '4': 1, '5': 8, '9': 0, '10': 'propagateDeletion', '17': true},
   ],
   '8': const [
@@ -79,7 +79,7 @@ const DeleteUserRequest$json = const {
 };
 
 /// Descriptor for `DeleteUserRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List deleteUserRequestDescriptor = $convert.base64Decode('ChFEZWxldGVVc2VyUmVxdWVzdBIXCgd1c2VyX2lkGAEgASgFUgZ1c2VySWQSMgoScHJvcGFnYXRlX2RlbGV0aW9uGAIgASgISABSEXByb3BhZ2F0ZURlbGV0aW9uiAEBQhUKE19wcm9wYWdhdGVfZGVsZXRpb24=');
+final $typed_data.Uint8List deleteUserRequestDescriptor = $convert.base64Decode('ChFEZWxldGVVc2VyUmVxdWVzdBIXCgd1c2VyX2lkGAEgASgJUgZ1c2VySWQSMgoScHJvcGFnYXRlX2RlbGV0aW9uGAIgASgISABSEXByb3BhZ2F0ZURlbGV0aW9uiAEBQhUKE19wcm9wYWdhdGVfZGVsZXRpb24=');
 @$core.Deprecated('Use deleteUserResponseDescriptor instead')
 const DeleteUserResponse$json = const {
   '1': 'DeleteUserResponse',
