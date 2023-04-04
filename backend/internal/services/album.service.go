@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"log"
 	"picsManager/backend/internal/models"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -23,7 +24,7 @@ func (a Service) CreateAlbum(obj models.Album) (*mongo.InsertOneResult, error) {
 }
 
 func (a Service) UpdateAlbum(obj models.Album) (*mongo.UpdateResult, error) {
-	update := bson.M{"$set": bson.M{"name": obj.Name, "ownerId": obj.OwnerID}}
+	update := bson.M{"$set": bson.M{"name": obj.Name, "ownerID": obj.OwnerID}}
 	return a.collection.UpdateOne(context.TODO(), bson.M{"_id": obj.ID}, update)
 
 }
@@ -33,9 +34,10 @@ func (a Service) DeleteAlbum(id primitive.ObjectID) error {
 	return err
 }
 
-func (a Service) AddAccessToAlbum(id primitive.ObjectID, accessID primitive.ObjectID) (*mongo.UpdateResult, error) {
+func (a Service) AddAccessToAlbum(albumId primitive.ObjectID, accessID primitive.ObjectID) (*mongo.UpdateResult, error) {
+	log.Printf("Album id %v --- AccessID %v", albumId, accessID)
 	update := bson.M{"$push": bson.M{"accessIds": accessID}}
-	return a.collection.UpdateOne(context.TODO(), bson.M{"_id": id}, update)
+	return a.collection.UpdateOne(context.TODO(), bson.M{"_id": albumId}, update)
 }
 
 func (a Service) GetAlbum(id primitive.ObjectID) (models.Album, error) {
@@ -44,7 +46,7 @@ func (a Service) GetAlbum(id primitive.ObjectID) (models.Album, error) {
 	cursor := a.collection.FindOne(context.TODO(), bson.M{"_id": id})
 	err := cursor.Decode(&res)
 	if err != nil {
-		return models.Album{ID: primitive.ObjectID{0}, Name: "", OwnerID: primitive.ObjectID{0}, AccessIDs: nil}, err
+		return models.Album{ID: primitive.ObjectID{0}, Name: "", OwnerID: primitive.ObjectID{0}, AccessID: nil}, err
 	}
 	return res, nil
 }
@@ -55,7 +57,7 @@ func (a Service) GetAlbumByName(name string) (models.Album, error) {
 	cursor := a.collection.FindOne(context.TODO(), bson.M{"name": name})
 	err := cursor.Decode(&res)
 	if err != nil {
-		return models.Album{ID: primitive.ObjectID{0}, Name: "", OwnerID: primitive.ObjectID{0}, AccessIDs: nil}, err
+		return models.Album{ID: primitive.ObjectID{0}, Name: "", OwnerID: primitive.ObjectID{0}, AccessID: nil}, err
 	}
 	return res, nil
 }
@@ -68,7 +70,7 @@ func (a Service) UserHasAccessToAlbum(userID primitive.ObjectID, albumID primiti
 	if album.OwnerID == userID {
 		return true, nil
 	}
-	for _, a := range album.AccessIDs {
+	for _, a := range album.AccessID {
 		if userID == a {
 			return true, nil
 		}

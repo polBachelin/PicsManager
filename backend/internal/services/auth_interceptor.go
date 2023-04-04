@@ -25,6 +25,7 @@ func accessiblePaths() map[string]struct{} {
 		apiServicePath + "AlbumService/UpdateAlbum":        {},
 		apiServicePath + "AlbumService/DeleteAlbum":        {},
 		apiServicePath + "AlbumService/ListAlbums":         {},
+		apiServicePath + "AlbumService/AddAccessToAlbum":   {},
 		apiServicePath + "AlbumService/ListOwnedAlbums":    {},
 		apiServicePath + "AlbumService/ListSharedAlbums":   {},
 		apiServicePath + "AlbumService/SearchAlbumsByName": {},

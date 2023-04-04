@@ -30,7 +30,7 @@ func (s *AlbumServiceController) CreateAlbum(ctx context.Context, req *pbAlbum.C
 	var album models.Album
 	album.Name = req.GetName()
 	album.OwnerID = userID
-	album.AccessIDs = make([]primitive.ObjectID, 0)
+	album.AccessID = make([]primitive.ObjectID, 0)
 	res, err := albumSvc.CreateAlbum(album)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to create album")
@@ -47,10 +47,10 @@ func (s *AlbumServiceController) UpdateAlbum(ctx context.Context, req *pbAlbum.U
 	svc := services.NewAlbumService()
 	var newAlbum models.Album
 	newAlbum.ID, err = primitive.ObjectIDFromHex(req.Source.AlbumId)
-	newAlbum.OwnerID = userID
 	if err != nil {
 		return nil, contextIDError
 	}
+	newAlbum.OwnerID = userID
 	newAlbum.Name = req.Source.Name
 	svc.UpdateAlbum(newAlbum)
 	return &pbAlbum.UpdateAlbumResponse{Album: buildAlbumMessage(newAlbum)}, nil
@@ -68,13 +68,22 @@ func (s *AlbumServiceController) DeleteAlbum(ctx context.Context, req *pbAlbum.D
 
 func (s *AlbumServiceController) AddAccessToAlbum(ctx context.Context, req *pbAlbum.AddAccessToAlbumRequest) (*pbAlbum.AddAccessToAlbumResponse, error) {
 	svc := services.NewPictureService()
-	id, err := primitive.ObjectIDFromHex(req.GetAlbumId())
-	accessId, err := primitive.ObjectIDFromHex(req.GetAccessId())
+	albumId, err := primitive.ObjectIDFromHex(req.AlbumId)
 	if err != nil {
 		return nil, contextIDError
 	}
-	_, err = svc.AddAccessToAlbum(id, accessId)
+	accessId, err := primitive.ObjectIDFromHex(req.AccessId)
+	log.Printf("Album id %v --- AccessID %v", albumId, accessId)
 	if err != nil {
+		return nil, contextIDError
+	}
+	alb, err := svc.GetAlbum(albumId)
+	log.Println(alb)
+	log.Println(err)
+	res, err := svc.AddAccessToAlbum(albumId, accessId)
+	log.Println(res)
+	if err != nil {
+		log.Printf(err.Error())
 		return nil, err
 	}
 	return &pbAlbum.AddAccessToAlbumResponse{}, nil

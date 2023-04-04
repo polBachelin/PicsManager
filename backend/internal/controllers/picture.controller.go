@@ -28,15 +28,9 @@ func (s *PictureServiceController) CreatePicture(ctx context.Context, req *pbPic
 		log.Println("Error: ", err)
 		return nil, err
 	}
-	albumSvc := services.NewAlbumService()
-	albumID, err := primitive.ObjectIDFromHex(req.AlbumId)
-	hasAccess, err := albumSvc.UserHasAccessToAlbum(userID, albumID)
-	if hasAccess == false || err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "User does not have access to album or albumID is wrong")
-	}
 	svc := services.NewPictureService()
 	var picture models.Picture
-	picture.AlbumID = albumID
+	picture.AlbumID = primitive.ObjectID{}
 	picture.OwnerID = userID
 	picture.Data = req.GetData()
 	picture.Tags = req.GetTags()
@@ -85,6 +79,7 @@ func (s *PictureServiceController) AddAccessToPicture(ctx context.Context, req *
 	svc := services.NewPictureService()
 	id, err := primitive.ObjectIDFromHex(req.GetPictureId())
 	accessId, err := primitive.ObjectIDFromHex(req.GetAccessId())
+	log.Printf("Album id %v --- AccessID %v", id, accessId)
 	if err != nil {
 		return nil, contextIDError
 	}
