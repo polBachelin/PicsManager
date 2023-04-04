@@ -51,10 +51,9 @@ func (s *AlbumServiceController) UpdateAlbum(ctx context.Context, req *pbAlbum.U
 		return nil, contextIDError
 	}
 	alb, err := svc.GetAlbum(newAlbum.ID)
-	if alb.OwnerID != userID {
+	if alb.OwnerID != userID || err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "User does not have access to album or album ID does not exist")
 	}
-
 	newAlbum.OwnerID = userID
 	newAlbum.Name = req.Source.Name
 	svc.UpdateAlbum(newAlbum)
