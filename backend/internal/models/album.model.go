@@ -8,5 +8,5 @@ type Album struct {
 	ID       primitive.ObjectID   `bson:"_id" json:"id,omitempty"`
 	Name     string               `bson:"name" json:"name"`
 	OwnerID  primitive.ObjectID   `bson:"ownerID" json:"ownerID"`
-	AccessID []primitive.ObjectID `bson:"accessIds" json:"accessIds,omitempty"`
+	AccessID []primitive.ObjectID `bson:"accessId" json:"accessId,omitempty"`
 }

@@ -36,7 +36,7 @@ func (a Service) DeleteAlbum(id primitive.ObjectID) error {
 
 func (a Service) AddAccessToAlbum(albumId primitive.ObjectID, accessID primitive.ObjectID) (*mongo.UpdateResult, error) {
 	log.Printf("Album id %v --- AccessID %v", albumId, accessID)
-	update := bson.M{"$push": bson.M{"accessIds": accessID}}
+	update := bson.M{"$push": bson.M{"accessId": accessID}}
 	return a.collection.UpdateOne(context.TODO(), bson.M{"_id": albumId}, update)
 }
 

@@ -53,6 +53,10 @@ func (s *PictureServiceController) UpdatePicture(ctx context.Context, req *pbPic
 	var newPicture models.Picture
 	newPicture.AlbumID, err = primitive.ObjectIDFromHex(req.Pictures.AlbumId)
 	newPicture.ID, err = primitive.ObjectIDFromHex(req.Pictures.ImageId)
+	pic, err := svc.GetPicture(newPicture.ID)
+	if pic.OwnerID != userID {
+		return nil, status.Errorf(codes.InvalidArgument, "User does not have access to album or album ID does not exist")
+	}
 	if err != nil {
 		return nil, contextIDError
 
