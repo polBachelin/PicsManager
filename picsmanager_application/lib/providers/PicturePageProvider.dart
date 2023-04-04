@@ -46,7 +46,7 @@ class PicturePageProvider extends ChangeNotifier {
   startTrendingByName(String token, String name) async {
     _safeCallStart();
     _pictures.clear();
-    await NetworkManager(token).pictureRepository.foreachPictures((source) {
+    await NetworkManager(token).pictureRepository.foreachPicturesByName(name, (source) {
       _pictures.add(source);
       notifyListeners();
     });

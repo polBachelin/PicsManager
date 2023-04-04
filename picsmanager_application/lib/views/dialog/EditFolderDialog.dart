@@ -132,10 +132,14 @@ void EditFolderDialog({required BuildContext context, required Album album}) {
                         ),
                         OutlinedButton(
                             onPressed: () async {
+                              print(selectedId);
+
                               final obj = NetworkManager(token.getToken);
                               await obj.albumRepository.updateAlbum(album.raw, controller.text, selected);
+                              print("a");
                               if (selectedId != null) {
                                 await obj.albumRepository.sharedAlbum(album.id, selectedId ?? "");
+                                print("b");
                               }
                             },
                             child: Text("save"))

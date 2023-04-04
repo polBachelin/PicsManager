@@ -99,4 +99,14 @@ class PictureRepositoryGrpc extends PictureRepository {
 
     await _stub.updatePicture(request);
   }
+
+  @override
+  Future<void> foreachPicturesByName(String query, Function(Picture p1) onFetch) async {
+    final request = SearchPicturesByNameRequest(query: query);
+    final response = _stub.searchPicturesByName(request);
+
+    await response.forEach((e) =>
+        onFetch(fromProtobuf(e.pictures))
+    );
+  }
 }

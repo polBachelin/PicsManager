@@ -6,6 +6,7 @@ abstract class PictureRepository {
   Future<void> searchPictureByName(String query, Function(Picture) onFetch);
 
   Future<void> foreachPictures(Function(Picture) onFetch);
+  Future<void> foreachPicturesByName(String query, Function(Picture) onFetch);
   Future<void> foreachPicturesFromAlbum(String album, Function(Picture) onFetch);
 
   Future<void> uploadPicture(List<int> image, String name);

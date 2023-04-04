@@ -4,7 +4,7 @@ class SignInProvider extends ChangeNotifier {
   String username = "";
   String password = "";
 
-  bool _isObscure = false;
+  bool _isObscure = true;
 
   bool get isObscure => _isObscure;
 
